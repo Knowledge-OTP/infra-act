@@ -1,0 +1,202 @@
+select-answer {
+    @include text-style(18px, $fontColor4, Lato);
+    display: block;
+
+    .answer {
+        @include display-flex();
+        @include align-items(center);
+        margin-bottom: 20px;
+
+        .correct-icon-drv,
+        .wrong-icon-drv {
+            display: none;
+            flex-shrink: 0;
+        }
+
+        &.wrong {
+            .content-wrapper {
+                .answer-index-wrapper {
+                    background-color: $backgroundColor3;
+                    color: $fontColor1;
+                    .inner-circle {
+                        display: block;
+                        border: 13px solid $backgroundColor3;
+                    }
+                    border-color: $backgroundColor3;
+                    .answer-index {
+                        color: $fontColor1;
+                    }
+                }
+
+                .content {
+                    color: $fontColor6;
+                }
+
+                .ion-ios-close-empty {
+                    display: block;
+                }
+
+                .wrong-icon-drv {
+                    @include dimension(13px, 100%);
+                    margin-left: 17px;
+                    display: block;
+
+                    svg {
+                        line {
+                            stroke: $backgroundColor3;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        &.correct {
+            .answer-solution-icon-wrapper {
+                visibility: visible;
+            }
+
+            .content-wrapper {
+                .answer-index-wrapper {
+                    background-color: $borderColor3;
+                    color: $fontColor1;
+                    .inner-circle {
+                        display: block;
+                        border: 13px solid $borderColor3;
+                    }
+                    border-color: $borderColor3;
+
+                    .answer-index {
+                        color: $fontColor1;
+                    }
+                }
+
+                .content {
+                    color: $fontColor5;
+                }
+
+                .ion-android-done {
+                    display: block;
+                }
+
+                .correct-icon-drv {
+                    @include dimension(23px, 100%);
+                    margin-left: 17px;
+                    display: block;
+
+                    svg {
+                        line {
+                            stroke: $borderColor3;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        &.answered-incorrect {
+            .answer-solution-icon-wrapper {
+                visibility: visible;
+            }
+
+            .content-wrapper {
+                .answer-index-wrapper {
+                    background-color: $backgroundColor1;
+                    color: $fontColor5;
+                    .inner-circle {
+                        display: block;
+                        border: 13px solid $borderColor3;
+                    }
+                    border-color: $borderColor3;
+
+                    .answer-index {
+                        color: $fontColor9;
+                    }
+                }
+
+                .content {
+                    color: $fontColor5;
+                }
+            }
+
+            .answer-solution-icon-wrapper {
+                visibility: visible;
+            }
+        }
+
+        &.answered {
+            .content-wrapper {
+                .answer-index-wrapper {
+                    background: $backgroundColor10;
+                    border: {
+                        color: $fontColor8;
+                    }
+
+                    .index-char {
+                        color: $fontColor1;
+                    }
+                }
+                markup {
+                    color: $fontColor8;
+                }
+            }
+        }
+
+        .answer-solution-icon-wrapper {
+            visibility: hidden;
+            margin-right: 25px;
+            @include flex-shrink(0);
+        }
+
+        .content-wrapper {
+            @include display-flex();
+            @include align-items(center);
+            cursor: pointer;
+
+            .answer-index-wrapper {
+                position: relative;
+                .inner-circle {
+                    display: none;
+                    position: absolute;
+                    top: 5px;
+                    left: 5px;
+                    border-radius: 50%;
+                }
+                background-color: $backgroundColor11;
+                border-radius: 50%;
+                @include flex-middle;
+                @include dimension(38px, 38px);
+                border: 1px solid $borderColor4;
+                margin-right: 22.5px;
+                @include flex-shrink(0);
+
+            }
+
+            .content {
+                p {
+                    margin: 0;
+                }
+            }
+
+            .ion-ios-close-empty {
+                @include text-style(28px, $backgroundColor1);
+                font-size: 30px;
+                position: absolute;
+                left: 12.5px;
+                top: 3px;
+                z-index: 1;
+                display: none;
+                @include flex-shrink(0);
+            }
+            .ion-android-done {
+                position: absolute;
+                font-size: 22px;
+                display: none;
+                z-index: 1;
+                color: $backgroundColor1;
+                top: 8px;
+                left: 9px;
+            }
+        }
+    }
+}

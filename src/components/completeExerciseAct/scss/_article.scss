@@ -1,0 +1,47 @@
+article, .article {
+    box-sizing: border-box;
+    background: $backgroundColor1;
+
+    .article-line-numbers {
+        width: 5%;
+        display: inline-block;
+        line-height: 20px;
+        position: relative;
+    }
+
+    .article-content {
+        width: 475px;
+        display: inline-block;
+        font-weight: $ultraLightFontWeight;
+        font-size: 16px;
+        .num-article {
+            @include text-style(15px, $fontColor2, Lato, $thinFontWeight);
+            position: absolute;
+            left: -32px;
+            padding-top: 2px;
+        }
+        .wrap-num-article {
+            position: relative;
+            margin-left: 20px;
+            .indented-line {
+                position: relative;
+                left: 30px;
+            }
+        }
+
+    }
+
+    .orange-square {
+        background-color: $backgroundColor2;
+        color: white;
+        font-size: 14px;
+        text-align: center;
+        padding: 0 3px;
+    }
+
+    strong {
+        font-family: Lato;
+        font-weight: $lightFontWeight;
+        font-size: 16px;
+    }
+}

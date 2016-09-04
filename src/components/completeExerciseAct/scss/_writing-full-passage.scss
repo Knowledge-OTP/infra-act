@@ -1,0 +1,40 @@
+writing-full-passage {
+    .english-full-paragraphs-wrapper {
+        padding-top: 28px;
+        display: flex;
+
+        .question-container {
+            .paragraph-title {
+                @include text-style(16px, $fontColor3, Lato, $regularFontWeight);
+                text-align: center;
+            }
+
+            p {
+                @include text-style(16px, $fontColor4, Lato, $lightFontWeight);
+                margin-top: 13px;
+                line-height: 1.5em;
+            }
+            padding: {
+                left: 30px;
+                right: 25px;
+            }
+
+            .paragraphs-wrapper {
+                .paragraph-number-title {
+                    @include text-style(16px, $fontColor4, Lato, $lightFontWeight);
+                    text-align: center;
+                    margin-top: 24px;
+                }
+            }
+        }
+
+        .answer-container {
+            padding-right: 15px;
+
+            p {
+                color: $fontColor3;
+                line-height: 1.5em;
+            }
+        }
+    }
+}

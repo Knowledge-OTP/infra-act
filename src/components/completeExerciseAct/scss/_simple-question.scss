@@ -1,0 +1,27 @@
+znk-exercise {
+    simple-question {
+        .simple-question-wrapper {
+            padding-top: 33px;
+
+            .answer-container {
+                width: auto;
+                margin: 0 auto;
+                overflow-y: auto;
+
+                .question-content {
+                    @include text-style(18px, $fontColor4, Lato, $regularFontWeight);
+                    margin-bottom: 1em;
+                    p:last-child {
+                        margin-bottom: 0;
+                        line-height: 1.5em;
+                    }
+                }
+
+                p {
+                    color: $fontColor3;
+                    line-height: 1.5em;
+                }
+            }
+        }
+    }
+}

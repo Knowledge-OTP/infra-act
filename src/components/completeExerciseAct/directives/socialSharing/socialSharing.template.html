@@ -1,0 +1,21 @@
+<div class="social-sharing-drv-container"
+     ng-class="[vm.showSocialArea.background, vm.animate ? 'social-sharing-drv-container-animate' : '']"
+     ng-if="vm.showSocialArea"
+     translate-namespace="SOCIAL_SHARING_CONTAINER_DRV">
+    <div class="decor" ng-class="vm.showSocialArea.banner1"></div>
+    <div class="share-main-container" ng-switch on="vm.showSocialArea.isImproved">
+        <div class="social-sharing-title" translate=".TITLE"></div>
+        <div class="social-text"
+             translate=".POINTS_TEXT"
+             ng-switch-when="false"
+             translate-values="{ pts: {{vm.showSocialArea.points}}, subjectName: '{{vm.subjectName}}' }">
+        </div>
+        <div class="social-text"
+             translate=".IMPROVED_TEXT"
+             ng-switch-when="true"
+             translate-values="{ pts: {{vm.showSocialArea.points}}, subjectName: '{{vm.subjectName}}' }">
+        </div>
+        <social-share-btn-drv share-data="vm.shareData"></social-share-btn-drv>
+    </div>
+    <div class="decor" ng-class="vm.showSocialArea.banner2"></div>
+</div>

@@ -1,0 +1,35 @@
+essay-question {
+    .writing-question-wrapper {
+        padding-top: 28px;
+        display: flex;
+
+        .question-container {
+            padding: {
+                left: 35px;
+                right: 25px;
+            }
+        }
+
+        .answer-container {
+            margin-left: 20px;
+
+            .question-content {
+                @include text-style(18px, $fontColor4, Lato, $regularFontWeight);
+            }
+
+            p {
+                color: $fontColor3;
+                line-height: 1.5em;
+            }
+
+            answer-builder {
+                .rate-answer-wrapper {
+                    .item-repeater:last-child {
+                        width: 26px;
+                    }
+                }
+            }
+
+        }
+    }
+}

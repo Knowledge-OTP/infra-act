@@ -1,0 +1,14 @@
+{
+    "PERFORMANCE_ACT": {
+        "MASTERY_LEVEL":{
+            "NOVICE": "novice",
+            "AVERAGE": "average",
+            "ADVANCE": "advanced",
+            "EXPERT": "expert",
+            "MASTER": "master"
+        }
+    },
+    "PERFORMANCE_TIMELINE": {
+        "POINTS_LEFT": "{{points}} pts to go!"
+    }
+}

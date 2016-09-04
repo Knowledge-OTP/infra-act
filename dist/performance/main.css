@@ -1,0 +1,44 @@
+/*border color*/
+/*background*/
+/* box shadow */
+/* font color*/
+/* scroll bar */
+/* Subjects colors */
+/* fonts size */
+/* paths */
+/* full background image with retina */
+/* full background image with retina */
+.performance-timeline {
+  height: 280px;
+  overflow-x: auto;
+  position: relative; }
+  .performance-timeline::-webkit-scrollbar {
+    height: 10px; }
+  .performance-timeline .time-line-wrapper {
+    margin-top: 75px; }
+  .performance-timeline .progress-val {
+    position: absolute;
+    color: #4f4d4d;
+    font-size: 21px;
+    font-family: Quicksand; }
+    .performance-timeline .progress-val .goal-wrapper {
+      display: inline;
+      position: relative; }
+    .performance-timeline .progress-val .progress-title {
+      color: #757a83;
+      font-size: 12px;
+      font-family: Lato;
+      font-weight: 200;
+      margin-top: 10px;
+      min-width: 100px; }
+    .performance-timeline .progress-val .timeline-plus {
+      position: absolute;
+      top: -7px;
+      right: -25px;
+      font-size: 12px;
+      font-family: Lato;
+      font-weight: 400; }
+      .performance-timeline .progress-val .timeline-plus.red-point {
+        color: #ff6766; }
+      .performance-timeline .progress-val .timeline-plus.green-point {
+        color: #87ca4d; }

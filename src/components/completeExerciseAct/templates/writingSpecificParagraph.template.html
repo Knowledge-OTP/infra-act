@@ -1,0 +1,32 @@
+<answer-explanation></answer-explanation>
+
+<div class="question-wrapper writing-specific-paragraph-wrapper question-basic-style" translate-namespace="WRITING_SPECIFIC_PARAGRAPH">
+
+    <div class="specific-paragraph-view-wrapper" ng-show="vm.view === vm.SPECIFIC_PARAGRAPH" image-zoomer>
+        <div class="question-container znk-scrollbar">
+            <div class="full-passage-link" ng-bind-html="vm.question.groupData.name" ng-click="vm.view = vm.FULL_PASSAGE"></div>
+            <div class="paragraph-title"></div>
+            <div class="paragraph"></div>
+        </div>
+
+        <div class="answer-container znk-scrollbar">
+            <div class="question-content"></div>
+            <answer-builder></answer-builder>
+        </div>
+    </div>
+
+    <div class="full-passage-view-wrapper " ng-show="vm.view === vm.FULL_PASSAGE" image-zoomer>
+
+        <div class="passage-title">
+            <div ng-bind-html="vm.question.groupData.name"></div>
+            <div class="back-to-question-link" ng-click="vm.view = vm.SPECIFIC_PARAGRAPH">
+                <i class="material-icons chevron-left">chevron_left</i>
+                <div class="back-to-question" translate=".BACK_TO_QUESTION"></div>
+            </div>
+        </div>
+
+        <div class="full-passage-wrapper znk-scrollbar">
+            <div class="full-passage"></div>
+        </div>
+    </div>
+</div>

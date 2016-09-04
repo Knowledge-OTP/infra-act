@@ -1,0 +1,36 @@
+reading-question {
+    height: 100%;
+    display: block;
+
+    .reading-question-wrapper {
+        display: flex;
+
+        .question-container {
+            padding-left: 35px;
+            .paragraph-title {
+                font-size: 18px;
+            }
+
+            p {
+                font-weight: $lightFontWeight;
+                line-height: 1.5em;
+                margin: 0;
+            }
+
+            .passage-title {
+                @include text-style(18px, $fontColor4, Lato, $regularFontWeight);
+            }
+
+            .wrap-num-article {
+                margin-left: 40px;
+            }
+        }
+
+        .answer-container {
+            p {
+                color: $fontColor3;
+                line-height: 1.5em;
+            }
+        }
+    }
+}

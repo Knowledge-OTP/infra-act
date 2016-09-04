@@ -1,0 +1,108 @@
+writing-specific-paragraph {
+    height: 100%;
+    display: block;
+
+    .writing-specific-paragraph-wrapper {
+        .specific-paragraph-view-wrapper {
+            height: 100%;
+            @include display-flex;
+
+            .question-container {
+                .full-passage-link {
+                    @include text-style(18px, $fontColor8, Lato, $regularFontWeight);
+                    cursor: pointer;
+                    margin: {
+                        bottom: 10px;
+                    }
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+                p {
+                    font-weight: $lightFontWeight;
+                    line-height: 1.5em;
+                }
+            }
+
+            .answer-container {
+                p {
+                    color: $fontColor3;
+                    line-height: 1.5em;
+                }
+            }
+        }
+
+        .full-passage-view-wrapper {
+            height: 100%;
+            margin: 0 auto;
+
+            .back-to-question-link {
+                position: absolute;
+                top: -7px;
+                cursor: pointer;
+                text-align: left;
+
+                .chevron-left {
+                    position: relative;
+                    top: 6px;
+                    left: 6px;
+                    color: $fontColor8;
+                }
+                .back-to-question {
+                    @include text-style(18px, $fontColor8, Lato, $regularFontWeight);
+                    display: inline-block;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .passage-title {
+                position: relative;
+                @include text-style(22px, $fontColor4, Lato, $regularFontWeight);
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            .full-passage-wrapper {
+                width: 1050px;
+                height: 100%;
+                overflow-y: auto;
+
+                .full-passage {
+                    width: 900px;
+                    margin: 0 auto 50px auto;
+                    p {
+                        @include text-style(16px, $fontColor4, Lato, $thinFontWeight);
+                        line-height: 1.5em;
+                    }
+
+                    .paragraph-number-title {
+                        @include text-style(16px, $fontColor3, Lato, $regularFontWeight);
+                        text-align: center;
+                    }
+
+                    .orange-square {
+                        background-color: #ff931e;
+                        color: white;
+                        font-size: 14px;
+                        text-align: center;
+                        padding: 0 3px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+znk-exercise {
+    &.done-btn-show, &.pager-displayed {
+        $bottomShadowHeight: 58px;
+        .full-passage {
+            & > div:last-child, & > article:last-child, & > p:last-child {
+                padding-bottom: $bottomShadowHeight;
+            }
+        }
+    }
+}

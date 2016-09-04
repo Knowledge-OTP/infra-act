@@ -1,0 +1,54 @@
+.social-sharing-drv-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    @keyframes socialAnimate {
+            100% {
+                max-height: 136px;
+            }
+    }
+    &.social-sharing-drv-container-animate {
+        overflow: hidden;
+        max-height: 0;
+        animation-name: socialAnimate;
+        animation-duration: 0.5s;
+        animation-delay: 0.3s;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-out;
+        animation-fill-mode: forwards;
+    }
+
+    &.background-lowest {
+       background-color: #f7f6ec;
+    }
+    &.background-improved {
+        background-color: #f5fcee;
+    }
+    &.background-middle-1 {
+        background-color: #ecf7f7;
+    }
+    &.background-middle-2 {
+        background-color: #eee6f2;
+    }
+    &.background-highest {
+        background-color: #fafbe5;
+    }
+
+    .share-main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        min-height: 136px;
+        .social-sharing-title {
+            @include text-style(27px, $fontColor3, Quicksand, $boldFontWeight);
+        }
+        .social-text {
+            @include text-style(16px, $fontColor3, Quicksand, $regularFontWeight);
+            .bold {
+                font-weight: $boldFontWeight;
+            }
+        }
+    }
+}

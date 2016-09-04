@@ -1,0 +1,54 @@
+custom-answer-builder-act {
+    .instructions-title-wrapper {
+        @include text-style(14px, $fontColor3, Lato, $regularFontWeight);
+        margin-left: 33px;
+
+        .instructions-title {
+            display: flex;
+            margin-bottom: 7px;
+
+            .svg-wrapper {
+                height: 15px;
+                cursor: pointer;
+                svg-icon.info {
+                    @include dimension(16px, auto);
+                    display: inline-block;
+                    margin-left: 6px;
+                }
+
+            }
+        }
+
+        .note-title {
+            @include text-style(12px, $fontColor2, Lato, $regularFontWeight);
+            font-style: italic;
+            margin-bottom: 17px;
+        }
+    }
+}
+
+md-tooltip.free-text-instructions-tooltip {
+    @include dimension(240px, 120px);
+    @include text-style(13px, $fontColor2, Lato, $regularFontWeight);
+    background-color: transparent;
+    padding: 0;
+    overflow: visible;
+
+    .md-content {
+        @include dimension(220px, 90px);
+        overflow: visible;
+        position: relative;
+        padding: 10px;
+        box-shadow: $boxshadowColor1, $boxshadowColor2, $boxshadowColor3;
+
+        .arrow-down {
+            position: absolute;
+            top: 105px;
+            left: calc(50% - 14px);
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-top: 16px solid $borderColor1;
+            pointer-events: none;
+        }
+    }
+}
