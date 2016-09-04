@@ -53,6 +53,6 @@
         }]);
 })();
 
-angular.module('znk.infra-act.configSat').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-act.configAct').run(['$templateCache', function($templateCache) {
 
 }]);
