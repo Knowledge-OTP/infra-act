@@ -223,18 +223,19 @@ angular.module('znk.infra-act.auth').run(['$templateCache', function($templateCa
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
-        .config(["QuestionTypesSrvProvider", "exerciseTypeConst", "CategoryServiceProvider", "TestScoreCategoryEnumProvider", function (QuestionTypesSrvProvider, exerciseTypeConst, CategoryServiceProvider, TestScoreCategoryEnumProvider) {
+        .config(["QuestionTypesSrvProvider", "exerciseTypeConst", "SubjectEnumConst", function (QuestionTypesSrvProvider, exerciseTypeConst, SubjectEnumConst) {
             'ngInject';
 
             function questionTypeGetter(question) {
                 var templatesContants = {
                     SIMPLE_QUESTION: 0,
                     MATH_QUESTION: 1,
-                    WRITING_SPECIFIC_PARAGRAPH: 2,
-                    WRITING_FULL_PASSAGE: 3,
-                    READING_QUESTION: 4,
-                    ESSAY_QUESTION: 5,
-                    LECTURE_QUESTION: 6
+                    READING_QUESTION: 2,
+                    WRITING_QUESTION: 3,
+                    ENGLISH_SPECIFIC_PARAGRAPH: 4,
+                    ENGLISH_FULL_PARAGRAPHS: 5,
+                    SCIENCE_QUESTION: 6,
+                    LECTURE_QUESTION: 7
                 };
 
                 // lecture question or simple question.
@@ -242,31 +243,27 @@ angular.module('znk.infra-act.auth').run(['$templateCache', function($templateCa
                     return question.exerciseTypeId === exerciseTypeConst.LECTURE ? templatesContants.LECTURE_QUESTION : templatesContants.SIMPLE_QUESTION;
                 }
 
-                var categoryService = CategoryServiceProvider.$get();
-                var TestScoreCategoryEnum = TestScoreCategoryEnumProvider.$get();
+                switch (question.subjectId) {
 
-                return categoryService.getCategoryLevel2Parent(question.categoryId).then(function (testScoreObj) {
-                    switch (testScoreObj.id) {
+                    case SubjectEnumConst.MATH:
+                        return templatesContants.MATH_QUESTION;
 
-                        case TestScoreCategoryEnum.MATH.enum:
-                            return templatesContants.MATH_QUESTION;
+                    case SubjectEnumConst.READING:
+                        return templatesContants.READING_QUESTION;
 
-                        case TestScoreCategoryEnum.WRITING.enum:
-                            if (question.paragraph !== null && question.paragraph.length > 0) {
-                                return templatesContants.WRITING_SPECIFIC_PARAGRAPH;
-                            }
-                            return templatesContants.WRITING_FULL_PASSAGE;
+                    case SubjectEnumConst.WRITING:
+                        return templatesContants.WRITING_QUESTION;
 
-                        case TestScoreCategoryEnum.READING.enum:
-                            return templatesContants.READING_QUESTION;
-
-                        case TestScoreCategoryEnum.ESSAY.enum:
-                            return templatesContants.ESSAY_QUESTION;
-
-                        default:
-                            return templatesContants.SIMPLE_QUESTION;
-                    }
-                });
+                    case SubjectEnumConst.ENGLISH:
+                        if (question.paragraph !== null && question.paragraph.length > 0) {
+                            return templatesContants.ENGLISH_SPECIFIC_PARAGRAPH;
+                        }
+                        return templatesContants.ENGLISH_FULL_PARAGRAPHS;
+                    case SubjectEnumConst.SCIENCE:
+                        return templatesContants.SCIENCE_QUESTION;
+                    default:
+                        return templatesContants.SIMPLE_QUESTION;
+                }
             }
 
             QuestionTypesSrvProvider.setQuestionTypeGetter(questionTypeGetter);
@@ -274,22 +271,32 @@ angular.module('znk.infra-act.auth').run(['$templateCache', function($templateCa
             var map = {
                 0: '<simple-question></simple-question>',
                 1: '<math-question></math-question>',
-                2: '<writing-specific-paragraph></writing-specific-paragraph>',
-                3: '<writing-full-passage></writing-full-passage>',
-                4: '<reading-question></reading-question>',
-                5: '<essay-question></essay-question>',
-                6: '<lecture-question></lecture-question>'
+                2: '<reading-question></reading-question>',
+                3: '<writing-question></writing-question>',
+                4: '<english-specific-paragraph></english-specific-paragraph>',
+                5: '<english-full-paragraphs></english-full-paragraphs>',
+                6: '<science-question></science-question>',
+                7: '<lecture-question></lecture-question>'
             };
             QuestionTypesSrvProvider.setQuestionTypesHtmlTemplate(map);
         }])
-        .config(["ZnkExerciseSrvProvider", "exerciseTypeConst", function (ZnkExerciseSrvProvider, exerciseTypeConst) {
+        .config(["ZnkExerciseAnswersSrvProvider", function (ZnkExerciseAnswersSrvProvider) {
             'ngInject';
 
-            var allowedTimeForQuestionByExercise = {};
-            allowedTimeForQuestionByExercise[exerciseTypeConst.TUTORIAL] = 1.5 * 60 * 1000;
-            allowedTimeForQuestionByExercise[exerciseTypeConst.DRILL] = 40 * 1000;
-            allowedTimeForQuestionByExercise[exerciseTypeConst.PRACTICE] = 40 * 1000;
-            ZnkExerciseSrvProvider.setAllowedTimeForQuestionMap(allowedTimeForQuestionByExercise);
+            function selectAnswerIndexFormatter(answerIndex, question) {
+                var isOddQuestion = angular.isUndefined(question.__questionStatus.index % 2) ? false : (question.__questionStatus.index % 2);
+                if (isOddQuestion) {
+                    var I_CHAR_INDEX = 3;
+                    if (answerIndex >= I_CHAR_INDEX) {
+                        answerIndex++;//  i char should be skipped
+                    }
+                    var UPPER_F_ASCII_CODE = 70;
+                    var formattedAnswerIndex = String.fromCharCode(UPPER_F_ASCII_CODE + answerIndex);
+                    return formattedAnswerIndex;
+                }
+            }
+
+            ZnkExerciseAnswersSrvProvider.config.selectAnswer.setAnswerIndexFormatter(selectAnswerIndexFormatter);
         }]);
 })();
 
@@ -2042,7 +2049,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     'use strict';
 
     angular.module('znk.infra-act.configAct')
-        .decorator('EstimatedScoreSrv', ["$delegate", "ScoringService", function ($delegate, ScoringService) {
+        .decorator('EstimatedScoreSrv', ["$delegate", "ScoringService", "SubjectEnum", function ($delegate, ScoringService, SubjectEnum) {
             'ngInject';
 
             var decoratedEstimatedScoreSrv = $delegate;
@@ -2073,13 +2080,15 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
                 });
             };
 
-            decoratedEstimatedScoreSrv.getCompositeScore = function () {    // todo: delete this fn?
+            decoratedEstimatedScoreSrv.getCompositeScore = function () {
                 return $delegate.getLatestEstimatedScore().then(function (estimatedScores) {
                     var scoresArr = [];
-                    angular.forEach(estimatedScores, function (estimatesScoreForSubject) {
-                        scoresArr.push(estimatesScoreForSubject.score || 0);
+                    angular.forEach(estimatedScores, function (estimatesScoreForSubject, subjectId) {
+                        if (+subjectId !== SubjectEnum.WRITING.enum) {
+                            scoresArr.push(estimatesScoreForSubject.score || 0);
+                        }
                     });
-                    return ScoringService.getTotalScoreResult(scoresArr);
+                    return ScoringService.getScoreCompositeResult(scoresArr);
                 });
             };
 
@@ -2100,194 +2109,186 @@ angular.module('znk.infra-act.configAct').run(['$templateCache', function($templ
 (function () {
     'use strict';
 
-    var CROSS_TEST_SCORE_ENUM = {
-        0: {name: 'History / Social Studies'},
-        1: {name: 'Science'}
-    };
-
     angular.module('znk.infra-act.examUtility')
-        .service('ScoringService',["$q", "ExamTypeEnum", "StorageRevSrv", "$log", "SubScoreSrv", function ($q, ExamTypeEnum, StorageRevSrv, $log, SubScoreSrv) {
+        .service('ScoringService',["$q", "SubjectEnum", "StorageRevSrv", "$log", function ($q, SubjectEnum, StorageRevSrv, $log) {
             'ngInject';
 
-            var keysMapConst = {
-                crossTestScore: 'CrossTestScore',
-                subScore: 'Subscore',
-                miniTest: 'miniTest',
-                test: 'test'
+            var subScoreTestIdArr = {
+                261: 'mechanics',
+                262: 'rhetoricalSkills',
+                263: 'interAlg',
+                264: 'preAlg',
+                265: 'planeGeom',
+                266: 'arts',
+                267: 'socStudies'
             };
+            var ExamTypeEnum = {
+                0: 'test',
+                1: 'miniTest'
+            };
+            var subScoreMap;
+            var scoreTable = {};
 
-            function _getScoreTableProm() {
-                return StorageRevSrv.getContent({
-                    exerciseType: 'scoretable'
-                }).then(function (scoreTable) {
-                    if (!scoreTable || !angular.isObject(scoreTable)) {
-                        var errMsg = 'ScoringService _getScoreTableProm:' +
-                            'no scoreTable or scoreTable is not an object! scoreTable: ' + scoreTable + '}';
-                        $log.error(errMsg);
-                        return $q.reject(errMsg);
-                    }
-                    return scoreTable;
-                });
-            }
-
-            function _isShouldAddToScore(question) {
-                return (question.isAnsweredCorrectly && !question.afterAllowedTime);
-            }
-
-            function _getRawScore(questionsResults) {
-                var score = 0;
-                angular.forEach(questionsResults, function (question) {
-                    if (_isShouldAddToScore(question)) {
-                        score += 1;
-                    }
-                });
-                return score;
-            }
-
-            function _isTypeFull(typeId) {
-                return ExamTypeEnum.FULL_TEST.enum === typeId;
-            }
-
-            function _getScoreTableKeyByTypeId(typeId) {
-                return _isTypeFull(typeId) ? keysMapConst.test : keysMapConst.miniTest;
-            }
-
-            function _getDataFromTable(scoreTable, key, id, rawScore) {
-                var data = angular.copy(scoreTable);
-                if (angular.isDefined(key)) {
-                    data = data[key];
-                }
-                if (angular.isDefined(id)) {
-                    data = data[id];
-                }
-                if (angular.isDefined(rawScore)) {
-                    data = data[rawScore];
-                }
-                return data;
-            }
-
-            function _mergeSectionsWithResults(sections, sectionsResults) {
-                return sections.reduce(function (previousValue, currentValue) {
-                    var currentSectionResult = sectionsResults.find(function (sectionResult) {
-                        return +sectionResult.exerciseId === currentValue.id;
-                    });
-                    previousValue.push(angular.extend({}, currentSectionResult, currentValue));
-                    return previousValue;
-                }, []);
-            }
-
-            function _getResultsFn(scoreTable, questionsResults, typeId, id) {
-                var rawScore = _getRawScore(questionsResults);
-                var key = _getScoreTableKeyByTypeId(typeId);
-                return _getDataFromTable(scoreTable, key, id, rawScore);
-            }
-
-            function _getTestScoreResultFn(scoreTable, questionsResults, typeId, categoryId) {
-                var data = _getResultsFn(scoreTable, questionsResults, typeId, categoryId);
+            function initialScoreObj() {
                 return {
-                    testScore: data
+                    scoreSection: 0,
+                    sumAnswerCorrect: 0,
+                    scoreSubTotal: 0,
+                    subScoresArr: []
                 };
             }
 
-            function _getSectionScoreResultFn(scoreTable, questionsResults, typeId, subjectId) {
-                var data = _getResultsFn(scoreTable, questionsResults, typeId, subjectId);
-                return {
-                    sectionScore: data
-                };
+            //   convert each subjectId to it's name as it's written in the scoreTable file
+            function convertIdToName(subjectId) {
+                var nameForScoreTable;
+                switch (subjectId) {
+                    case SubjectEnum.ENGLISH.enum: // 5
+                        nameForScoreTable = SubjectEnum.ENGLISH.val;
+                        break;
+                    case SubjectEnum.READING.enum:
+                        nameForScoreTable = SubjectEnum.READING.val;
+                        break;
+                    case SubjectEnum.WRITING.enum:
+                        nameForScoreTable = SubjectEnum.WRITING.val;
+                        break;
+                    case SubjectEnum.SCIENCE.enum:
+                        nameForScoreTable = SubjectEnum.SCIENCE.val;
+                        break;
+                    default: // case SubjectEnum.MATH.enum:
+                        nameForScoreTable = SubjectEnum.MATH.val;
+                        break;
+                }
+                return nameForScoreTable;
             }
 
-            function _getFullExamSubAndCrossScoresFn(scoreTable, sections, sectionsResults) {
-                var mergeSections = _mergeSectionsWithResults(sections, sectionsResults);
-                var subScoresMap = {};
-                var crossTestScoresMap = {};
-                var subScoresArrProms = [];
-                angular.forEach(mergeSections, function (section) {
-                    angular.forEach(section.questionResults, function (questionResult) {
-                        var subScoresArrProm = SubScoreSrv.getSpecificCategorySubScores(questionResult.categoryId);
-                        subScoresArrProm.then(function (subScoresArr) {
-                            if (subScoresArr.length > 0) {
-                                angular.forEach(subScoresArr, function (subScore) {
-                                    if (!subScoresMap[subScore.id]) {
-                                        subScoresMap[subScore.id] = {
-                                            raw: 0,
-                                            name: subScore.name,
-                                            subjectId: section.subjectId
-                                        };
+            // calculate the sum of the score and adjust it according to the scoreTable file.
+            function sumScores(resultsObj, computeSubScore, scoreObj) {
+                var scoreSumTemp;
+                angular.forEach(resultsObj.questions, function (value, key) {
+                    scoreSumTemp = 0;
+                    var isSubScoreWithIdExist = false;
+                    if (resultsObj.answers[key].isAnswerCorrectly && !resultsObj.answers[key].afterAllowedTime) {
+                        scoreObj.sumAnswerCorrect += 1;
+                        scoreSumTemp = 1;
+                    }
+                    var curSubId = resultsObj.subjectId;
+                    if (computeSubScore === true && curSubId !== SubjectEnum.SCIENCE.enum && curSubId !== SubjectEnum.WRITING.enum) {
+                        var subScoresElm = Object.keys(scoreObj.subScoresArr);
+                        if (subScoreMap.hasOwnProperty(value.categoryId)) { // for the sub score
+                            var categoryIdCur = subScoreMap[value.categoryId];
+                            for (var i = 0; i < subScoresElm.length; i++) {
+                                var subScoreItemValue = scoreObj.subScoresArr[subScoresElm[i]];
+                                if (subScoreItemValue.categoryId === categoryIdCur) {
+                                    // if the category exist in the scoreObj subScoresArr array then
+                                    // increase the amount
+                                    if (resultsObj.answers[key].isAnswerCorrectly && !resultsObj.answers[key].afterAllowedTime) {
+                                        subScoreItemValue.scoreSum++;
                                     }
-                                    if (_isShouldAddToScore(questionResult)) {
-                                        subScoresMap[subScore.id].raw += 1;
-                                    }
+                                    isSubScoreWithIdExist = true;
+                                    break;
+                                }
+                            }
+                            if (isSubScoreWithIdExist === false) {
+                                scoreObj.subScoresArr.push({
+                                    categoryId: categoryIdCur,
+                                    scoreSum: scoreSumTemp,
+                                    subjectId: resultsObj.subjectId
                                 });
                             }
-                            return subScoresArr;
-                        });
-                        subScoresArrProms.push(subScoresArrProm);
-                        var crossTestScoreId = questionResult.crossTestScoreId;
-                        if (angular.isDefined(crossTestScoreId) && crossTestScoreId !== null) {
-                            if (!crossTestScoresMap[crossTestScoreId]) {
-                                crossTestScoresMap[crossTestScoreId] = {
-                                    raw: 0,
-                                    name: CROSS_TEST_SCORE_ENUM[crossTestScoreId].name
-                                };
-                            }
-                            if (_isShouldAddToScore(questionResult)) {
-                                crossTestScoresMap[crossTestScoreId].raw += 1;
-                            }
                         }
-                    });
+                    }
                 });
+                return scoreObj;
+            }
 
-                return $q.all(subScoresArrProms).then(function () {
-                    angular.forEach(subScoresMap, function (subScore, key) {
-                        subScoresMap[key].sum = _getDataFromTable(scoreTable, keysMapConst.subScore, key, subScore.raw);
-                    });
-                    angular.forEach(crossTestScoresMap, function (crossTestScores, key) {
-                        crossTestScoresMap[key].sum = _getDataFromTable(scoreTable, keysMapConst.crossTestScore, key, crossTestScores.raw);
-                    });
-                    return {
-                        subScores: subScoresMap,
-                        crossTestScores: crossTestScoresMap
-                    };
+            function getScoreTable() {
+                return StorageRevSrv.getContent({
+                    exerciseType: 'scoretable'
                 });
             }
 
-            // api
+            // return the score section result
+            this.getScoreSectionResult = function (resultsObj) {
+                return getScoreTable().then(function (data) {
+                    scoreTable = data;
 
-            this.isTypeFull = function (typeId) {
-                return ExamTypeEnum.FULL_TEST.enum === typeId;
-            };
-
-            this.getTestScoreResult = function (questionsResults, typeId, categoryId) {
-                return _getScoreTableProm().then(function (scoreTable) {
-                    return _getTestScoreResultFn(scoreTable, questionsResults, typeId, categoryId);
+                    var scoreObj = initialScoreObj();
+                    scoreObj = sumScores(resultsObj, false, scoreObj);
+                    var shortNameCtg = (convertIdToName(resultsObj.subjectId));
+                    var curSubId = resultsObj.subjectId;
+                    var curAns = scoreObj.sumAnswerCorrect;
+                    var curType = ExamTypeEnum[resultsObj.typeId];
+                    scoreObj.scoreSection = scoreTable[shortNameCtg][curType][curAns];
+                    if (curSubId === SubjectEnum.WRITING.enum) {
+                        scoreObj.scoreSection *= 3;
+                    }
+                    return scoreObj;
+                }, function (reason) {
+                    return reason;
                 });
             };
+            // return the sub score results
+            this.getSubScoreResult = function (resultsObj) {
+                var proms = [getScoreTable(),
+                    StorageRevSrv.getContent({
+                        exerciseType: 'sub_score_map'
+                    })
+                ];
+                return $q.all(proms).then(function (resultsProm) {
+                    scoreTable = resultsProm[0];
+                    subScoreMap = resultsProm[1];
+                    var scoreObj = initialScoreObj();
+                    scoreObj = sumScores(resultsObj, true, scoreObj);
 
-            this.getSectionScoreResult = function (questionsResults, typeId, subjectId) {
-                return _getScoreTableProm().then(function (scoreTable) {
-                    return _getSectionScoreResultFn(scoreTable, questionsResults, typeId, subjectId);
+                    angular.forEach(scoreObj.subScoresArr, function (value) {
+                        var subScoreName = subScoreTestIdArr[value.categoryId];
+                        var shortNameCtg = (convertIdToName(resultsObj.subjectId));
+                        var curAns = scoreObj.sumAnswerCorrect;
+                        if (angular.isDefined(scoreTable[shortNameCtg][subScoreName])) {
+                            value.scoreSum = scoreTable[shortNameCtg][subScoreName][curAns];
+
+                            scoreObj.scoreSubTotal += value.scoreSum;
+                        }
+                    });
+                    return scoreObj;
                 });
             };
-
-            this.getFullExamSubAndCrossScores = function (sections, sectionsResults) {
-                return _getScoreTableProm().then(function (scoreTable) {
-                    return _getFullExamSubAndCrossScoresFn(scoreTable, sections, sectionsResults);
-                });
+            this.getScoreCompositeResult = function (scoreResultsArr) {
+                var sumScoreResultsArr = 0,
+                    i;
+                var scoreObj = initialScoreObj();
+                for (i = 0; i < scoreResultsArr.length; i++) {
+                    sumScoreResultsArr += scoreResultsArr[i];
+                }
+                scoreObj.compositeScoreResults = Math.round((sumScoreResultsArr / i));
+                return $q.when(scoreObj);
             };
 
             this.rawScoreToScore = function (subjectId, rawScore) {
-                return _getScoreTableProm().then(function (scoreTable) {
-                    var roundedRawScore = Math.round(rawScore);
-                    return _getDataFromTable(scoreTable, keysMapConst.test, subjectId, roundedRawScore);
-                });
-            };
+                return getScoreTable().then(function (scoreTableData) {
+                    if (angular.isUndefined(subjectId)) {
+                        $log.error('scoringSrv:rawScoreToScore: subject id was not provided');
+                    }
+                    if (angular.isUndefined(rawScore)) {
+                        $log.error('scoringSrv:rawScoreToScore: raw score was not provided');
+                    }
 
-            this.getTotalScoreResult = function (scoresArr) {
-                var totalScores = 0;
-                angular.forEach(scoresArr, function (score) {
-                    totalScores += score;
+                    var subjectName = convertIdToName(subjectId);
+                    var roundedRawScore = Math.round(rawScore);
+                    var FULL_TEST_TYPE = ExamTypeEnum[0];
+                    var scoreForRawScore = scoreTableData &&
+                        scoreTableData[subjectName] &&
+                        scoreTableData[subjectName][FULL_TEST_TYPE] &&
+                        scoreTableData[subjectName][FULL_TEST_TYPE][roundedRawScore];
+
+                    if (angular.isUndefined(scoreForRawScore)) {
+                        $log.error('scoringSrv:rawScoreToScore: raw score was not found');
+                        return 0;
+                    }
+
+                    var isWritingSubject = subjectId === SubjectEnum.WRITING.enum;
+                    return isWritingSubject ? scoreForRawScore * 3 : scoreForRawScore;
                 });
-                return $q.when(totalScores);
             };
         }]);
 })();
@@ -2967,27 +2968,38 @@ angular.module('znk.infra-act.performance').run(['$templateCache', function($tem
     'use strict';
 
     angular.module('znk.infra-act.socialSharingAct')
-        .config(["EstimatedScoreSrvProvider", "SubjectEnumConst", "EstimatedScoreEventsHandlerSrvProvider", "exerciseTypeConst", function estimatedScoreConfig(EstimatedScoreSrvProvider, SubjectEnumConst,EstimatedScoreEventsHandlerSrvProvider, exerciseTypeConst) {
-            'ngInject';
+        .config(["EstimatedScoreSrvProvider", "SubjectEnumConst", "EstimatedScoreEventsHandlerSrvProvider", "exerciseTypeConst", function estimatedScoreConfig(EstimatedScoreSrvProvider, SubjectEnumConst,
+                                              EstimatedScoreEventsHandlerSrvProvider, exerciseTypeConst) {
 
             rawScoreToScoreFnGetter.$inject = ["ScoringService"];
-            eventProcessControl.$inject = ["SubjectEnum"];
-            var subjectsRawScoreEdges = {};
-            subjectsRawScoreEdges[SubjectEnumConst.VERBAL] = {
-                min: 0,
-                max: 80
+            var subjectsRawScoreEdges = {
+                'ENGLISH': {
+                    min: 0,
+                    max: 75
+                },
+                'MATH': {
+                    min: 0,
+                    max: 60
+                },
+                'READING': {
+                    min: 0,
+                    max: 40
+                },
+                'SCIENCE': {
+                    min: 0,
+                    max: 40
+                },
+                'WRITING': {
+                    min: 0,
+                    max: 10
+                }
             };
-            subjectsRawScoreEdges [SubjectEnumConst.MATH] = {
-                min: 0,
-                max: 58
-            };
-
             EstimatedScoreSrvProvider.setSubjectsRawScoreEdges(subjectsRawScoreEdges);
 
             EstimatedScoreSrvProvider.setMinMaxDiagnosticScore(-Infinity, Infinity);
 
             function rawScoreToScoreFnGetter(ScoringService) {
-                'ngInject';//jshint ignore:line
+                'ngInject';
 
                 return function (subjectId, rawScore) {
                     return ScoringService.rawScoreToScore(subjectId, rawScore);
@@ -2997,28 +3009,21 @@ angular.module('znk.infra-act.performance').run(['$templateCache', function($tem
             EstimatedScoreSrvProvider.setRawScoreToRealScoreFn(rawScoreToScoreFnGetter);
 
             var diagnosticScoringMap = {
-                1: [55, 55, 45, 45],
-                2: [65, 65, 50, 50],
-                3: [75, 75, 55, 55],
-                4: [85, 85, 65, 65],
-                5: [95, 95, 75, 75]
+                1: [4, 4, 3, 3],
+                2: [5, 5, 4, 4],
+                3: [6, 6, 5, 5],
+                4: [7, 7, 6, 6],
+                5: [10, 10, 7, 7]
             };
             EstimatedScoreEventsHandlerSrvProvider.setDiagnosticScoring(diagnosticScoringMap);
 
             var defaultRawPointsForExercise = [1, 0, 0, 0];
             EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.SECTION, defaultRawPointsForExercise);
             EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.TUTORIAL, defaultRawPointsForExercise);
+            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.GAME, defaultRawPointsForExercise);
             EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.PRACTICE, defaultRawPointsForExercise);
-
-            function eventProcessControl(SubjectEnum) {
-                'ngInject';//jshint ignore:line
-
-                return function (exerciseType, exercise) {
-                    return exercise.subjectId !== SubjectEnum.ESSAY.enum;
-                };
-            }
-
-            EstimatedScoreEventsHandlerSrvProvider.setEventProcessControl(eventProcessControl);
+            var drillRawPointsForExercise = [0.2, 0, 0, 0];
+            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.DRILL, drillRawPointsForExercise);
         }]);
 })(angular);
 
@@ -3028,40 +3033,52 @@ angular.module('znk.infra-act.performance').run(['$templateCache', function($tem
     angular.module('znk.infra-act.socialSharingAct')
         .config(["SocialSharingSrvProvider", function(SocialSharingSrvProvider){
             SocialSharingSrvProvider.setPoints({
-                600: {
+                25: {
                     background: 'background-lowest',
                     banner1: 'summary-congrats-banner-600-1',
-                    banner2: 'summary-congrats-banner-600-1',
+                    banner2: 'summary-congrats-banner-600-2',
                     shareUrlMap: {
-                        math: 'ACT-FB-share-post-math-600.png',
-                        verbal: 'ACT-FB-share-post-verbal-600.png'
+                        math: 'ACT-FB-share-post-math-25.png',
+                        english: 'ACT-FB-share-post-english-25.png',
+                        reading: 'ACT-FB-share-post-reading-25.png',
+                        science: 'ACT-FB-share-post-science-25.png',
+                        writing: 'ACT-FB-share-post-writing-25.png'
                     }
                 },
-                650: {
+                28: {
                     background: 'background-middle-1',
                     banner1: 'summary-congrats-banner-650-1',
-                    banner2: 'summary-congrats-banner-650-1',
+                    banner2: 'summary-congrats-banner-650-2',
                     shareUrlMap: {
-                        math: 'ACT-FB-share-post-math-650.png',
-                        verbal: 'ACT-FB-share-post-verbal-650.png'
+                        math: 'ACT-FB-share-post-math-28.png',
+                        english: 'ACT-FB-share-post-english-28.png',
+                        reading: 'ACT-FB-share-post-reading-28.png',
+                        science: 'ACT-FB-share-post-science-28.png',
+                        writing: 'ACT-FB-share-post-writing-28.png'
                     }
                 },
-                700: {
+                30: {
                     background: 'background-middle-2',
                     banner1: 'summary-congrats-banner-700-1',
-                    banner2: 'summary-congrats-banner-700-1',
+                    banner2: 'summary-congrats-banner-700-2',
                     shareUrlMap: {
-                        math: 'ACT-FB-share-post-math-700.png',
-                        verbal: 'ACT-FB-share-post-verbal-700.png'
+                        math: 'ACT-FB-share-post-math-30.png',
+                        english: 'ACT-FB-share-post-english-30.png',
+                        reading: 'ACT-FB-share-post-reading-30.png',
+                        science: 'ACT-FB-share-post-science-30.png',
+                        writing: 'ACT-FB-share-post-writing-30.png'
                     }
                 },
-                750: {
+                33: {
                     background: 'background-highest',
                     banner1: 'summary-congrats-banner-750-1',
-                    banner2: 'summary-congrats-banner-750-1',
+                    banner2: 'summary-congrats-banner-750-2',
                     shareUrlMap: {
-                        math: 'ACT-FB-share-post-math-750.png',
-                        verbal: 'ACT-FB-share-post-verbal-750.png'
+                        math: 'ACT-FB-share-post-math-25.png',
+                        english: 'ACT-FB-share-post-english-33.png',
+                        reading: 'ACT-FB-share-post-reading-33.png',
+                        science: 'ACT-FB-share-post-science-33.png',
+                        writing: 'ACT-FB-share-post-writing-33.png'
                     }
                 },
                 improved: {
@@ -3070,7 +3087,10 @@ angular.module('znk.infra-act.performance').run(['$templateCache', function($tem
                     banner2: 'summary-congrats-banner-improved-2',
                     shareUrlMap: {
                         math: 'ACT-FB-share-post-math-improved.png',
-                        verbal: 'ACT-FB-share-post-verbal-improved.png'
+                        english: 'ACT-FB-share-post-english-improved.png',
+                        reading: 'ACT-FB-share-post-reading-improved.png',
+                        science: 'ACT-FB-share-post-science-improved.png',
+                        writing: 'ACT-FB-share-post-writing-improved.png'
                     }
                 }
             });

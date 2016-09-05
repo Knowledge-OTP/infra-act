@@ -10,27 +10,38 @@
     'use strict';
 
     angular.module('znk.infra-act.socialSharingAct')
-        .config(["EstimatedScoreSrvProvider", "SubjectEnumConst", "EstimatedScoreEventsHandlerSrvProvider", "exerciseTypeConst", function estimatedScoreConfig(EstimatedScoreSrvProvider, SubjectEnumConst,EstimatedScoreEventsHandlerSrvProvider, exerciseTypeConst) {
-            'ngInject';
+        .config(["EstimatedScoreSrvProvider", "SubjectEnumConst", "EstimatedScoreEventsHandlerSrvProvider", "exerciseTypeConst", function estimatedScoreConfig(EstimatedScoreSrvProvider, SubjectEnumConst,
+                                              EstimatedScoreEventsHandlerSrvProvider, exerciseTypeConst) {
 
             rawScoreToScoreFnGetter.$inject = ["ScoringService"];
-            eventProcessControl.$inject = ["SubjectEnum"];
-            var subjectsRawScoreEdges = {};
-            subjectsRawScoreEdges[SubjectEnumConst.VERBAL] = {
-                min: 0,
-                max: 80
+            var subjectsRawScoreEdges = {
+                'ENGLISH': {
+                    min: 0,
+                    max: 75
+                },
+                'MATH': {
+                    min: 0,
+                    max: 60
+                },
+                'READING': {
+                    min: 0,
+                    max: 40
+                },
+                'SCIENCE': {
+                    min: 0,
+                    max: 40
+                },
+                'WRITING': {
+                    min: 0,
+                    max: 10
+                }
             };
-            subjectsRawScoreEdges [SubjectEnumConst.MATH] = {
-                min: 0,
-                max: 58
-            };
-
             EstimatedScoreSrvProvider.setSubjectsRawScoreEdges(subjectsRawScoreEdges);
 
             EstimatedScoreSrvProvider.setMinMaxDiagnosticScore(-Infinity, Infinity);
 
             function rawScoreToScoreFnGetter(ScoringService) {
-                'ngInject';//jshint ignore:line
+                'ngInject';
 
                 return function (subjectId, rawScore) {
                     return ScoringService.rawScoreToScore(subjectId, rawScore);
@@ -40,28 +51,21 @@
             EstimatedScoreSrvProvider.setRawScoreToRealScoreFn(rawScoreToScoreFnGetter);
 
             var diagnosticScoringMap = {
-                1: [55, 55, 45, 45],
-                2: [65, 65, 50, 50],
-                3: [75, 75, 55, 55],
-                4: [85, 85, 65, 65],
-                5: [95, 95, 75, 75]
+                1: [4, 4, 3, 3],
+                2: [5, 5, 4, 4],
+                3: [6, 6, 5, 5],
+                4: [7, 7, 6, 6],
+                5: [10, 10, 7, 7]
             };
             EstimatedScoreEventsHandlerSrvProvider.setDiagnosticScoring(diagnosticScoringMap);
 
             var defaultRawPointsForExercise = [1, 0, 0, 0];
             EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.SECTION, defaultRawPointsForExercise);
             EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.TUTORIAL, defaultRawPointsForExercise);
+            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.GAME, defaultRawPointsForExercise);
             EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.PRACTICE, defaultRawPointsForExercise);
-
-            function eventProcessControl(SubjectEnum) {
-                'ngInject';//jshint ignore:line
-
-                return function (exerciseType, exercise) {
-                    return exercise.subjectId !== SubjectEnum.ESSAY.enum;
-                };
-            }
-
-            EstimatedScoreEventsHandlerSrvProvider.setEventProcessControl(eventProcessControl);
+            var drillRawPointsForExercise = [0.2, 0, 0, 0];
+            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.DRILL, drillRawPointsForExercise);
         }]);
 })(angular);
 
@@ -71,40 +75,52 @@
     angular.module('znk.infra-act.socialSharingAct')
         .config(["SocialSharingSrvProvider", function(SocialSharingSrvProvider){
             SocialSharingSrvProvider.setPoints({
-                600: {
+                25: {
                     background: 'background-lowest',
                     banner1: 'summary-congrats-banner-600-1',
-                    banner2: 'summary-congrats-banner-600-1',
+                    banner2: 'summary-congrats-banner-600-2',
                     shareUrlMap: {
-                        math: 'ACT-FB-share-post-math-600.png',
-                        verbal: 'ACT-FB-share-post-verbal-600.png'
+                        math: 'ACT-FB-share-post-math-25.png',
+                        english: 'ACT-FB-share-post-english-25.png',
+                        reading: 'ACT-FB-share-post-reading-25.png',
+                        science: 'ACT-FB-share-post-science-25.png',
+                        writing: 'ACT-FB-share-post-writing-25.png'
                     }
                 },
-                650: {
+                28: {
                     background: 'background-middle-1',
                     banner1: 'summary-congrats-banner-650-1',
-                    banner2: 'summary-congrats-banner-650-1',
+                    banner2: 'summary-congrats-banner-650-2',
                     shareUrlMap: {
-                        math: 'ACT-FB-share-post-math-650.png',
-                        verbal: 'ACT-FB-share-post-verbal-650.png'
+                        math: 'ACT-FB-share-post-math-28.png',
+                        english: 'ACT-FB-share-post-english-28.png',
+                        reading: 'ACT-FB-share-post-reading-28.png',
+                        science: 'ACT-FB-share-post-science-28.png',
+                        writing: 'ACT-FB-share-post-writing-28.png'
                     }
                 },
-                700: {
+                30: {
                     background: 'background-middle-2',
                     banner1: 'summary-congrats-banner-700-1',
-                    banner2: 'summary-congrats-banner-700-1',
+                    banner2: 'summary-congrats-banner-700-2',
                     shareUrlMap: {
-                        math: 'ACT-FB-share-post-math-700.png',
-                        verbal: 'ACT-FB-share-post-verbal-700.png'
+                        math: 'ACT-FB-share-post-math-30.png',
+                        english: 'ACT-FB-share-post-english-30.png',
+                        reading: 'ACT-FB-share-post-reading-30.png',
+                        science: 'ACT-FB-share-post-science-30.png',
+                        writing: 'ACT-FB-share-post-writing-30.png'
                     }
                 },
-                750: {
+                33: {
                     background: 'background-highest',
                     banner1: 'summary-congrats-banner-750-1',
-                    banner2: 'summary-congrats-banner-750-1',
+                    banner2: 'summary-congrats-banner-750-2',
                     shareUrlMap: {
-                        math: 'ACT-FB-share-post-math-750.png',
-                        verbal: 'ACT-FB-share-post-verbal-750.png'
+                        math: 'ACT-FB-share-post-math-25.png',
+                        english: 'ACT-FB-share-post-english-33.png',
+                        reading: 'ACT-FB-share-post-reading-33.png',
+                        science: 'ACT-FB-share-post-science-33.png',
+                        writing: 'ACT-FB-share-post-writing-33.png'
                     }
                 },
                 improved: {
@@ -113,7 +129,10 @@
                     banner2: 'summary-congrats-banner-improved-2',
                     shareUrlMap: {
                         math: 'ACT-FB-share-post-math-improved.png',
-                        verbal: 'ACT-FB-share-post-verbal-improved.png'
+                        english: 'ACT-FB-share-post-english-improved.png',
+                        reading: 'ACT-FB-share-post-reading-improved.png',
+                        science: 'ACT-FB-share-post-science-improved.png',
+                        writing: 'ACT-FB-share-post-writing-improved.png'
                     }
                 }
             });

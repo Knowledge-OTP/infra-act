@@ -7,194 +7,186 @@
 (function () {
     'use strict';
 
-    var CROSS_TEST_SCORE_ENUM = {
-        0: {name: 'History / Social Studies'},
-        1: {name: 'Science'}
-    };
-
     angular.module('znk.infra-act.examUtility')
-        .service('ScoringService',["$q", "ExamTypeEnum", "StorageRevSrv", "$log", "SubScoreSrv", function ($q, ExamTypeEnum, StorageRevSrv, $log, SubScoreSrv) {
+        .service('ScoringService',["$q", "SubjectEnum", "StorageRevSrv", "$log", function ($q, SubjectEnum, StorageRevSrv, $log) {
             'ngInject';
 
-            var keysMapConst = {
-                crossTestScore: 'CrossTestScore',
-                subScore: 'Subscore',
-                miniTest: 'miniTest',
-                test: 'test'
+            var subScoreTestIdArr = {
+                261: 'mechanics',
+                262: 'rhetoricalSkills',
+                263: 'interAlg',
+                264: 'preAlg',
+                265: 'planeGeom',
+                266: 'arts',
+                267: 'socStudies'
             };
+            var ExamTypeEnum = {
+                0: 'test',
+                1: 'miniTest'
+            };
+            var subScoreMap;
+            var scoreTable = {};
 
-            function _getScoreTableProm() {
-                return StorageRevSrv.getContent({
-                    exerciseType: 'scoretable'
-                }).then(function (scoreTable) {
-                    if (!scoreTable || !angular.isObject(scoreTable)) {
-                        var errMsg = 'ScoringService _getScoreTableProm:' +
-                            'no scoreTable or scoreTable is not an object! scoreTable: ' + scoreTable + '}';
-                        $log.error(errMsg);
-                        return $q.reject(errMsg);
-                    }
-                    return scoreTable;
-                });
-            }
-
-            function _isShouldAddToScore(question) {
-                return (question.isAnsweredCorrectly && !question.afterAllowedTime);
-            }
-
-            function _getRawScore(questionsResults) {
-                var score = 0;
-                angular.forEach(questionsResults, function (question) {
-                    if (_isShouldAddToScore(question)) {
-                        score += 1;
-                    }
-                });
-                return score;
-            }
-
-            function _isTypeFull(typeId) {
-                return ExamTypeEnum.FULL_TEST.enum === typeId;
-            }
-
-            function _getScoreTableKeyByTypeId(typeId) {
-                return _isTypeFull(typeId) ? keysMapConst.test : keysMapConst.miniTest;
-            }
-
-            function _getDataFromTable(scoreTable, key, id, rawScore) {
-                var data = angular.copy(scoreTable);
-                if (angular.isDefined(key)) {
-                    data = data[key];
-                }
-                if (angular.isDefined(id)) {
-                    data = data[id];
-                }
-                if (angular.isDefined(rawScore)) {
-                    data = data[rawScore];
-                }
-                return data;
-            }
-
-            function _mergeSectionsWithResults(sections, sectionsResults) {
-                return sections.reduce(function (previousValue, currentValue) {
-                    var currentSectionResult = sectionsResults.find(function (sectionResult) {
-                        return +sectionResult.exerciseId === currentValue.id;
-                    });
-                    previousValue.push(angular.extend({}, currentSectionResult, currentValue));
-                    return previousValue;
-                }, []);
-            }
-
-            function _getResultsFn(scoreTable, questionsResults, typeId, id) {
-                var rawScore = _getRawScore(questionsResults);
-                var key = _getScoreTableKeyByTypeId(typeId);
-                return _getDataFromTable(scoreTable, key, id, rawScore);
-            }
-
-            function _getTestScoreResultFn(scoreTable, questionsResults, typeId, categoryId) {
-                var data = _getResultsFn(scoreTable, questionsResults, typeId, categoryId);
+            function initialScoreObj() {
                 return {
-                    testScore: data
+                    scoreSection: 0,
+                    sumAnswerCorrect: 0,
+                    scoreSubTotal: 0,
+                    subScoresArr: []
                 };
             }
 
-            function _getSectionScoreResultFn(scoreTable, questionsResults, typeId, subjectId) {
-                var data = _getResultsFn(scoreTable, questionsResults, typeId, subjectId);
-                return {
-                    sectionScore: data
-                };
+            //   convert each subjectId to it's name as it's written in the scoreTable file
+            function convertIdToName(subjectId) {
+                var nameForScoreTable;
+                switch (subjectId) {
+                    case SubjectEnum.ENGLISH.enum: // 5
+                        nameForScoreTable = SubjectEnum.ENGLISH.val;
+                        break;
+                    case SubjectEnum.READING.enum:
+                        nameForScoreTable = SubjectEnum.READING.val;
+                        break;
+                    case SubjectEnum.WRITING.enum:
+                        nameForScoreTable = SubjectEnum.WRITING.val;
+                        break;
+                    case SubjectEnum.SCIENCE.enum:
+                        nameForScoreTable = SubjectEnum.SCIENCE.val;
+                        break;
+                    default: // case SubjectEnum.MATH.enum:
+                        nameForScoreTable = SubjectEnum.MATH.val;
+                        break;
+                }
+                return nameForScoreTable;
             }
 
-            function _getFullExamSubAndCrossScoresFn(scoreTable, sections, sectionsResults) {
-                var mergeSections = _mergeSectionsWithResults(sections, sectionsResults);
-                var subScoresMap = {};
-                var crossTestScoresMap = {};
-                var subScoresArrProms = [];
-                angular.forEach(mergeSections, function (section) {
-                    angular.forEach(section.questionResults, function (questionResult) {
-                        var subScoresArrProm = SubScoreSrv.getSpecificCategorySubScores(questionResult.categoryId);
-                        subScoresArrProm.then(function (subScoresArr) {
-                            if (subScoresArr.length > 0) {
-                                angular.forEach(subScoresArr, function (subScore) {
-                                    if (!subScoresMap[subScore.id]) {
-                                        subScoresMap[subScore.id] = {
-                                            raw: 0,
-                                            name: subScore.name,
-                                            subjectId: section.subjectId
-                                        };
+            // calculate the sum of the score and adjust it according to the scoreTable file.
+            function sumScores(resultsObj, computeSubScore, scoreObj) {
+                var scoreSumTemp;
+                angular.forEach(resultsObj.questions, function (value, key) {
+                    scoreSumTemp = 0;
+                    var isSubScoreWithIdExist = false;
+                    if (resultsObj.answers[key].isAnswerCorrectly && !resultsObj.answers[key].afterAllowedTime) {
+                        scoreObj.sumAnswerCorrect += 1;
+                        scoreSumTemp = 1;
+                    }
+                    var curSubId = resultsObj.subjectId;
+                    if (computeSubScore === true && curSubId !== SubjectEnum.SCIENCE.enum && curSubId !== SubjectEnum.WRITING.enum) {
+                        var subScoresElm = Object.keys(scoreObj.subScoresArr);
+                        if (subScoreMap.hasOwnProperty(value.categoryId)) { // for the sub score
+                            var categoryIdCur = subScoreMap[value.categoryId];
+                            for (var i = 0; i < subScoresElm.length; i++) {
+                                var subScoreItemValue = scoreObj.subScoresArr[subScoresElm[i]];
+                                if (subScoreItemValue.categoryId === categoryIdCur) {
+                                    // if the category exist in the scoreObj subScoresArr array then
+                                    // increase the amount
+                                    if (resultsObj.answers[key].isAnswerCorrectly && !resultsObj.answers[key].afterAllowedTime) {
+                                        subScoreItemValue.scoreSum++;
                                     }
-                                    if (_isShouldAddToScore(questionResult)) {
-                                        subScoresMap[subScore.id].raw += 1;
-                                    }
+                                    isSubScoreWithIdExist = true;
+                                    break;
+                                }
+                            }
+                            if (isSubScoreWithIdExist === false) {
+                                scoreObj.subScoresArr.push({
+                                    categoryId: categoryIdCur,
+                                    scoreSum: scoreSumTemp,
+                                    subjectId: resultsObj.subjectId
                                 });
                             }
-                            return subScoresArr;
-                        });
-                        subScoresArrProms.push(subScoresArrProm);
-                        var crossTestScoreId = questionResult.crossTestScoreId;
-                        if (angular.isDefined(crossTestScoreId) && crossTestScoreId !== null) {
-                            if (!crossTestScoresMap[crossTestScoreId]) {
-                                crossTestScoresMap[crossTestScoreId] = {
-                                    raw: 0,
-                                    name: CROSS_TEST_SCORE_ENUM[crossTestScoreId].name
-                                };
-                            }
-                            if (_isShouldAddToScore(questionResult)) {
-                                crossTestScoresMap[crossTestScoreId].raw += 1;
-                            }
                         }
-                    });
+                    }
                 });
+                return scoreObj;
+            }
 
-                return $q.all(subScoresArrProms).then(function () {
-                    angular.forEach(subScoresMap, function (subScore, key) {
-                        subScoresMap[key].sum = _getDataFromTable(scoreTable, keysMapConst.subScore, key, subScore.raw);
-                    });
-                    angular.forEach(crossTestScoresMap, function (crossTestScores, key) {
-                        crossTestScoresMap[key].sum = _getDataFromTable(scoreTable, keysMapConst.crossTestScore, key, crossTestScores.raw);
-                    });
-                    return {
-                        subScores: subScoresMap,
-                        crossTestScores: crossTestScoresMap
-                    };
+            function getScoreTable() {
+                return StorageRevSrv.getContent({
+                    exerciseType: 'scoretable'
                 });
             }
 
-            // api
+            // return the score section result
+            this.getScoreSectionResult = function (resultsObj) {
+                return getScoreTable().then(function (data) {
+                    scoreTable = data;
 
-            this.isTypeFull = function (typeId) {
-                return ExamTypeEnum.FULL_TEST.enum === typeId;
-            };
-
-            this.getTestScoreResult = function (questionsResults, typeId, categoryId) {
-                return _getScoreTableProm().then(function (scoreTable) {
-                    return _getTestScoreResultFn(scoreTable, questionsResults, typeId, categoryId);
+                    var scoreObj = initialScoreObj();
+                    scoreObj = sumScores(resultsObj, false, scoreObj);
+                    var shortNameCtg = (convertIdToName(resultsObj.subjectId));
+                    var curSubId = resultsObj.subjectId;
+                    var curAns = scoreObj.sumAnswerCorrect;
+                    var curType = ExamTypeEnum[resultsObj.typeId];
+                    scoreObj.scoreSection = scoreTable[shortNameCtg][curType][curAns];
+                    if (curSubId === SubjectEnum.WRITING.enum) {
+                        scoreObj.scoreSection *= 3;
+                    }
+                    return scoreObj;
+                }, function (reason) {
+                    return reason;
                 });
             };
+            // return the sub score results
+            this.getSubScoreResult = function (resultsObj) {
+                var proms = [getScoreTable(),
+                    StorageRevSrv.getContent({
+                        exerciseType: 'sub_score_map'
+                    })
+                ];
+                return $q.all(proms).then(function (resultsProm) {
+                    scoreTable = resultsProm[0];
+                    subScoreMap = resultsProm[1];
+                    var scoreObj = initialScoreObj();
+                    scoreObj = sumScores(resultsObj, true, scoreObj);
 
-            this.getSectionScoreResult = function (questionsResults, typeId, subjectId) {
-                return _getScoreTableProm().then(function (scoreTable) {
-                    return _getSectionScoreResultFn(scoreTable, questionsResults, typeId, subjectId);
+                    angular.forEach(scoreObj.subScoresArr, function (value) {
+                        var subScoreName = subScoreTestIdArr[value.categoryId];
+                        var shortNameCtg = (convertIdToName(resultsObj.subjectId));
+                        var curAns = scoreObj.sumAnswerCorrect;
+                        if (angular.isDefined(scoreTable[shortNameCtg][subScoreName])) {
+                            value.scoreSum = scoreTable[shortNameCtg][subScoreName][curAns];
+
+                            scoreObj.scoreSubTotal += value.scoreSum;
+                        }
+                    });
+                    return scoreObj;
                 });
             };
-
-            this.getFullExamSubAndCrossScores = function (sections, sectionsResults) {
-                return _getScoreTableProm().then(function (scoreTable) {
-                    return _getFullExamSubAndCrossScoresFn(scoreTable, sections, sectionsResults);
-                });
+            this.getScoreCompositeResult = function (scoreResultsArr) {
+                var sumScoreResultsArr = 0,
+                    i;
+                var scoreObj = initialScoreObj();
+                for (i = 0; i < scoreResultsArr.length; i++) {
+                    sumScoreResultsArr += scoreResultsArr[i];
+                }
+                scoreObj.compositeScoreResults = Math.round((sumScoreResultsArr / i));
+                return $q.when(scoreObj);
             };
 
             this.rawScoreToScore = function (subjectId, rawScore) {
-                return _getScoreTableProm().then(function (scoreTable) {
-                    var roundedRawScore = Math.round(rawScore);
-                    return _getDataFromTable(scoreTable, keysMapConst.test, subjectId, roundedRawScore);
-                });
-            };
+                return getScoreTable().then(function (scoreTableData) {
+                    if (angular.isUndefined(subjectId)) {
+                        $log.error('scoringSrv:rawScoreToScore: subject id was not provided');
+                    }
+                    if (angular.isUndefined(rawScore)) {
+                        $log.error('scoringSrv:rawScoreToScore: raw score was not provided');
+                    }
 
-            this.getTotalScoreResult = function (scoresArr) {
-                var totalScores = 0;
-                angular.forEach(scoresArr, function (score) {
-                    totalScores += score;
+                    var subjectName = convertIdToName(subjectId);
+                    var roundedRawScore = Math.round(rawScore);
+                    var FULL_TEST_TYPE = ExamTypeEnum[0];
+                    var scoreForRawScore = scoreTableData &&
+                        scoreTableData[subjectName] &&
+                        scoreTableData[subjectName][FULL_TEST_TYPE] &&
+                        scoreTableData[subjectName][FULL_TEST_TYPE][roundedRawScore];
+
+                    if (angular.isUndefined(scoreForRawScore)) {
+                        $log.error('scoringSrv:rawScoreToScore: raw score was not found');
+                        return 0;
+                    }
+
+                    var isWritingSubject = subjectId === SubjectEnum.WRITING.enum;
+                    return isWritingSubject ? scoreForRawScore * 3 : scoreForRawScore;
                 });
-                return $q.when(totalScores);
             };
         }]);
 })();

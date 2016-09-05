@@ -2,18 +2,19 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
-        .config(function (QuestionTypesSrvProvider, exerciseTypeConst, CategoryServiceProvider, TestScoreCategoryEnumProvider) {
+        .config(function (QuestionTypesSrvProvider, exerciseTypeConst, SubjectEnumConst) {
             'ngInject';
 
             function questionTypeGetter(question) {
                 var templatesContants = {
                     SIMPLE_QUESTION: 0,
                     MATH_QUESTION: 1,
-                    WRITING_SPECIFIC_PARAGRAPH: 2,
-                    WRITING_FULL_PASSAGE: 3,
-                    READING_QUESTION: 4,
-                    ESSAY_QUESTION: 5,
-                    LECTURE_QUESTION: 6
+                    READING_QUESTION: 2,
+                    WRITING_QUESTION: 3,
+                    ENGLISH_SPECIFIC_PARAGRAPH: 4,
+                    ENGLISH_FULL_PARAGRAPHS: 5,
+                    SCIENCE_QUESTION: 6,
+                    LECTURE_QUESTION: 7
                 };
 
                 // lecture question or simple question.
@@ -21,31 +22,27 @@
                     return question.exerciseTypeId === exerciseTypeConst.LECTURE ? templatesContants.LECTURE_QUESTION : templatesContants.SIMPLE_QUESTION;
                 }
 
-                var categoryService = CategoryServiceProvider.$get();
-                var TestScoreCategoryEnum = TestScoreCategoryEnumProvider.$get();
+                switch (question.subjectId) {
 
-                return categoryService.getCategoryLevel2Parent(question.categoryId).then(function (testScoreObj) {
-                    switch (testScoreObj.id) {
+                    case SubjectEnumConst.MATH:
+                        return templatesContants.MATH_QUESTION;
 
-                        case TestScoreCategoryEnum.MATH.enum:
-                            return templatesContants.MATH_QUESTION;
+                    case SubjectEnumConst.READING:
+                        return templatesContants.READING_QUESTION;
 
-                        case TestScoreCategoryEnum.WRITING.enum:
-                            if (question.paragraph !== null && question.paragraph.length > 0) {
-                                return templatesContants.WRITING_SPECIFIC_PARAGRAPH;
-                            }
-                            return templatesContants.WRITING_FULL_PASSAGE;
+                    case SubjectEnumConst.WRITING:
+                        return templatesContants.WRITING_QUESTION;
 
-                        case TestScoreCategoryEnum.READING.enum:
-                            return templatesContants.READING_QUESTION;
-
-                        case TestScoreCategoryEnum.ESSAY.enum:
-                            return templatesContants.ESSAY_QUESTION;
-
-                        default:
-                            return templatesContants.SIMPLE_QUESTION;
-                    }
-                });
+                    case SubjectEnumConst.ENGLISH:
+                        if (question.paragraph !== null && question.paragraph.length > 0) {
+                            return templatesContants.ENGLISH_SPECIFIC_PARAGRAPH;
+                        }
+                        return templatesContants.ENGLISH_FULL_PARAGRAPHS;
+                    case SubjectEnumConst.SCIENCE:
+                        return templatesContants.SCIENCE_QUESTION;
+                    default:
+                        return templatesContants.SIMPLE_QUESTION;
+                }
             }
 
             QuestionTypesSrvProvider.setQuestionTypeGetter(questionTypeGetter);
@@ -53,22 +50,32 @@
             var map = {
                 0: '<simple-question></simple-question>',
                 1: '<math-question></math-question>',
-                2: '<writing-specific-paragraph></writing-specific-paragraph>',
-                3: '<writing-full-passage></writing-full-passage>',
-                4: '<reading-question></reading-question>',
-                5: '<essay-question></essay-question>',
-                6: '<lecture-question></lecture-question>'
+                2: '<reading-question></reading-question>',
+                3: '<writing-question></writing-question>',
+                4: '<english-specific-paragraph></english-specific-paragraph>',
+                5: '<english-full-paragraphs></english-full-paragraphs>',
+                6: '<science-question></science-question>',
+                7: '<lecture-question></lecture-question>'
             };
             QuestionTypesSrvProvider.setQuestionTypesHtmlTemplate(map);
         })
-        .config(function (ZnkExerciseSrvProvider, exerciseTypeConst) {
+        .config(function (ZnkExerciseAnswersSrvProvider) {
             'ngInject';
 
-            var allowedTimeForQuestionByExercise = {};
-            allowedTimeForQuestionByExercise[exerciseTypeConst.TUTORIAL] = 1.5 * 60 * 1000;
-            allowedTimeForQuestionByExercise[exerciseTypeConst.DRILL] = 40 * 1000;
-            allowedTimeForQuestionByExercise[exerciseTypeConst.PRACTICE] = 40 * 1000;
-            ZnkExerciseSrvProvider.setAllowedTimeForQuestionMap(allowedTimeForQuestionByExercise);
+            function selectAnswerIndexFormatter(answerIndex, question) {
+                var isOddQuestion = angular.isUndefined(question.__questionStatus.index % 2) ? false : (question.__questionStatus.index % 2);
+                if (isOddQuestion) {
+                    var I_CHAR_INDEX = 3;
+                    if (answerIndex >= I_CHAR_INDEX) {
+                        answerIndex++;//  i char should be skipped
+                    }
+                    var UPPER_F_ASCII_CODE = 70;
+                    var formattedAnswerIndex = String.fromCharCode(UPPER_F_ASCII_CODE + answerIndex);
+                    return formattedAnswerIndex;
+                }
+            }
+
+            ZnkExerciseAnswersSrvProvider.config.selectAnswer.setAnswerIndexFormatter(selectAnswerIndexFormatter);
         });
 })();
 
