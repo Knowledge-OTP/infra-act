@@ -5,7 +5,7 @@
         "Zinkerz"
     ],
     "dependencies": {
-        "infra-web-app": "https://github.com/Knowledge-OTP/infra-web-app.git#igor/infra-sat",
+        "infra-web-app": "https://github.com/Knowledge-OTP/infra-web-app.git#oren/int-c-e",
         "angularfire": "^1.0.2"
     },
     "ignore": [
