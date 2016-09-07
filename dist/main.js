@@ -280,7 +280,7 @@ angular.module('znk.infra-act.auth').run(['$templateCache', function($templateCa
             };
             QuestionTypesSrvProvider.setQuestionTypesHtmlTemplate(map);
         }])
-        .config(["ZnkExerciseAnswersSrvProvider", function (ZnkExerciseAnswersSrvProvider) {
+        .config(["ZnkExerciseAnswersSrvProvider", "ZnkExerciseSrvProvider", "exerciseTypeConst", function (ZnkExerciseAnswersSrvProvider, ZnkExerciseSrvProvider, exerciseTypeConst) {
             'ngInject';
 
             function selectAnswerIndexFormatter(answerIndex, question) {
@@ -297,6 +297,12 @@ angular.module('znk.infra-act.auth').run(['$templateCache', function($templateCa
             }
 
             ZnkExerciseAnswersSrvProvider.config.selectAnswer.setAnswerIndexFormatter(selectAnswerIndexFormatter);
+
+            var allowedTimeForQuestionByExercise = {};
+            allowedTimeForQuestionByExercise[exerciseTypeConst.TUTORIAL] = 1.5 * 60 * 1000;
+            allowedTimeForQuestionByExercise[exerciseTypeConst.DRILL] = 40 * 1000;
+            allowedTimeForQuestionByExercise[exerciseTypeConst.PRACTICE] = 40 * 1000;
+            ZnkExerciseSrvProvider.setAllowedTimeForQuestionMap(allowedTimeForQuestionByExercise);
         }]);
 })();
 
