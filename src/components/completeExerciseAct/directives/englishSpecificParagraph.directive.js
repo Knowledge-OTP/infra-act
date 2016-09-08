@@ -12,7 +12,6 @@
                         SPECIFIC_PARAGRAPH: 1,
                         FULL_PASSAGE: 2
                     };
-
                     scope.vm.view = scope.vm.SPECIFIC_PARAGRAPH;
 
                     var paragraph = questionBuilderCtrl.question.paragraph.replace(/_/g, '');

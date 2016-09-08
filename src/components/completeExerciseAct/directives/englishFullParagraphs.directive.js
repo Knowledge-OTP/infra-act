@@ -15,7 +15,6 @@
                     angular.element(element[0].querySelector('.question-content')).append(questionBuilderCtrl.question.content);
 
                     var questionContainerDomElement = angular.element(element[0].querySelector('.paragraphs-wrapper'));
-
                     var paragraphArray = questionBuilderCtrl.question.groupData.paragraphs;
 
 

@@ -457,7 +457,6 @@
                     angular.element(element[0].querySelector('.question-content')).append(questionBuilderCtrl.question.content);
 
                     var questionContainerDomElement = angular.element(element[0].querySelector('.paragraphs-wrapper'));
-
                     var paragraphArray = questionBuilderCtrl.question.groupData.paragraphs;
 
 
@@ -500,7 +499,6 @@
                         SPECIFIC_PARAGRAPH: 1,
                         FULL_PASSAGE: 2
                     };
-
                     scope.vm.view = scope.vm.SPECIFIC_PARAGRAPH;
 
                     var paragraph = questionBuilderCtrl.question.paragraph.replace(/_/g, '');
