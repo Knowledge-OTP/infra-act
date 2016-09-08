@@ -10,24 +10,159 @@
         require: {
             completeExerciseCtrl: '^completeExercise'
         },
-        controller: function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, masteryLevel, SubScoreSrv, PerformanceData) {
+        controller: function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, SubScoreSrv, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log) {
             'ngInject';
 
-            var translateFilter = $filter('translate');
             var $ctrl = this;
-            var performanceDataProm = PerformanceData.getPerformanceData();
-            function _initSuccessGauge() {
-                var exerciseResult = $ctrl.completeExerciseCtrl.getExerciseResult();
-                var exerciseContent = $ctrl.completeExerciseCtrl.getExerciseContent();
+            var PERCENTAGE = 100;
+            var translateFilter = $filter('translate');
+            var exerciseData = $ctrl.completeExerciseCtrl.getExerciseResult();
 
-                $ctrl.performanceChart = {};
-                $ctrl.performanceChart.gaugeSettings = {
+            PerformanceData.getPerformanceData().then(function (performanceData) {
+                $ctrl.performanceData = performanceData;
+                setPerformanceData();
+            });
+
+            $timeout(function () {
+                HintSrv.triggerHint(HintSrv.hintMap.IN_APP_MESSAGE_WORKOUT_SUMMARY);
+            }, 500);
+
+
+            var screenSharingData;
+            var currUserScreenSharingStateChangeCb = function (newUserScreenSharingState) {
+                if (newUserScreenSharingState === UserScreenSharingStateEnum.SHARER.enum) {
+                    ScreenSharingSrv.getActiveScreenSharingData().then(function (_screenSharingData) {
+                        screenSharingData = _screenSharingData;
+                        screenSharingData.activeExercise = {
+                            exerciseTypeId: exerciseData.exerciseTypeId,
+                            exerciseId: exerciseData.exercise.id,
+                            activeScreen: 'SUMMARY'
+                        };
+                        screenSharingData.$save();
+                    }).catch(function (err) {
+                        $log.error(err);
+                    });
+                }
+            };
+            ScreenSharingSrv.registerToCurrUserScreenSharingStateChanges(currUserScreenSharingStateChangeCb);
+
+            function _calcSectionScoring() {
+                var resultForScoring = {
+                    subjectId: exerciseData.exercise.subjectId,
+                    typeId: exerciseData.examData.typeId,
+                    questions: exerciseData.exercise.questions,
+                    answers: exerciseData.exerciseResult.questionResults.map(function (result) {
+                        return {
+                            userAnswerId: result.questionId,
+                            isAnswerCorrectly: result.isAnsweredCorrectly
+                        };
+                    })
+                };
+                ScoringService.getScoreSectionResult(resultForScoring).then(function (scoreObj) {
+                    $ctrl.testScoreTitle = translateFilter('WORKOUTS_WORKOUT_SUMMARY.TEST_TITLE') + scoreObj.scoreSection;
+                });
+            }
+
+            function setPerformanceData() {
+                var GENERAL_CATEGORIES_STATS = 'level3Categories';
+                var questionsArr = exerciseData.exercise.questions;
+                var statsProm = StatsSrv.getStats();
+                var categoryMapProm = CategoryService.getCategoryMap();
+                $ctrl.generalCategories = {};
+
+                $q.all([statsProm, categoryMapProm]).then(function (results) {
+                    var statsObj = results[0];
+                    var categoryMap = results[1];
+
+                    function buildGeneralCategory(question) {
+                        CategoryService.getParentCategory(question.categoryId).then(function (generalCategory) {
+                            if (generalCategory && !$ctrl.generalCategories[generalCategory.id] && statsObj[GENERAL_CATEGORIES_STATS]['id_' + generalCategory.id]) {
+                                var generalCategoryObj = statsObj[GENERAL_CATEGORIES_STATS]['id_' + generalCategory.id];
+                                var progress = getProgress(generalCategoryObj);
+
+                                $ctrl.generalCategories[generalCategory.id] = {};
+                                $ctrl.generalCategories[generalCategory.id].name = categoryMap[generalCategoryObj.id].name;
+                                $ctrl.generalCategories[generalCategory.id].progress = progress;
+                                $ctrl.generalCategories[generalCategory.id].mastery = masteryLevel.getMasteryLevel(progress);
+
+                                if (exerciseData.exerciseTypeId !== ExerciseTypeEnum.SECTION.enum) {
+                                    var subScoreObj = categoryMap[generalCategory.parentId];
+                                    $ctrl.categoryName = translateFilter('WORKOUTS_WORKOUT_SUMMARY.CATEGORY') + ': ' + subScoreObj.name;
+                                }
+                            }
+                        });
+                    }
+
+                    function _calcMasteryDifference() {
+                        var SUBJECT_STATS = 'level1Categories';
+                        var subjectProgress = statsObj[SUBJECT_STATS];
+                        subjectProgress = subjectProgress['id_' + $ctrl.currentSubjectId];
+
+                        var oldSubjectMastery = _calcOldSubjectMastery(subjectProgress);
+                        var currentSubjectProgress = $ctrl.performanceData[$ctrl.currentSubjectId].overall.progress;
+                        $ctrl.subjectsDelta = currentSubjectProgress - oldSubjectMastery;
+                    }
+
+                    function getProgress(generalCategoryObj) {
+                        return generalCategoryObj.totalQuestions > 0 ? Math.round((generalCategoryObj.correct * PERCENTAGE) / generalCategoryObj.totalQuestions) : 0;
+                    }
+
+                    function _calcOldSubjectMastery(subjectStats) {
+                        var totalQuestions = subjectStats.totalQuestions;
+                        var numOfTotalCorrectAnswers = subjectStats.correct;
+
+                        var numOfExerciseQuestions = exerciseData.exerciseResult.questionResults.length;
+                        var numOfCorrectExerciseAnswers = exerciseData.exerciseResult.correctAnswersNum;
+
+                        var oldNumOfTotalQuestions = totalQuestions - numOfExerciseQuestions;
+                        var oldNumOfCorrectAnswers = numOfTotalCorrectAnswers - numOfCorrectExerciseAnswers;
+
+                        return _calcAvgPercentage(oldNumOfCorrectAnswers, oldNumOfTotalQuestions);
+                    }
+
+                    function _calcAvgPercentage(num, total) {
+                        return Math.round((num / total) * 100);
+                    }
+
+                    for (var i = 0; i < questionsArr.length; i++) {
+                        buildGeneralCategory(questionsArr[i]);
+                    }
+                    _calcMasteryDifference();
+                });
+            }
+
+            function translateSubjectName(subjectId) {
+                var subjectName = translateFilter(angular.uppercase(SubjectEnum.getEnumMap()[subjectId]));
+                return subjectName ? subjectName.toLowerCase() : '';
+            }
+
+            this.$onInit = function () {
+                $ctrl.results = exerciseData.exerciseResult;
+                $ctrl.subjectName = translateSubjectName(exerciseData.exercise.subjectId);
+                $ctrl.currentSubjectId = exerciseData.exercise.subjectId;
+                $ctrl.activeExerciseId = exerciseData.exercise.id;
+                $ctrl.avgTime = {
+                    correctAvgTime: Math.round($ctrl.results.correctAvgTime / 1000),
+                    wrongAvgTime: Math.round($ctrl.results.wrongAvgTime / 1000),
+                    skippedAvgTime: Math.round($ctrl.results.skippedAvgTime / 1000)
+                };
+
+                if (exerciseData.exerciseTypeId === ExerciseTypeEnum.SECTION.enum) {
+                    _calcSectionScoring();
+                }
+
+                $ctrl.seenSummary = exerciseData.exerciseResult.seenSummary;
+
+                if (!exerciseData.exerciseResult.seenSummary) {
+                    exerciseData.exerciseResult.seenSummary = true;
+                    exerciseData.exerciseResult.$save();
+                }
+
+                // @todo: translate labels
+                $ctrl.gaugeSuccessRate = exerciseData.exercise.questions.length > 0 ? Math.round(($ctrl.results.correctAnswersNum * PERCENTAGE) / exerciseData.exercise.questions.length) : 0;
+                $ctrl.performenceChart = {
                     labels: ['Correct', 'Wrong', 'Unanswered'],
-                    data: [
-                        exerciseResult.correctAnswersNum,
-                        exerciseResult.wrongAnswersNum,
-                        exerciseResult.skippedAnswersNum
-                    ],
+                    data: [$ctrl.results.correctAnswersNum, $ctrl.results.wrongAnswersNum, $ctrl.results.skippedAnswersNum],
                     colours: ['#87ca4d', '#ff6766', '#ebebeb'],
                     options: {
                         segmentShowStroke: false,
@@ -36,177 +171,14 @@
                         animation: false
                     }
                 };
+            };
 
-                var totalQuestionsNum = exerciseContent.questions.length;
-                var totalCorrectNum = exerciseResult.correctAnswersNum || 0;
-                $ctrl.performanceChart.successRate = parseInt(totalCorrectNum / totalQuestionsNum * 100);
-            }
-
-            function _initStats() {
-                var exerciseResult = $ctrl.completeExerciseCtrl.getExerciseResult();
-                // var exerciseContent = $ctrl.completeExerciseCtrl.getExerciseContent();
-
-                $ctrl.statsTime = {};
-                var avgTimePropToConvertToSeconds = ['correct', 'wrong', 'skipped'];
-                avgTimePropToConvertToSeconds.forEach(function (avgTimeProp) {
-                    var avgTimePropInResultObj = avgTimeProp + 'AvgTime';
-                    $ctrl.statsTime[avgTimePropInResultObj] = parseInt(exerciseResult[avgTimePropInResultObj] / 1000);
-                });
-            }
-
-            var _calcMasteryStats = (function(){
-                function _calcAvgPercentage(num, total) {
-                    return Math.round((num / total) * 100);
+            this.$onDestroy = function () {
+                ScreenSharingSrv.unregisterFromCurrUserScreenSharingStateChanges(currUserScreenSharingStateChangeCb);
+                if (screenSharingData) {
+                    screenSharingData.activeExercise = null;
+                    screenSharingData.$save();
                 }
-
-                function _calcOldTestScoreMastery(testScoreStats) {
-                    var exerciseResult = $ctrl.completeExerciseCtrl.getExerciseResult();
-
-                    var totalQuestions = testScoreStats.totalQuestions;
-                    var numOfTotalCorrectAnswers = testScoreStats.correct;
-
-                    var numOfExerciseQuestions = exerciseResult.questionResults.length;
-                    var numOfCorrectExerciseAnswers = exerciseResult.correctAnswersNum;
-
-                    var oldNumOfTotalQuestions = totalQuestions - numOfExerciseQuestions;
-                    var oldNumOfCorrectAnswers = numOfTotalCorrectAnswers - numOfCorrectExerciseAnswers;
-
-                    return _calcAvgPercentage(oldNumOfCorrectAnswers, oldNumOfTotalQuestions);
-                }
-
-                function _isAnsweredCorrectly(questionId) {
-                    var questionResult = $ctrl.completeExerciseCtrl.getExerciseResult().questionResults;
-                    return questionResult.some(function (element, index, array) {
-                        var result = array[index];
-                        return questionId === result.questionId && result.isAnsweredCorrectly;
-                    });
-                }
-
-                function _updateRawMastery(practicedCategory, question) {
-                    var categoryId = practicedCategory.id;
-                    if (angular.isUndefined($ctrl.categoryMastery[categoryId])) {
-                        $ctrl.categoryMastery[categoryId] = {};
-                        $ctrl.categoryMastery[categoryId].questionCount = 0;
-                        $ctrl.categoryMastery[categoryId].correctAnswersNum = 0;
-                        $ctrl.categoryMastery[categoryId].name = practicedCategory.name;
-                    }
-                    $ctrl.categoryMastery[categoryId].questionCount++;
-                    $ctrl.categoryMastery[categoryId].correctAnswersNum += _isAnsweredCorrectly(question.id) ? 1 : 0;
-                }
-
-                function _setSubScoreMastery(questions) {
-                    var promArr = [];
-                    angular.forEach(questions, function (question) {
-                        var prom = SubScoreSrv.getSpecificCategorySubScores(question.categoryId).then(function (subScoredArr) {
-                            if (subScoredArr.length > 0) {  // there are questions that not related to any sub score.
-                                angular.forEach(subScoredArr, function (subScore) {
-                                    _updateRawMastery(subScore, question);
-                                });
-                            }
-                        });
-                        promArr.push(prom);
-                    });
-                    return promArr;
-                }
-
-                function _setGeneralMastery(questions) {
-                    var promArr = [];
-                    angular.forEach(questions, function (question) {
-                        var categoryId = question.categoryId;
-                        var prom = CategoryService.getParentCategory(categoryId).then(function (generalCategory) {
-                            _updateRawMastery(generalCategory, question);
-                        });
-                        promArr.push(prom);
-                    });
-                    return promArr;
-                }
-
-                function _getCategoryProgressById(categoriesArray, categoryId) {
-                    for (var i = 0; i < categoriesArray.length; i++) {
-                        if (+categoriesArray[i].categoryId === +categoryId) {
-                            return categoriesArray[i].progress;
-                        }
-                    }
-                }
-
-                function _calcCategoryMastery(categoryRawMastery) {
-                    var subjectId = $ctrl.completeExerciseCtrl.getExerciseContent().subjectId;
-
-                    performanceDataProm.then(function (performanceData) {
-                        var subScoresKeys = Object.keys(categoryRawMastery);
-                        var subScoresArray = performanceData[subjectId].categoryArray;
-
-                        angular.forEach(subScoresKeys, function (subScoreKey) {
-                            var progress = _getCategoryProgressById(subScoresArray, subScoreKey);
-                            categoryRawMastery[subScoreKey].progress = progress;
-                            categoryRawMastery[subScoreKey].mastery = masteryLevel.getMasteryLevel(progress);
-                        });
-                    });
-                }
-
-                return function () {
-                    var exerciseCategoryId = $ctrl.completeExerciseCtrl.getExerciseContent().categoryId;
-
-                    var TEST_SCORE = 2;
-
-                    $ctrl.testScoreMastery = {};
-                    $q.all([
-                        StatsSrv.getLevelStats(TEST_SCORE),
-                        CategoryService.getCategoryLevel2Parent(exerciseCategoryId)
-                    ])
-                        .then(function (res) {
-                            var testScoreStats = res[0];
-                            var testScoreCategory = res[1];
-
-                            var testScoreName = TestScoreCategoryEnum.getValByEnum(testScoreCategory.id);
-                            testScoreName = angular.uppercase(testScoreName);
-                            $ctrl.testScoreMastery.testScorename = translateFilter('COMPLETE_EXERCISE_ACT.COMPLETE_EXERCISE_SUMMARY.' + testScoreName);
-
-                            var TEST_SCORE_ID = 'id_' + testScoreCategory.id;
-                            testScoreStats = testScoreStats[TEST_SCORE_ID];
-                            $ctrl.testScoreMastery.progress = _calcAvgPercentage(testScoreStats.correct, testScoreStats.totalQuestions);
-                            $ctrl.testScoreMastery.mastery = masteryLevel.getMasteryLevel($ctrl.testScoreMastery.progress);
-
-                            var oldTestScoreMastery = _calcOldTestScoreMastery(testScoreStats);
-                            $ctrl.testScoreDelta = $ctrl.testScoreMastery.progress - oldTestScoreMastery;
-                        });
-
-                    $ctrl.categoryMastery = {};
-
-                    var exerciseContent = $ctrl.completeExerciseCtrl.getExerciseContent();
-                    var _questions = exerciseContent .questions;
-                    var promArr;
-                    if (exerciseContent .subjectId !== SubjectEnum.ESSAY.enum) {
-                        promArr = _setSubScoreMastery(_questions);
-                    } else {
-                        promArr = _setGeneralMastery(_questions);
-                    }
-                    $q.all(promArr).then(function () {
-                        _calcCategoryMastery($ctrl.categoryMastery);
-                    });
-                };
-            })();
-
-            this.$onInit = function () {
-                _initSuccessGauge();
-
-                _initStats();
-
-                _calcMasteryStats();
-
-                this.exerciseResult = $ctrl.completeExerciseCtrl.getExerciseResult();
-                this.exerciseContent = $ctrl.completeExerciseCtrl.getExerciseContent();
-                this.isEssaySubject = this.exerciseContent.subjectId === SubjectEnum.ESSAY.enum;
-
-                if(!this.exerciseResult.seenSummary){
-                    this.notSeenSummary = true;
-                    this.exerciseResult.seenSummary = true;
-                    this.exerciseResult.$save();
-                }
-
-                this.goToSummary = function () {
-                    this.completeExerciseCtrl.changeViewState(CompleteExerciseSrv.VIEW_STATES.EXERCISE);
-                };
             };
         }
     });
