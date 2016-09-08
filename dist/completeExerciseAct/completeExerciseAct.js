@@ -231,7 +231,6 @@
                 $ctrl.performanceData = performanceData;
                 setPerformanceData();
             });
-
             $timeout(function () {
                 HintSrv.triggerHint(HintSrv.hintMap.IN_APP_MESSAGE_WORKOUT_SUMMARY);
             }, 500);

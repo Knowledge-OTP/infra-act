@@ -39,10 +39,6 @@ english-full-paragraphs{
     }
 
     .question-wrapper {
-        &.english-full-paragraphs-wrapper{
-            &.question-basic-style{
-                display: flex;
-            }
-        }
+        display: flex;
     }
 }
