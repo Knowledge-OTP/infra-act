@@ -33,7 +33,7 @@
             }
 
             var directive = {
-                templateUrl: 'app/components/znkExercise/templates/englishFullParagraphs.template.html',
+                templateUrl: 'components/completeExerciseAct/templates/englishFullParagraphs.template.html',
                 restrict: 'E',
                 require: '^questionBuilder',
                 scope: {},

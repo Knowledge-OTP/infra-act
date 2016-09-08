@@ -665,7 +665,7 @@ angular.module('znk.infra-act.auth').run(['$templateCache', function($templateCa
             }
 
             var directive = {
-                templateUrl: 'app/components/znkExercise/templates/englishFullParagraphs.template.html',
+                templateUrl: 'components/completeExerciseAct/templates/englishFullParagraphs.template.html',
                 restrict: 'E',
                 require: '^questionBuilder',
                 scope: {},
@@ -705,7 +705,7 @@ angular.module('znk.infra-act.auth').run(['$templateCache', function($templateCa
             }
 
             var directive = {
-                templateUrl: 'app/components/znkExercise/templates/englishSpecificParagraph.template.html',
+                templateUrl: 'components/completeExerciseAct/templates/englishSpecificParagraph.template.html',
                 restrict: 'E',
                 require: '^questionBuilder',
                 scope: {},
