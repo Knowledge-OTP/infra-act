@@ -1,0 +1,82 @@
+english-specific-paragraph {
+    .english-specific-paragraph-wrapper {
+
+        .specific-paragraph-view-wrapper {
+            height:100%;
+            @include display-flex;
+
+            .question-container {
+                .full-passage-link {
+                    @include text-style(18px, $fcColor5, Lato, $regularFontWeight);
+                    cursor: pointer;
+                    margin: {
+                        bottom: 10px;
+                    }
+
+                    &:hover{
+                        text-decoration: underline;
+                    }
+                }
+                p {
+                    font-weight: $lightFontWeight;
+                    line-height: 1.5em;
+                }
+            }
+
+            .answer-container {
+                p {
+                    color: $fcColor7;
+                    line-height: 1.5em;
+                }
+            }
+        }
+
+        .full-passage-view-wrapper{
+            @include dimension(1040px, 540px);
+            margin: 0 auto;
+            overflow-y: auto;
+
+            .back-to-question-link {
+                position: absolute;
+                top: -7px;
+                cursor: pointer;
+                text-align: left;
+
+                .chevron-left {
+                    position: relative;
+                    top: 6px;
+                    left: 6px;
+                    color: $fcColor5;
+                }
+                .back-to-question {
+                    @include text-style(18px, $fcColor5, Lato, $regularFontWeight);
+                    display: inline-block;
+                    &:hover{
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .passage-title{
+                position: relative;
+                @include text-style(22px, $fcColor6, Lato, $regularFontWeight);
+                text-align: center;
+                margin-bottom: 24px;
+            }
+
+            .full-passage{
+                width: 900px;
+                margin: 0 auto 50px auto;
+                p{
+                    @include text-style(16px, $fcColor6, Lato, $thinFontWeight);
+                    line-height: 1.5em;
+                }
+
+                .paragraph-number-title{
+                    @include text-style(16px, $fcColor7, Lato, $regularFontWeight);
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
