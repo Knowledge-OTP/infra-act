@@ -13,7 +13,11 @@
             "READING": "READING",
             "WRITING": "WRITING",
             "ESSAY": "ESSAY",
-            "MASTERY": "mastery"
+            "AVG": "Avg",
+            "SEC": "sec",
+            "CATEGORY": "Category",
+            "MASTERY": "mastery",
+            "TEST_TITLE": "Test Score:"
         }
     },
     "SOCIAL_SHARING_CONTAINER_DRV": {

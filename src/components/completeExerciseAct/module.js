@@ -10,6 +10,7 @@
         'znk.infra-act.examUtility',
         'znk.infra-act.socialSharingAct',
         'chart.js',
-        'znk.infra-act.performance'
+        'znk.infra-act.performance',
+        'znk.infra.hint'
     ]);
 })(angular);

@@ -8,6 +8,46 @@
         .config(function($sceProvider){
             $sceProvider.enabled(false);
         })
+        .config(function (HintSrvProvider) {
+            var inAppMessageRacoonWorkoutIntroHintName = 'IN_APP_MESSAGE_WORKOUT_INTRO';
+            var msgKey = 'RACCOON_IN_APP.WORKOUT_INTRO';
+            HintSrvProvider.registerHint(inAppMessageRacoonWorkoutIntroHintName, _baseGetInAppMessageRaccoonHintAction(msgKey, 'PRACTICE_RACCOON'));
+
+            // WORKOUT_SUMMARY hint
+            var inAppMessageRacoonWorkoutSummaryHintName = 'IN_APP_MESSAGE_WORKOUT_SUMMARY';
+            msgKey = 'RACCOON_IN_APP.WORKOUT_SUMMARY';
+            HintSrvProvider.registerHint(inAppMessageRacoonWorkoutSummaryHintName, _baseGetInAppMessageRaccoonHintAction(msgKey, 'PRACTICE_RACCOON'));
+
+            // WELCOME_BACK hint
+            var inAppMessageRacoonWelcomeBackHintName = 'IN_APP_MESSAGE_WELCOME_BACK';
+            msgKey = 'RACCOON_IN_APP.WELCOME_BACK';
+            HintSrvProvider.registerHint(inAppMessageRacoonWelcomeBackHintName, _baseGetInAppMessageRaccoonHintAction(msgKey, 'HINT_RACCOON'), _determineWhetherToTriggerWelcomeBack);
+
+            function _baseGetInAppMessageRaccoonHintAction(messageKey, raccoonType) {
+                return function workoutIntroHintAction(RaccoonInAppService, $filter) {
+                    'ngInject';
+                    return function () {
+                        var message = $filter('translate')(messageKey);
+                        RaccoonInAppService.showHintRaccoon(message, RaccoonInAppService.raccoonTypes[raccoonType]);
+                    };
+                };
+            }
+
+            function _determineWhetherToTriggerWelcomeBack(UserLastSessionService, ENV) {
+                'ngInject';
+                return function () {
+                    return UserLastSessionService.get().then(function (lastSession) {
+                        if (!lastSession) {
+                            return false;
+                        }
+                        var FIVE_DAYS = 1000 * 60 * 60 * 24 * ENV.welcomeBackHintInDays;
+                        var userLastSession = new Date(lastSession);
+                        var today = new Date();
+                        return (today - userLastSession) >= FIVE_DAYS;
+                    });
+                };
+            }
+        })
         .run(function ($rootScope, BaseExerciseGetterSrv, ExerciseTypeEnum, ExerciseParentEnum, ScreenSharingSrv) {
             $rootScope.data = {};
 
