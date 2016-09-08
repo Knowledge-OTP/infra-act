@@ -1665,10 +1665,16 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "            <div class=\"category-name\">{{$ctrl.categoryName | cutString: 42}}</div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <button autofocus tabindex=\"1\"\n" +
-    "                class=\"review-button md-button primary\"\n" +
-    "                translate=\".REVIEW\"\n" +
-    "                ui-sref=\"^.exercise\"></button>\n" +
+    "        <div class=\"review-btn-wrapper\">\n" +
+    "            <md-button class=\"md-primary znk\"\n" +
+    "                       autofocus\n" +
+    "                       tabindex=\"1\"\n" +
+    "                       md-no-ink\n" +
+    "                       ng-cloak\n" +
+    "                       ng-click=\"$ctrl.goToSummary()\">\n" +
+    "                <span translate=\".REVIEW\"></span>\n" +
+    "            </md-button>\n" +
+    "        </div>\n" +
     "    </section>\n" +
     "\n" +
     "    <section class=\"time-line-wrapper2\"  ng-class=\"{'seen-summary': $ctrl.seenSummary}\">\n" +

@@ -54,10 +54,16 @@
             <div class="category-name">{{$ctrl.categoryName | cutString: 42}}</div>
         </div>
 
-        <button autofocus tabindex="1"
-                class="review-button md-button primary"
-                translate=".REVIEW"
-                ui-sref="^.exercise"></button>
+        <div class="review-btn-wrapper">
+            <md-button class="md-primary znk"
+                       autofocus
+                       tabindex="1"
+                       md-no-ink
+                       ng-cloak
+                       ng-click="$ctrl.goToSummary()">
+                <span translate=".REVIEW"></span>
+            </md-button>
+        </div>
     </section>
 
     <section class="time-line-wrapper2"  ng-class="{'seen-summary': $ctrl.seenSummary}">
