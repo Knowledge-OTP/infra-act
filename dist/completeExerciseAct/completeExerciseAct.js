@@ -1441,6 +1441,8 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "                        <div class=\"success-title\" translate=\".SUCCESS\"></div>\n" +
     "                    </div>\n" +
     "                    <canvas\n" +
+    "                        width=\"134px\"\n" +
+    "                        height=\"134px\"\n" +
     "                        id=\"doughnut\"\n" +
     "                        class=\"chart chart-doughnut\"\n" +
     "                        chart-options=\"$ctrl.performenceChart.options\"\n" +
