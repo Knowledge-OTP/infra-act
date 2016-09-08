@@ -445,7 +445,7 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
-        .directive('englishFullParagraphsDirective', function () {
+        .directive('englishFullParagraphs', function () {
             'ngInject';
 
             function compileFn() {
@@ -491,7 +491,7 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
-        .directive('englishSpecificParagraphDirective', function () {
+        .directive('englishSpecificParagraph', function () {
             'ngInject';
 
             function compileFn() {

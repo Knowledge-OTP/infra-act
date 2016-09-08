@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
-        .directive('englishFullParagraphsDirective', function () {
+        .directive('englishFullParagraphs', function () {
             'ngInject';
 
             function compileFn() {

@@ -54,7 +54,7 @@
             var questionTypeArr = [
                 'SIMPLE_QUESTION',
                 'MATH_QUESTION',
-                'WRITING_SPECIFIC_PARAGRAPH',
+                'ENGLISH_SPECIFIC_PARAGRAPH',
                 'WRITING_FULL_PASSAGE',
                 'READING_QUESTION',
                 'ESSAY_QUESTION',
@@ -105,9 +105,9 @@
                         exerciseParentId: 1,
                         exerciseParentTypeId: ExerciseParentEnum.WORKOUT.enum
                     },
-                    WRITING_SPECIFIC_PARAGRAPH:{
-                        exerciseId: 231,
-                        exerciseTypeId: ExerciseTypeEnum.PRACTICE.enum,
+                    ENGLISH_SPECIFIC_PARAGRAPH:{
+                        exerciseId: 104,
+                        exerciseTypeId: ExerciseTypeEnum.TUTORIAL.enum,
                         exerciseParentId: 1,
                         exerciseParentTypeId: ExerciseParentEnum.WORKOUT.enum
                     },
