@@ -150,7 +150,7 @@
                     _calcSectionScoring();
                 }
 
-                $ctrl.seenSummary = false; //$ctrl.exerciseResults.seenSummary;
+                $ctrl.seenSummary = $ctrl.exerciseResults.seenSummary;
 
                 if (!$ctrl.exerciseResults.seenSummary) {
                     $ctrl.exerciseResults.seenSummary = true;

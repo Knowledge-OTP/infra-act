@@ -549,7 +549,7 @@ angular.module('znk.infra-act.auth').run(['$templateCache', function($templateCa
                     _calcSectionScoring();
                 }
 
-                $ctrl.seenSummary = false; //$ctrl.exerciseResults.seenSummary;
+                $ctrl.seenSummary = $ctrl.exerciseResults.seenSummary;
 
                 if (!$ctrl.exerciseResults.seenSummary) {
                     $ctrl.exerciseResults.seenSummary = true;
