@@ -169,6 +169,10 @@
                         animation: false
                     }
                 };
+
+                this.goToSummary = function () {
+                    this.completeExerciseCtrl.changeViewState(CompleteExerciseSrv.VIEW_STATES.EXERCISE);
+                };
             };
 
             this.$onDestroy = function () {
