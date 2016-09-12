@@ -2,11 +2,15 @@
     'use strict';
 
     angular.module('znk.infra-act.performance')
-        .config(function timelineConfig(TimelineSrvProvider) {
+        .config(function timelineConfig(TimelineSrvProvider, SubjectEnumConst) {
             'ngInject';
 
             TimelineSrvProvider.setColors({
-                0: '#AF89D2', 7: '#F9D41B'
+                [SubjectEnumConst.MATH]: '#75CBE8',
+                [SubjectEnumConst.READING]: '#F9D41B',
+                [SubjectEnumConst.WRITING]: '#FF5895',
+                [SubjectEnumConst.ENGLISH]: '#AF89D2',
+                [SubjectEnumConst.SCIENCE]: '#51CDBA'
             });
         });
 })(angular);
