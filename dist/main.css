@@ -928,7 +928,10 @@ complete-exercise-summary {
       width: 134px;
       height: 134px; }
   complete-exercise-summary .review-btn-wrapper {
-    text-align: center; }
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+        justify-content: center; }
   complete-exercise-summary .statistics {
     width: 320px;
     height: 110px;
