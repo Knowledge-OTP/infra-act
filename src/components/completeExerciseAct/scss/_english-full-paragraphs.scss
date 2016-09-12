@@ -5,12 +5,12 @@ english-full-paragraphs{
 
         .question-container {
             .paragraph-title{
-                @include text-style(16px, $fcColor7, Lato, $regularFontWeight);
+                @include text-style(16px, $fontColor4, Lato, $regularFontWeight);
                 text-align: center;
             }
 
             p {
-                @include text-style(16px, $fcColor70, Lato, $lightFontWeight);
+                @include text-style(16px, $fontColor4, Lato, $lightFontWeight);
                 margin-top: 13px;
                 line-height: 1.5em;
             }
@@ -21,7 +21,7 @@ english-full-paragraphs{
 
             .paragraphs-wrapper {
                 .paragraph-number-title{
-                    @include text-style(16px, $fcColor70, Lato, $lightFontWeight);
+                    @include text-style(16px, $fontColor4, Lato, $lightFontWeight);
                     text-align: center;
                     margin-top: 24px;
                 }
@@ -32,7 +32,7 @@ english-full-paragraphs{
             padding-right: 15px;
 
             p {
-                color: $fcColor7;
+                color: $fontColor4;
                 line-height: 1.5em;
             }
         }

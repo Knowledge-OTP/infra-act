@@ -7,7 +7,7 @@ english-specific-paragraph {
 
             .question-container {
                 .full-passage-link {
-                    @include text-style(18px, $fcColor5, Lato, $regularFontWeight);
+                    @include text-style(18px, $fontColor8, Lato, $regularFontWeight);
                     cursor: pointer;
                     margin: {
                         bottom: 10px;
@@ -25,7 +25,7 @@ english-specific-paragraph {
 
             .answer-container {
                 p {
-                    color: $fcColor7;
+                    color: $fontColor3;
                     line-height: 1.5em;
                 }
             }
@@ -46,10 +46,10 @@ english-specific-paragraph {
                     position: relative;
                     top: 6px;
                     left: 6px;
-                    color: $fcColor5;
+                    color: $fontColor8;
                 }
                 .back-to-question {
-                    @include text-style(18px, $fcColor5, Lato, $regularFontWeight);
+                    @include text-style(18px, $fontColor8, Lato, $regularFontWeight);
                     display: inline-block;
                     &:hover{
                         text-decoration: underline;
@@ -59,7 +59,7 @@ english-specific-paragraph {
 
             .passage-title{
                 position: relative;
-                @include text-style(22px, $fcColor6, Lato, $regularFontWeight);
+                @include text-style(22px, $fontColor4, Lato, $regularFontWeight);
                 text-align: center;
                 margin-bottom: 24px;
             }
@@ -68,12 +68,12 @@ english-specific-paragraph {
                 width: 900px;
                 margin: 0 auto 50px auto;
                 p{
-                    @include text-style(16px, $fcColor6, Lato, $thinFontWeight);
+                    @include text-style(16px, $fontColor4, Lato, $thinFontWeight);
                     line-height: 1.5em;
                 }
 
                 .paragraph-number-title{
-                    @include text-style(16px, $fcColor7, Lato, $regularFontWeight);
+                    @include text-style(16px, $fontColor3, Lato, $regularFontWeight);
                     text-align: center;
                 }
             }

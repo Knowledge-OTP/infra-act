@@ -98,6 +98,110 @@ md-tooltip.free-text-instructions-tooltip {
       border-top: 16px solid #ffffff;
       pointer-events: none; }
 
+english-full-paragraphs .english-full-paragraphs-wrapper {
+  padding-top: 28px;
+  display: -ms-flexbox;
+  display: flex; }
+  english-full-paragraphs .english-full-paragraphs-wrapper .question-container {
+    padding-left: 30px;
+    padding-right: 25px; }
+    english-full-paragraphs .english-full-paragraphs-wrapper .question-container .paragraph-title {
+      font-size: 16px;
+      color: #161616;
+      font-family: Lato;
+      font-weight: 400;
+      text-align: center; }
+    english-full-paragraphs .english-full-paragraphs-wrapper .question-container p {
+      font-size: 16px;
+      color: #161616;
+      font-family: Lato;
+      font-weight: 200;
+      margin-top: 13px;
+      line-height: 1.5em; }
+    english-full-paragraphs .english-full-paragraphs-wrapper .question-container .paragraphs-wrapper .paragraph-number-title {
+      font-size: 16px;
+      color: #161616;
+      font-family: Lato;
+      font-weight: 200;
+      text-align: center;
+      margin-top: 24px; }
+  english-full-paragraphs .english-full-paragraphs-wrapper .answer-container {
+    padding-right: 15px; }
+    english-full-paragraphs .english-full-paragraphs-wrapper .answer-container p {
+      color: #161616;
+      line-height: 1.5em; }
+
+english-full-paragraphs .question-wrapper {
+  display: -ms-flexbox;
+  display: flex; }
+
+english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper {
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex; }
+  english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container .full-passage-link {
+    font-size: 18px;
+    color: #0a9bad;
+    font-family: Lato;
+    font-weight: 400;
+    cursor: pointer;
+    margin-bottom: 10px; }
+    english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container .full-passage-link:hover {
+      text-decoration: underline; }
+  english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container p {
+    font-weight: 200;
+    line-height: 1.5em; }
+  english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper .answer-container p {
+    color: #4f4d4d;
+    line-height: 1.5em; }
+
+english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper {
+  width: 1040px;
+  height: 540px;
+  margin: 0 auto;
+  overflow-y: auto; }
+  english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link {
+    position: absolute;
+    top: -7px;
+    cursor: pointer;
+    text-align: left; }
+    english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .chevron-left {
+      position: relative;
+      top: 6px;
+      left: 6px;
+      color: #0a9bad; }
+    english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .back-to-question {
+      font-size: 18px;
+      color: #0a9bad;
+      font-family: Lato;
+      font-weight: 400;
+      display: inline-block; }
+      english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .back-to-question:hover {
+        text-decoration: underline; }
+  english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .passage-title {
+    position: relative;
+    font-size: 22px;
+    color: #161616;
+    font-family: Lato;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 24px; }
+  english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage {
+    width: 900px;
+    margin: 0 auto 50px auto; }
+    english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage p {
+      font-size: 16px;
+      color: #161616;
+      font-family: Lato;
+      font-weight: 200;
+      line-height: 1.5em; }
+    english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage .paragraph-number-title {
+      font-size: 16px;
+      color: #4f4d4d;
+      font-family: Lato;
+      font-weight: 400;
+      text-align: center; }
+
 essay-question .writing-question-wrapper {
   padding-top: 28px;
   display: -ms-flexbox;
@@ -595,6 +699,21 @@ znk-exercise simple-question .simple-question-wrapper {
     znk-exercise simple-question .simple-question-wrapper .answer-container p {
       color: #4f4d4d;
       line-height: 1.5em; }
+
+science-question .science-question-wrapper {
+  display: -ms-flexbox;
+  display: flex; }
+  science-question .science-question-wrapper .question-container {
+    padding-left: 25px;
+    padding-right: 25px; }
+    science-question .science-question-wrapper .question-container .paragraph-title {
+      position: relative; }
+    science-question .science-question-wrapper .question-container p {
+      font-weight: 200;
+      line-height: 1.5em; }
+  science-question .science-question-wrapper .answer-container p {
+    color: #b7b7b7;
+    line-height: 1.5em; }
 
 writing-full-passage .english-full-paragraphs-wrapper {
   padding-top: 28px;

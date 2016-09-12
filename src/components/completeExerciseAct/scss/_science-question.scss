@@ -1,0 +1,30 @@
+science-question {
+    .science-question-wrapper {
+        display: flex;
+
+        .question-container {
+            padding: {
+                left: 25px;
+                right: 25px;
+            }
+
+            .paragraph-title {
+                position: relative;
+            }
+
+            p {
+                font-weight: $lightFontWeight;
+                line-height: 1.5em
+            }
+
+        }
+
+        .answer-container {
+
+            p {
+                color: $fontColor7;
+                line-height: 1.5em
+            }
+        }
+    }
+}

@@ -1184,6 +1184,49 @@ angular.module('znk.infra-act.auth').run(['$templateCache', function($templateCa
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
+        .directive('scienceQuestion', function () {
+            'ngInject';
+
+            function compileFn() {
+                function preFn(scope, element, attrs, questionBuilderCtrl) {
+                    scope.vm = {
+                        question: questionBuilderCtrl.question
+                    };
+
+                    angular.element(element[0].querySelector('.paragraph-title')).append(questionBuilderCtrl.question.paragraphTitle);
+                    angular.element(element[0].querySelector('.question-content')).append(questionBuilderCtrl.question.content);
+
+                    var questionContainerDomElement = angular.element(element[0].querySelector('.paragraphs-wrapper'));
+
+                    var paragraphArray = questionBuilderCtrl.question.groupData.paragraphs;
+
+                    for (var i = 0; i < paragraphArray.length; i++) {
+                        var paragraph = paragraphArray[i].body.replace(/_/g, '');
+                        questionContainerDomElement.append(paragraph);
+                    }
+                }
+
+                return {
+                    pre: preFn
+                };
+            }
+
+            var directive = {
+                templateUrl: 'components/completeExerciseAct/templates/scienceQuestion.template.html',
+                restrict: 'E',
+                require: '^questionBuilder',
+                scope: {},
+                compile: compileFn
+            };
+
+            return directive;
+        });
+})(angular);
+
+(function (angular) {
+    'use strict';
+
+    angular.module('znk.infra-act.completeExerciseAct')
         .directive('selectAnswer', ["$timeout", "ZnkExerciseViewModeEnum", "ZnkExerciseAnswersSrv", "ZnkExerciseEvents", "$document", function ($timeout, ZnkExerciseViewModeEnum, ZnkExerciseAnswersSrv, ZnkExerciseEvents, $document) {
             'ngInject';
 
@@ -2051,6 +2094,25 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "        <div class=\"question-content\"></div>\n" +
     "        <answer-builder></answer-builder>\n" +
     "    </div>\n" +
+    "</div>\n" +
+    "");
+  $templateCache.put("components/completeExerciseAct/templates/scienceQuestion.template.html",
+    "<!--scienceQuestion.template.html-->\n" +
+    "<answer-explanation></answer-explanation>\n" +
+    "\n" +
+    "<div class=\"question-wrapper science-question-wrapper question-basic-style\" image-zoomer>\n" +
+    "\n" +
+    "    <div class=\"question-container znk-scrollbar\">\n" +
+    "        <div class=\"paragraph-title\"></div>\n" +
+    "\n" +
+    "        <div class=\"paragraphs-wrapper\"></div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"answer-container znk-scrollbar\">\n" +
+    "        <div class=\"question-content\"></div>\n" +
+    "        <answer-builder></answer-builder>\n" +
+    "    </div>\n" +
+    "\n" +
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/selectAnswer.template.html",
