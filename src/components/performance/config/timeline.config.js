@@ -4,13 +4,20 @@
     angular.module('znk.infra-act.performance')
         .config(function timelineConfig(TimelineSrvProvider, SubjectEnumConst) {
             'ngInject';
+            var keys = {};
+
+            keys[SubjectEnumConst.MATH] = '#75CBE8';
+            keys[SubjectEnumConst.READING] = '#F9D41B';
+            keys[SubjectEnumConst.WRITING] = '#FF5895';
+            keys[SubjectEnumConst.ENGLISH] = '#AF89D2';
+            keys[SubjectEnumConst.SCIENCE] = '#51CDBA';
 
             TimelineSrvProvider.setColors({
-                [SubjectEnumConst.MATH]: '#75CBE8',
-                [SubjectEnumConst.READING]: '#F9D41B',
-                [SubjectEnumConst.WRITING]: '#FF5895',
-                [SubjectEnumConst.ENGLISH]: '#AF89D2',
-                [SubjectEnumConst.SCIENCE]: '#51CDBA'
+                mathKey: '#75CBE8',
+                readingKey: '#F9D41B',
+                writingKey: '#FF5895',
+                englishKey: '#AF89D2',
+                scienceKey: '#51CDBA'
             });
         });
 })(angular);
