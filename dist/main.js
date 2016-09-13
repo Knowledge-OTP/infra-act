@@ -70,43 +70,6 @@
                 return dfd.promise;
             };
 
-            function _dataLogin() {
-                var postUrl = ENV.backendEndpoint + 'firebase/token';
-                var authData = refAuthDB.getAuth();
-                var postData = {
-                    email: authData.password ? authData.password.email : '',
-                    uid: authData.uid,
-                    fbDataEndPoint: ENV.fbDataEndPoint,
-                    fbEndpoint: ENV.fbGlobalEndPoint,
-                    auth: ENV.dataAuthSecret,
-                    token: authData.token
-                };
-
-                return $http.post(postUrl, postData).then(function (token) {
-                    var defer = $q.defer();
-                    refDataDB.authWithCustomToken(token.data, function (error, userAuthData) {
-                        if (error) {
-                            defer.reject(error);
-                        }
-                        $log.debug('authSrv::login(): uid=' + userAuthData.uid);
-                        defer.resolve(userAuthData);
-                    });
-                    return defer.promise;
-                });
-            }
-
-            function _$onAuth(data) {
-                var _loginAuthData = data;
-
-                if (_loginAuthData) {
-                    return _dataLogin(_loginAuthData).then(function () {
-                        $rootScope.$broadcast('auth:login', _loginAuthData);
-                    });
-                }
-                $rootScope.$broadcast('auth:logout');
-                return $q.when();
-            }
-
             this.login = function (loginData) {
                 var deferred = $q.defer();
 
@@ -180,6 +143,43 @@
                     }
                 });
             };
+
+            function _dataLogin() {
+                var postUrl = ENV.backendEndpoint + 'firebase/token';
+                var authData = refAuthDB.getAuth();
+                var postData = {
+                    email: authData.password ? authData.password.email : '',
+                    uid: authData.uid,
+                    fbDataEndPoint: ENV.fbDataEndPoint,
+                    fbEndpoint: ENV.fbGlobalEndPoint,
+                    auth: ENV.dataAuthSecret,
+                    token: authData.token
+                };
+
+                return $http.post(postUrl, postData).then(function (token) {
+                    var defer = $q.defer();
+                    refDataDB.authWithCustomToken(token.data, function (error, userAuthData) {
+                        if (error) {
+                            defer.reject(error);
+                        }
+                        $log.debug('authSrv::login(): uid=' + userAuthData.uid);
+                        defer.resolve(userAuthData);
+                    });
+                    return defer.promise;
+                });
+            }
+
+            function _$onAuth(data) {
+                var _loginAuthData = data;
+
+                if (_loginAuthData) {
+                    return _dataLogin(_loginAuthData).then(function () {
+                        $rootScope.$broadcast('auth:login', _loginAuthData);
+                    });
+                }
+                $rootScope.$broadcast('auth:logout');
+                return $q.when();
+            }
         }]);
 })(angular);
 
