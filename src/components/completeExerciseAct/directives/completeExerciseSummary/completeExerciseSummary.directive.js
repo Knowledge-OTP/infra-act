@@ -10,7 +10,7 @@
         require: {
             completeExerciseCtrl: '^completeExercise'
         },
-        controller: function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log) {
+        controller: function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log, ENV) {
             'ngInject';
 
             var $ctrl = this;
@@ -22,7 +22,9 @@
                 setPerformanceData();
             });
             $timeout(function () {
-                HintSrv.triggerHint(HintSrv.hintMap.IN_APP_MESSAGE_WORKOUT_SUMMARY);
+                if (ENV.appContext === 'student') {
+                    HintSrv.triggerHint(HintSrv.hintMap.IN_APP_MESSAGE_WORKOUT_SUMMARY);
+                }
             }, 500);
 
             var screenSharingData;
