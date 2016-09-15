@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('znk.infra-act.auth', [
-        'firebase'
+        'firebase',
+        'znk.infra.userContext'
     ]);
 })(angular);
 
