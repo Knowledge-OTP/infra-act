@@ -231,11 +231,11 @@
                 $ctrl.performanceData = performanceData;
                 setPerformanceData();
             });
-            $timeout(function () {
-                if (ENV.appContext === 'student') {
+            if (ENV.appContext === 'student') {
+                $timeout(function () {
                     HintSrv.triggerHint(HintSrv.hintMap.IN_APP_MESSAGE_WORKOUT_SUMMARY);
-                }
-            }, 500);
+                }, 500);
+            }
 
             var screenSharingData;
             var currUserScreenSharingStateChangeCb = function (newUserScreenSharingState) {

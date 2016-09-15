@@ -187,22 +187,20 @@
     'use strict';
 
     angular.module('znk.infra-act.auth')
-        .service('AuthHelperService', ["$filter", "$translate", "ENV", function ($filter, $translate, ENV) {
+        .service('AuthHelperService', ["$filter", "ENV", function ($filter, ENV) {
             'ngInject';
 
             var translateFilter = $filter('translate');
             var excludeDomains = ['mailinator.com'];
 
-            $translate.onReady = function () {
-                this.errorMessages = {
-                    DEFAULT_ERROR: translateFilter('AUTH_HELPER.DEFAULT_ERROR_MESSAGE'),
-                    FB_ERROR: translateFilter('AUTH_HELPER.FACEBOOK_ERROR'),
-                    EMAIL_EXIST: translateFilter('AUTH_HELPER.EMAIL_EXIST'),
-                    INVALID_EMAIL: translateFilter('AUTH_HELPER.INVALID_EMAIL'),
-                    NO_INTERNET_CONNECTION_ERR: translateFilter('AUTH_HELPER.NO_INTERNET_CONNECTION_ERR'),
-                    EMAIL_NOT_EXIST: translateFilter('AUTH_HELPER.EMAIL_NOT_EXIST'),
-                    INCORRECT_EMAIL_AND_PASSWORD_COMBINATION: translateFilter('AUTH_HELPER.INCORRECT_EMAIL_AND_PASSWORD_COMBINATION')
-                };
+            this.errorMessages = {
+                DEFAULT_ERROR: translateFilter('AUTH_HELPER.DEFAULT_ERROR_MESSAGE'),
+                FB_ERROR: translateFilter('AUTH_HELPER.FACEBOOK_ERROR'),
+                EMAIL_EXIST: translateFilter('AUTH_HELPER.EMAIL_EXIST'),
+                INVALID_EMAIL: translateFilter('AUTH_HELPER.INVALID_EMAIL'),
+                NO_INTERNET_CONNECTION_ERR: translateFilter('AUTH_HELPER.NO_INTERNET_CONNECTION_ERR'),
+                EMAIL_NOT_EXIST: translateFilter('AUTH_HELPER.EMAIL_NOT_EXIST'),
+                INCORRECT_EMAIL_AND_PASSWORD_COMBINATION: translateFilter('AUTH_HELPER.INCORRECT_EMAIL_AND_PASSWORD_COMBINATION')
             };
 
             this.isDomainExclude = function (userEmail) {
@@ -456,11 +454,11 @@ angular.module('znk.infra-act.auth').run(['$templateCache', function($templateCa
                 $ctrl.performanceData = performanceData;
                 setPerformanceData();
             });
-            $timeout(function () {
-                if (ENV.appContext === 'student') {
+            if (ENV.appContext === 'student') {
+                $timeout(function () {
                     HintSrv.triggerHint(HintSrv.hintMap.IN_APP_MESSAGE_WORKOUT_SUMMARY);
-                }
-            }, 500);
+                }, 500);
+            }
 
             var screenSharingData;
             var currUserScreenSharingStateChangeCb = function (newUserScreenSharingState) {
