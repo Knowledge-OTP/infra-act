@@ -1,7 +1,7 @@
-(function (angular) {
+(function () {
     'use strict';
 
-    angular.module('znk.infra-act')
+    angular.module('znk.infra-act.configAct')
         .decorator('CategoryService', function ($delegate, SubjectEnum) {
             'ngInject';
 
@@ -27,4 +27,4 @@
 
             return categoryService;
         });
-})(angular);
+})();
