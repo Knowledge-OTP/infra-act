@@ -220,7 +220,7 @@
         require: {
             completeExerciseCtrl: '^completeExercise'
         },
-        controller: ["CompleteExerciseSrv", "SubjectEnum", "$q", "StatsSrv", "CategoryService", "TestScoreCategoryEnum", "$filter", "ExerciseTypeEnum", "masteryLevel", "ScoringService", "SubScoreSrv", "PerformanceData", "$timeout", "HintSrv", "UserScreenSharingStateEnum", "ScreenSharingSrv", "$log", function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, SubScoreSrv, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log) {
+        controller: ["CompleteExerciseSrv", "SubjectEnum", "$q", "StatsSrv", "CategoryService", "TestScoreCategoryEnum", "$filter", "ExerciseTypeEnum", "masteryLevel", "ScoringService", "PerformanceData", "$timeout", "HintSrv", "UserScreenSharingStateEnum", "ScreenSharingSrv", "$log", function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log) {
             'ngInject';
 
             var $ctrl = this;

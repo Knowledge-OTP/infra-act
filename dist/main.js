@@ -445,7 +445,7 @@ angular.module('znk.infra-act.auth').run(['$templateCache', function($templateCa
         require: {
             completeExerciseCtrl: '^completeExercise'
         },
-        controller: ["CompleteExerciseSrv", "SubjectEnum", "$q", "StatsSrv", "CategoryService", "TestScoreCategoryEnum", "$filter", "ExerciseTypeEnum", "masteryLevel", "ScoringService", "SubScoreSrv", "PerformanceData", "$timeout", "HintSrv", "UserScreenSharingStateEnum", "ScreenSharingSrv", "$log", function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, SubScoreSrv, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log) {
+        controller: ["CompleteExerciseSrv", "SubjectEnum", "$q", "StatsSrv", "CategoryService", "TestScoreCategoryEnum", "$filter", "ExerciseTypeEnum", "masteryLevel", "ScoringService", "PerformanceData", "$timeout", "HintSrv", "UserScreenSharingStateEnum", "ScreenSharingSrv", "$log", function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log) {
             'ngInject';
 
             var $ctrl = this;
@@ -2524,94 +2524,6 @@ angular.module('znk.infra-act.configAct').run(['$templateCache', function($templ
         }]);
 })();
 
-(function(angular){
-    'use strict';
-
-    angular.module('znk.infra-act.examUtility')
-        .service('SubScoreSrv', ["CategoryService", "$q", "StorageRevSrv", "SubjectEnum", function(CategoryService, $q, StorageRevSrv, SubjectEnum) {
-            'ngInject';
-
-            function _getSubScoreCategoryData() {
-                return StorageRevSrv.getContent({
-                    exerciseId: null,
-                    exerciseType: 'subscoreCategory'
-                });
-            }
-
-            function _getSubScoreData(subScoreId) {
-                return _getSubScoreCategoryData().then(function (subScoresCategoryData) {
-                    return subScoresCategoryData[subScoreId];
-                });
-            }
-
-            this.getSpecificCategorySubScores = function (specificCategoryId) {
-                return CategoryService.getCategoryData(specificCategoryId).then(function (specificCategoryData) {
-                    var allProm = [];
-                    var subScoreKeys = ['subScore1Id', 'subScore2Id'];
-                    angular.forEach(subScoreKeys, function (subScoreKey) {
-                        var subScoreId = specificCategoryData[subScoreKey];
-                        if (subScoreId || subScoreId === 0) {
-                            allProm.push(_getSubScoreData(subScoreId));
-                        }
-                    });
-                    return $q.all(allProm);
-                });
-            };
-
-            this.getAllSubScoresBySubject = (function () {
-                var getAllSubjectScoresBySubjectProm;
-                return function () {
-                    function _getMathOrVerbalSubjectIdIfCategoryNotEssay(category) {
-                        return CategoryService.getSubjectIdByCategory(category).then(function (subjectId) {
-                            if (subjectId === SubjectEnum.MATH.enum || subjectId === SubjectEnum.VERBAL.enum) {
-                                return subjectId;
-                            }
-                        });
-                    }
-
-                    if (!getAllSubjectScoresBySubjectProm) {
-                        var allSubScoresProm = _getSubScoreCategoryData();
-                        var allSpecificCategoriesProm = CategoryService.getAllLevel4Categories();
-
-                        getAllSubjectScoresBySubjectProm = $q.all([allSubScoresProm, allSpecificCategoriesProm]).then(function (res) {
-                            var allSubScores = res[0];
-                            var allSpecificCategories = res[1];
-                            var subScorePerSubject = {};
-                            subScorePerSubject[SubjectEnum.MATH.enum] = {};
-                            subScorePerSubject[SubjectEnum.VERBAL.enum] = {};
-                            var specificCategoryKeys = Object.keys(allSpecificCategories);
-                            var promArray = [];
-                            var subScoreKeys = ['subScore1Id', 'subScore2Id'];
-
-                            angular.forEach(specificCategoryKeys, function (specificCategoryId) {
-                                var specificCategory = allSpecificCategories[specificCategoryId];
-                                var prom = _getMathOrVerbalSubjectIdIfCategoryNotEssay(specificCategory).then(function (subjectId) {
-                                    if (angular.isDefined(subjectId)) {
-                                        angular.forEach(subScoreKeys, function (subScoreKey) {
-                                            var subScoreId = specificCategory[subScoreKey];
-                                            if (subScoreId !== null && angular.isUndefined(subScorePerSubject[subjectId][subScoreKey])) {
-                                                subScorePerSubject[subjectId][subScoreId] = allSubScores[subScoreId];
-                                            }
-                                        });
-                                    }
-                                });
-                                promArray.push(prom);
-                            });
-
-                            return $q.all(promArray).then(function () {
-                                return subScorePerSubject;
-                            });
-                        });
-                    }
-
-                    return getAllSubjectScoresBySubjectProm;
-                };
-            })();
-
-            this.getSubScoreData = _getSubScoreData;
-        }]);
-})(angular);
-
 angular.module('znk.infra-act.examUtility').run(['$templateCache', function($templateCache) {
 
 }]);
@@ -2636,94 +2548,6 @@ angular.module('znk.infra-act.examUtility').run(['$templateCache', function($tem
                 ['ESSAY', 12, 'essay']
             ]);
             return testScoreCategoryEnum;
-        }]);
-})(angular);
-
-(function(angular){
-    'use strict';
-
-    angular.module('znk.infra-act.exerciseUtilityAct')
-        .service('SubScoreSrv', ["CategoryService", "$q", "StorageRevSrv", "SubjectEnum", function(CategoryService, $q, StorageRevSrv, SubjectEnum) {
-            'ngInject';
-
-            function _getSubScoreCategoryData() {
-                return StorageRevSrv.getContent({
-                    exerciseId: null,
-                    exerciseType: 'subscoreCategory'
-                });
-            }
-
-            function _getSubScoreData(subScoreId) {
-                return _getSubScoreCategoryData().then(function (subScoresCategoryData) {
-                    return subScoresCategoryData[subScoreId];
-                });
-            }
-
-            this.getSpecificCategorySubScores = function (specificCategoryId) {
-                return CategoryService.getCategoryData(specificCategoryId).then(function (specificCategoryData) {
-                    var allProm = [];
-                    var subScoreKeys = ['subScore1Id', 'subScore2Id'];
-                    angular.forEach(subScoreKeys, function (subScoreKey) {
-                        var subScoreId = specificCategoryData[subScoreKey];
-                        if (subScoreId || subScoreId === 0) {
-                            allProm.push(_getSubScoreData(subScoreId));
-                        }
-                    });
-                    return $q.all(allProm);
-                });
-            };
-
-            this.getAllSubScoresBySubject = (function () {
-                var getAllSubjectScoresBySubjectProm;
-                return function () {
-                    function _getMathOrVerbalSubjectIdIfCategoryNotEssay(category) {
-                        return CategoryService.getSubjectIdByCategory(category).then(function (subjectId) {
-                            if (subjectId === SubjectEnum.MATH.enum || subjectId === SubjectEnum.VERBAL.enum) {
-                                return subjectId;
-                            }
-                        });
-                    }
-
-                    if (!getAllSubjectScoresBySubjectProm) {
-                        var allSubScoresProm = _getSubScoreCategoryData();
-                        var allSpecificCategoriesProm = CategoryService.getAllLevel4Categories();
-
-                        getAllSubjectScoresBySubjectProm = $q.all([allSubScoresProm, allSpecificCategoriesProm]).then(function (res) {
-                            var allSubScores = res[0];
-                            var allSpecificCategories = res[1];
-                            var subScorePerSubject = {};
-                            subScorePerSubject[SubjectEnum.MATH.enum] = {};
-                            subScorePerSubject[SubjectEnum.VERBAL.enum] = {};
-                            var specificCategoryKeys = Object.keys(allSpecificCategories);
-                            var promArray = [];
-                            var subScoreKeys = ['subScore1Id', 'subScore2Id'];
-
-                            angular.forEach(specificCategoryKeys, function (specificCategoryId) {
-                                var specificCategory = allSpecificCategories[specificCategoryId];
-                                var prom = _getMathOrVerbalSubjectIdIfCategoryNotEssay(specificCategory).then(function (subjectId) {
-                                    if (angular.isDefined(subjectId)) {
-                                        angular.forEach(subScoreKeys, function (subScoreKey) {
-                                            var subScoreId = specificCategory[subScoreKey];
-                                            if (subScoreId !== null && angular.isUndefined(subScorePerSubject[subjectId][subScoreKey])) {
-                                                subScorePerSubject[subjectId][subScoreId] = allSubScores[subScoreId];
-                                            }
-                                        });
-                                    }
-                                });
-                                promArray.push(prom);
-                            });
-
-                            return $q.all(promArray).then(function () {
-                                return subScorePerSubject;
-                            });
-                        });
-                    }
-
-                    return getAllSubjectScoresBySubjectProm;
-                };
-            })();
-
-            this.getSubScoreData = _getSubScoreData;
         }]);
 })(angular);
 
