@@ -2968,178 +2968,116 @@ angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', functi
     'use strict';
 
     angular.module('znk.infra-act.performance')
-        .service('PerformanceData', ["$q", "masteryLevel", "StatsSrv", "SubScoreSrv", "SubjectEnum", "TestScoreCategoryEnum", "CategoryService", function($q, masteryLevel, StatsSrv, SubScoreSrv, SubjectEnum, TestScoreCategoryEnum, CategoryService) {
+        .service('PerformanceData', ["StatsSrv", "StatsQuerySrv", "CategoryService", "$q", function(StatsSrv, StatsQuerySrv, CategoryService, $q) {
             'ngInject';
 
-            var statsLevelsMap = {
-                SUBJECT: 1,
-                TEST_SCORE: 2,
-                SPECIFIC: 4,
-                GENERAL: 3
-            };
+            var SUBJECTS = 'level1Categories';
+            var SUBSCORS = 'level2Categories';
+            var GENERAL_CATEGORYS = 'level3Categories';
+            var GENERAL_CATEGORY_LEVEL = 3;
+            var performanceData = {};
 
-            function _getSubjectId(parentsIds) {
-                return parentsIds[parentsIds.length - 1];
-            }
-
-            function _isEssayCategory(parentsIds) {
-                var subjectId = _getSubjectId(parentsIds);
-                return subjectId === SubjectEnum.ESSAY.enum;
-            }
-
-            function _calculateCategoryPerformanceData(category) {
-                if (!category) {
-                    return {};
-                }
-
-                var progress, avgTime;
-
-                var totalQuestionsNum = category.totalQuestions;
-                if (totalQuestionsNum) {
-                    progress = Math.round(category.correct / category.totalQuestions * 100);
-                    avgTime = Math.round(category.totalTime / totalQuestionsNum / 1000);
-                } else {
-                    progress = avgTime = 0;
-                }
-
-                return {
-                    categoryId: category.id,
-                    progress: progress,
-                    masteryLevel: masteryLevel.getMasteryLevel(progress),
-                    avgTime: avgTime
-                };
-            }
-
-            function _getStatsKey(id) {
-                return 'id_' + id;
-            }
-
-            function _getMathAndVerbalPerformanceData() {
-                return $q.all([
-                    StatsSrv.getLevelStats(statsLevelsMap.TEST_SCORE),
-                    StatsSrv.getLevelStats(statsLevelsMap.SPECIFIC)
-
-                ]).then(function (res) {
-                    var testScoreStats = res[0] || {};
-                    var specificCategoryStats = res[1] || {};
-
-                    var mathStats = testScoreStats[_getStatsKey(TestScoreCategoryEnum.MATH.enum)];
-                    var mathSubjectPerformanceData = _calculateCategoryPerformanceData(mathStats);
-
-                    var readingStats = testScoreStats[_getStatsKey(TestScoreCategoryEnum.READING.enum)];
-                    var writingStats = testScoreStats[_getStatsKey(TestScoreCategoryEnum.WRITING.enum)];
-                    var verbalSubjectPerformanceData = {
-                        reading: _calculateCategoryPerformanceData(readingStats),
-                        writing: _calculateCategoryPerformanceData(writingStats)
-                    };
-
-                    var mathAndVerbalPerformanceData = {};
-                        mathAndVerbalPerformanceData[SubjectEnum.MATH.enum] =  mathSubjectPerformanceData;
-                        mathAndVerbalPerformanceData[SubjectEnum.VERBAL.enum] =  verbalSubjectPerformanceData;
-
-                    var mathAndVerbalSubScoreData = {};
-                        mathAndVerbalSubScoreData [SubjectEnum.MATH.enum] = {};
-                        mathAndVerbalSubScoreData [SubjectEnum.VERBAL.enum] = {};
-
-                    var allProm = [];
-                    angular.forEach(specificCategoryStats, function (specificCategory) {
-                        if (!_isEssayCategory(specificCategory.parentsIds)) {
-                            var subjectId = _getSubjectId(specificCategory.parentsIds);
-                            var subScoresData = mathAndVerbalSubScoreData[subjectId];
-                            var getSpecificCategorySubScoresProm = SubScoreSrv.getSpecificCategorySubScores(specificCategory.id)
-                                .then(function (subScores) {
-                                    angular.forEach(subScores, function (subScore) {
-                                        if (!subScoresData[subScore.id]) {
-                                            subScoresData[subScore.id] = angular.copy(subScore);
-                                            subScoresData[subScore.id].totalQuestions = 0;
-                                            subScoresData[subScore.id].correct = 0;
-                                            subScoresData[subScore.id].totalTime = 0;
-                                        }
-
-                                        subScoresData[subScore.id].totalQuestions += specificCategory.totalQuestions;
-                                        subScoresData[subScore.id].correct += specificCategory.correct;
-                                        subScoresData[subScore.id].totalTime += specificCategory.totalTime;
-                                    });
-                                });
-                            allProm.push(getSpecificCategorySubScoresProm);
-                        }
-                    });
-
-                    return $q.all(allProm).then(function () {
-                        angular.forEach(mathAndVerbalSubScoreData, function (subScoresForSubject, subjectId) {
-                            var categoryArray = [];
-                            angular.forEach(subScoresForSubject, function (subScore) {
-                                var subScorePerformance = _calculateCategoryPerformanceData(subScore);
-                                categoryArray.push(subScorePerformance);
-                            });
-
-                            mathAndVerbalPerformanceData[subjectId].categoryArray = categoryArray;
-                        });
-
-                        return mathAndVerbalPerformanceData;
-                    });
-                });
-            }
-
-            function _getEssayPerformanceData() {
-                return $q.all([
-                    StatsSrv.getLevelStats(statsLevelsMap.TEST_SCORE),
-                    StatsSrv.getLevelStats(statsLevelsMap.GENERAL)
-                ]).then(function (res) {
-                    var testScoreLevelStats = res[0] || {};
-                    var generalCategoryLevelStats = res[1] || {};
-
-                    var essayStats = testScoreLevelStats[_getStatsKey(TestScoreCategoryEnum.ESSAY.enum)];
-                    var essayGeneralCategoryPerformanceData = _calculateCategoryPerformanceData(essayStats);
-                    essayGeneralCategoryPerformanceData.categoryArray = [];
-
-                    angular.forEach(generalCategoryLevelStats, function (generalCategoryStats) {
-                        if (_isEssayCategory(generalCategoryStats.parentsIds)) {
-                            var generalCategoryPerformance = _calculateCategoryPerformanceData(generalCategoryStats);
-                            essayGeneralCategoryPerformanceData.categoryArray.push(generalCategoryPerformance);
-                        }
-                    });
-
-                    return essayGeneralCategoryPerformanceData;
-                });
-            }
-
-            function _extendSubjectPerformance(performanceToExtend, allRelevantCategories) {
-                var generalCategoriesPerformanceArr = performanceToExtend.categoryArray;
-                for (var i = 0; i < generalCategoriesPerformanceArr.length; i++) {
-                    var categoryId = generalCategoriesPerformanceArr[i].categoryId;
-                    delete allRelevantCategories[categoryId];
-                }
-                performanceToExtend.noDataItems = allRelevantCategories;
-                return performanceToExtend;
-            }
-
-            function _addingNotPracticedSubScores(mathAndVerbalSubScore, allSubScoresBySubject) {
-                var subjectKeys = Object.keys(allSubScoresBySubject);
-                angular.forEach(subjectKeys, function (subjectId) {
-                    _extendSubjectPerformance(mathAndVerbalSubScore[subjectId], allSubScoresBySubject[subjectId]);
-                });
-
-                return mathAndVerbalSubScore;
-            }
-
+            var promArray = [StatsSrv.getStats(), CategoryService.getAllSubscores()];
             this.getPerformanceData = function () {
-                return $q.all([
-                    _getMathAndVerbalPerformanceData(),
-                    _getEssayPerformanceData(),
-                    SubScoreSrv.getAllSubScoresBySubject(),
-                    CategoryService.getAllLevel3CategoriesGroupedByLevel1(SubjectEnum.ESSAY.enum)
-                ]).then(function (res) {
-                    var mathAndVerbalSubScorePerformanceData = res[0];
-                    var essayPerformanceData = res[1];
-                    var allSubScoresBySubjects = res[2];
-                    var allGeneralCategories = angular.copy(res[3]);
-
-                    var performanceData = _addingNotPracticedSubScores(mathAndVerbalSubScorePerformanceData, allSubScoresBySubjects);
-                    performanceData[SubjectEnum.ESSAY.enum] = _extendSubjectPerformance(essayPerformanceData, allGeneralCategories);
+                performanceData = {};
+                return $q.all(promArray).then(function (results) {
+                    var stats = results[0];
+                    var allSubScores = results[1];
+                    if (angular.isDefined(stats[SUBJECTS]) && angular.isDefined(stats[SUBSCORS]) && angular.isDefined(stats[GENERAL_CATEGORYS])) {
+                        _buildSubjects(stats[SUBJECTS]);
+                        _buildSubScores(stats[SUBSCORS], allSubScores);
+                        _buildGeneralCategories(stats[GENERAL_CATEGORYS]);
+                    }
                     return performanceData;
                 });
             };
+
+            function _buildSubjects(subjectsObj) {
+                var subjectsKeys = Object.keys(subjectsObj);
+
+                angular.forEach(subjectsKeys, function (subjectkey) {
+                    var subjectData = {};
+
+                    subjectData.subScoreArray = [];
+                    performanceData[subjectsObj[subjectkey].id] = subjectData;
+                    subjectData.overall = {
+                        progress: _getProgressPercentage(subjectsObj[subjectkey].totalQuestions, subjectsObj[subjectkey].correct),
+                        avgTime: _getAvgTime(subjectsObj[subjectkey].totalQuestions, subjectsObj[subjectkey].totalTime)
+                    };
+                    StatsQuerySrv.getWeakestCategoryInLevel(GENERAL_CATEGORY_LEVEL, null, subjectsObj[subjectkey].id).then(function (weakestCategory) {
+                        if (angular.isDefined(weakestCategory) && angular.isDefined(weakestCategory.totalQuestions) && angular.isDefined(weakestCategory.correct)) {
+                            subjectData.weakestCategory = {
+                                progress: _getProgressPercentage(weakestCategory.totalQuestions, weakestCategory.correct),
+                                id: weakestCategory.id
+                            };
+                        }
+                    });
+                });
+            }
+
+            function _buildSubScores(subScoreObj, allSubScores) {
+                function _addNotPracitecedSubScores(_subScoreObj, _allSubScores) {
+                    var allSubScoreKeys = Object.keys(_allSubScores);
+                    angular.forEach(allSubScoreKeys, function (subScore) {
+                        var subScoreId = 'id_' + allSubScores[subScore].id;      // firebase format
+                        if (angular.isUndefined(_subScoreObj[subScoreId]) && angular.isDefined(performanceData[allSubScores[subScore].parentId])) {      // this sub score not practiced yet by the user
+                            var notPracticedSubScore = {
+                                subScoreId: allSubScores[subScore].id,
+                                parentsIds: [allSubScores[subScore].parentId]
+                            };
+                            performanceData[allSubScores[subScore].parentId].subScoreArray.push(notPracticedSubScore);
+                        }
+                    });
+                }
+
+                _addNotPracitecedSubScores(subScoreObj, allSubScores);
+
+                var subScoreKeys = Object.keys(subScoreObj);
+                angular.forEach(subScoreKeys, function (subScoreKey) {
+                    var subScoreData = {};
+
+                    subScoreData.levelProgress = _getProgressPercentage(subScoreObj[subScoreKey].totalQuestions, subScoreObj[subScoreKey].correct);
+                    subScoreData.avgTime = _getAvgTime(subScoreObj[subScoreKey].totalQuestions, subScoreObj[subScoreKey].totalTime);
+                    subScoreData.subScoreId = subScoreObj[subScoreKey].id;
+                    subScoreData.categoryArray = [];
+
+                    var subjectId = subScoreObj[subScoreKey].parentsIds[0];
+                    if (angular.isDefined(performanceData[subjectId])) {
+                        performanceData[subjectId].subScoreArray.push(subScoreData);
+                    }
+                });
+            }
+
+            function _buildGeneralCategories(generalObj) {
+                var generalCategoryKeys = Object.keys(generalObj);
+
+                angular.forEach(generalCategoryKeys, function (generalCategoryKey) {
+                    var SUBJECT_ID = generalObj[generalCategoryKey].parentsIds[1];
+                    var SUB_SCORE_ID = generalObj[generalCategoryKey].parentsIds[0];
+                    var generalCategoryData = {};
+
+                    generalCategoryData.levelProgress = _getProgressPercentage(generalObj[generalCategoryKey].totalQuestions, generalObj[generalCategoryKey].correct);
+                    generalCategoryData.avgTime = _getAvgTime(generalObj[generalCategoryKey].totalQuestions, generalObj[generalCategoryKey].totalTime);
+                    generalCategoryData.id = generalObj[generalCategoryKey].id;
+                    _setCategoryToCategoryArray(performanceData[SUBJECT_ID], SUB_SCORE_ID, generalCategoryData);   // (subject object, sub score id, general category object)
+                });
+
+                function _setCategoryToCategoryArray(subjectObj, subScoreId, generalCategory) {
+                    for (var i = 0; i < subjectObj.subScoreArray.length; i++) {
+                        if (angular.isDefined(subjectObj.subScoreArray[i]) && subjectObj.subScoreArray[i].subScoreId === subScoreId) {
+                            subjectObj.subScoreArray[i].categoryArray.push(generalCategory);
+                        }
+                    }
+                }
+            }
+
+            function _getProgressPercentage(totalQuestions, correctAnswers) {
+                return totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+            }
+
+            function _getAvgTime(totalQuestions, totalTime) {
+                return totalQuestions > 0 ? Math.round((totalTime / 1000) / totalQuestions) : 0;
+            }
         }]);
 })(angular);
 
