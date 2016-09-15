@@ -5,6 +5,7 @@
         "Zinkerz"
     ],
     "dependencies": {
+        "infra": "https://github.com/Knowledge-OTP/infra.git#oren/int-c-e",
         "infra-web-app": "https://github.com/Knowledge-OTP/infra-web-app.git#oren/int-c-e",
         "angularfire": "^1.0.2"
     },
