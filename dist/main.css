@@ -828,6 +828,26 @@ writing-specific-paragraph {
 znk-exercise.done-btn-show .full-passage > div:last-child, znk-exercise.done-btn-show .full-passage > article:last-child, znk-exercise.done-btn-show .full-passage > p:last-child, znk-exercise.pager-displayed .full-passage > div:last-child, znk-exercise.pager-displayed .full-passage > article:last-child, znk-exercise.pager-displayed .full-passage > p:last-child {
   padding-bottom: 58px; }
 
+writing-question .writing-question-wrapper {
+  padding-top: 28px;
+  display: -ms-flexbox;
+  display: flex; }
+  writing-question .writing-question-wrapper .question-container {
+    padding-left: 35px;
+    padding-right: 25px; }
+  writing-question .writing-question-wrapper .answer-container {
+    margin-left: 20px; }
+    writing-question .writing-question-wrapper .answer-container .question-content {
+      font-size: 18px;
+      color: #161616;
+      font-family: Lato;
+      font-weight: 400; }
+    writing-question .writing-question-wrapper .answer-container p {
+      color: #4f4d4d;
+      line-height: 1.5em; }
+    writing-question .writing-question-wrapper .answer-container answer-builder .rate-answer-wrapper .item-repeater:last-child {
+      width: 26px; }
+
 znk-exercise .swiper-container {
   box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.27);
   border-bottom-left-radius: 15px;
