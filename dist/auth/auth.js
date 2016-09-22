@@ -119,11 +119,11 @@
             };
 
             this.registerFirstLogin = function () {
-                var ActStorageSrv = storageObj();
+                var storageSrv = storageObj();
                 var firstLoginPath = 'firstLogin/' + this.getAuth().uid;
-                return ActStorageSrv.get(firstLoginPath).then(function (userFirstLoginTime) {
+                return storageSrv.get(firstLoginPath).then(function (userFirstLoginTime) {
                     if (angular.equals(userFirstLoginTime, {})) {
-                        ActStorageSrv.set(firstLoginPath, Date.now());
+                        storageSrv.set(firstLoginPath, Date.now());
                     }
                 });
             };
