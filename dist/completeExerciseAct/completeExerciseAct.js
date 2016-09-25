@@ -23,8 +23,8 @@
             'ngInject';
 
             var svgMap = {
-                'correct-icon': 'components/completeExerciseAct/svg/correct-icon.svg',
-                'wrong-icon': 'components/completeExerciseAct/svg/wrong-icon.svg'
+                'complete-exercise-correct-icon': 'components/completeExerciseAct/svg/correct-icon.svg',
+                'complete-exercise-wrong-icon': 'components/completeExerciseAct/svg/wrong-icon.svg'
             };
             SvgIconSrvProvider.registerSvgSources(svgMap);
         }]);
@@ -1880,8 +1880,8 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "    <div ng-switch-when=\"true\" class=\"answer-status-wrapper\" ng-class=\"userAnswerStatus\">\n" +
     "        <div class=\"answer-status\">\n" +
     "            <div class=\"user-answer\">{{d.userAnswer}}</div>\n" +
-    "            <svg-icon class=\"correct-icon\" name=\"correct\"></svg-icon>\n" +
-    "            <svg-icon class=\"wrong-icon\" name=\"wrong-icon\"></svg-icon>\n" +
+    "            <svg-icon class=\"correct-icon\" name=\"complete-exercise-correct-icon\"></svg-icon>\n" +
+    "            <svg-icon class=\"wrong-icon\" name=\"complete-exercise-wrong-icon\"></svg-icon>\n" +
     "        </div>\n" +
     "        <div class=\"correct-answer\">\n" +
     "            <span translate=\".CORRECT_ANSWER\"></span>\n" +
@@ -1926,7 +1926,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "    <div class=\"checkbox-items-wrapper\" >\n" +
     "        <div class=\"item-repeater\" ng-repeat=\"item in d.itemsArray track by $index\">\n" +
     "            <svg-icon class=\"correct-icon\" name=\"correct-icon\"></svg-icon>\n" +
-    "            <svg-icon class=\"wrong-icon\" name=\"wrong-icon\"></svg-icon>\n" +
+    "            <svg-icon class=\"wrong-icon\" name=\"complete-exercise-wrong-icon\"></svg-icon>\n" +
     "            <div class=\"checkbox-item\" ng-click=\"clickHandler($index)\">\n" +
     "                <div class=\"item-index\">{{$index +  2}}</div>\n" +
     "            </div>\n" +
@@ -1982,8 +1982,8 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "            <span class=\"index-char\">{{::d.getIndexChar($index)}}</span>\n" +
     "        </div>\n" +
     "        <markup content=\"answer.content\" type=\"md\" class=\"content\"></markup>\n" +
-    "        <svg-icon class=\"correct-icon-drv\" name=\"correct-icon\"></svg-icon>\n" +
-    "        <svg-icon class=\"wrong-icon-drv\" name=\"wrong-icon\"></svg-icon>\n" +
+    "        <svg-icon class=\"correct-icon-drv\" name=\"complete-exercise-correct-icon\"></svg-icon>\n" +
+    "        <svg-icon class=\"wrong-icon-drv\" name=\"complete-exercise-wrong-icon\"></svg-icon>\n" +
     "    </div>\n" +
     "</div>\n" +
     "");
