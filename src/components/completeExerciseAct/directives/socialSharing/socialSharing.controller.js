@@ -12,7 +12,10 @@
 
                 var subjectMap = {};
                 subjectMap[SubjectEnum.MATH.enum] = 'math';
-                subjectMap[SubjectEnum.VERBAL.enum] = 'verbal';
+                subjectMap[SubjectEnum.ENGLISH.enum] = 'english';
+                subjectMap[SubjectEnum.READING.enum] = 'reading';
+                subjectMap[SubjectEnum.SCIENCE.enum] = 'science';
+                subjectMap[SubjectEnum.WRITING.enum] = 'writing';
 
                 // return if subjectId is in excludeArr
                 if (self.excludeArr && angular.isArray(self.excludeArr)) {
@@ -30,10 +33,7 @@
                         self.subjectName = subjectMap[self.subjectId];
                         var image = $window.location.protocol + ENV.zinkerzWebsiteBaseUrl + 'wp-content/themes/salient-child/images/share/' + sharingData.shareUrlMap[self.subjectName];
                         var descriptionTranslate = sharingData.isImproved ? 'IMPROVED_TEXT' : 'SHARE_DESCRIPTION';
-                        var description = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.' + descriptionTranslate, {
-                            pts: sharingData.points,
-                            subjectName: self.subjectName
-                        });
+                        var description = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.' + descriptionTranslate, { pts: sharingData.points, subjectName: self.subjectName });
                         var title = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.SHARE_TITLE');
                         var caption = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.SHARE_CAPTION');
                         var url = ENV.zinkezWebsiteUrl;

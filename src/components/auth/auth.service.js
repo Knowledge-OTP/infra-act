@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('znk.infra-act.auth')
-        .service('AuthService', function ($window, $firebaseAuth, ENV, $q, $timeout, $rootScope, $http, $log, $injector) {
+        .service('AuthService', function ($window, StorageFirebaseAdapter, StorageSrv, $firebaseAuth, ENV, $q, $timeout, $rootScope, $http, $log) {
             'ngInject';
 
             var refAuthDB = new $window.Firebase(ENV.fbGlobalEndPoint, ENV.firebaseAppScopeName);
@@ -111,15 +111,26 @@
             };
 
             this.registerFirstLogin = function () {
-                var ActStorageSrv = $injector.get('ActStorageSrv');
-                var StorageSrv = $injector.get('StorageSrv');
-                var firstLoginPath = 'firstLogin/' + StorageSrv.variables.uid;
-                return ActStorageSrv.get(firstLoginPath).then(function (userFirstLoginTime) {
+                var storageSrv = storageObj();
+                var firstLoginPath = 'firstLogin/' + this.getAuth().uid;
+                return storageSrv.get(firstLoginPath).then(function (userFirstLoginTime) {
                     if (angular.equals(userFirstLoginTime, {})) {
-                        ActStorageSrv.set(firstLoginPath, Date.now());
+                        storageSrv.set(firstLoginPath, Date.now());
                     }
                 });
             };
+
+            function storageObj (){
+                var fbAdapter = new StorageFirebaseAdapter(ENV.fbDataEndPoint + '/' + ENV.firebaseAppScopeName);
+                var config = {
+                    variables: {
+                        uid: function () {
+                            return self.getAuth().uid;
+                        }
+                    }
+                };
+                return new StorageSrv(fbAdapter, config);
+            }
 
             function _dataLogin() {
                 var postUrl = ENV.backendEndpoint + 'firebase/token';

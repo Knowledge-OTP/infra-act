@@ -220,7 +220,7 @@
         require: {
             completeExerciseCtrl: '^completeExercise'
         },
-        controller: ["CompleteExerciseSrv", "SubjectEnum", "$q", "StatsSrv", "CategoryService", "TestScoreCategoryEnum", "$filter", "ExerciseTypeEnum", "masteryLevel", "ScoringService", "SubScoreSrv", "PerformanceData", "$timeout", "HintSrv", "UserScreenSharingStateEnum", "ScreenSharingSrv", "$log", function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, SubScoreSrv, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log) {
+        controller: ["CompleteExerciseSrv", "SubjectEnum", "$q", "StatsSrv", "CategoryService", "TestScoreCategoryEnum", "$filter", "ExerciseTypeEnum", "masteryLevel", "ScoringService", "PerformanceData", "$timeout", "HintSrv", "UserScreenSharingStateEnum", "ScreenSharingSrv", "$log", "ENV", function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log, ENV) {
             'ngInject';
 
             var $ctrl = this;
@@ -231,9 +231,11 @@
                 $ctrl.performanceData = performanceData;
                 setPerformanceData();
             });
-            $timeout(function () {
-                HintSrv.triggerHint(HintSrv.hintMap.IN_APP_MESSAGE_WORKOUT_SUMMARY);
-            }, 500);
+            if (ENV.appContext === 'student') {
+                $timeout(function () {
+                    HintSrv.triggerHint(HintSrv.hintMap.IN_APP_MESSAGE_WORKOUT_SUMMARY);
+                }, 500);
+            }
 
             var screenSharingData;
             var currUserScreenSharingStateChangeCb = function (newUserScreenSharingState) {
@@ -1209,7 +1211,10 @@
 
                 var subjectMap = {};
                 subjectMap[SubjectEnum.MATH.enum] = 'math';
-                subjectMap[SubjectEnum.VERBAL.enum] = 'verbal';
+                subjectMap[SubjectEnum.ENGLISH.enum] = 'english';
+                subjectMap[SubjectEnum.READING.enum] = 'reading';
+                subjectMap[SubjectEnum.SCIENCE.enum] = 'science';
+                subjectMap[SubjectEnum.WRITING.enum] = 'writing';
 
                 // return if subjectId is in excludeArr
                 if (self.excludeArr && angular.isArray(self.excludeArr)) {
@@ -1227,10 +1232,7 @@
                         self.subjectName = subjectMap[self.subjectId];
                         var image = $window.location.protocol + ENV.zinkerzWebsiteBaseUrl + 'wp-content/themes/salient-child/images/share/' + sharingData.shareUrlMap[self.subjectName];
                         var descriptionTranslate = sharingData.isImproved ? 'IMPROVED_TEXT' : 'SHARE_DESCRIPTION';
-                        var description = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.' + descriptionTranslate, {
-                            pts: sharingData.points,
-                            subjectName: self.subjectName
-                        });
+                        var description = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.' + descriptionTranslate, { pts: sharingData.points, subjectName: self.subjectName });
                         var title = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.SHARE_TITLE');
                         var caption = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.SHARE_CAPTION');
                         var url = ENV.zinkezWebsiteUrl;
@@ -1350,6 +1352,46 @@
 
             var directive = {
                 templateUrl: 'components/completeExerciseAct/templates/writingFullPassage.template.html',
+                restrict: 'E',
+                require: '^questionBuilder',
+                scope: {},
+                compile: compileFn
+            };
+
+            return directive;
+        });
+})(angular);
+
+(function (angular) {
+    'use strict';
+
+    angular.module('znk.infra-act.completeExerciseAct')
+        .directive('writingQuestion', function () {
+            'ngInject';
+
+            function compileFn() {
+                function preFn(scope, element, attrs, questionBuilderCtrl) {
+                    scope.vm = {
+                        question: questionBuilderCtrl.question
+                    };
+
+                    var questionContainerDomElement = angular.element(element[0].querySelector('.question-container'));
+                    var paragraphArray = questionBuilderCtrl.question.groupData.paragraphs;
+
+                    for (var i = 0; i < paragraphArray.length; i++) {
+                        questionContainerDomElement.append(paragraphArray[i].body.replace(/_/g, ''));
+                    }
+
+                    angular.element(element[0].querySelector('.question-content')).append(questionBuilderCtrl.question.content);
+                }
+
+                return {
+                    pre: preFn
+                };
+            }
+
+            var directive = {
+                templateUrl: 'components/completeExerciseAct/templates/writingQuestion.template.html',
                 restrict: 'E',
                 require: '^questionBuilder',
                 scope: {},
@@ -1970,6 +2012,21 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "        <div class=\"paragraphs-wrapper\"></div>\n" +
     "\n" +
     "    </div>\n" +
+    "\n" +
+    "    <div class=\"answer-container znk-scrollbar\">\n" +
+    "        <div class=\"question-content\"></div>\n" +
+    "        <answer-builder></answer-builder>\n" +
+    "    </div>\n" +
+    "\n" +
+    "</div>\n" +
+    "");
+  $templateCache.put("components/completeExerciseAct/templates/writingQuestion.template.html",
+    "<!--writingQuestion.template.html-->\n" +
+    "<answer-explanation></answer-explanation>\n" +
+    "\n" +
+    "<div class=\"question-wrapper writing-question-wrapper question-basic-style\">\n" +
+    "\n" +
+    "    <div class=\"question-container znk-scrollbar\"></div>\n" +
     "\n" +
     "    <div class=\"answer-container znk-scrollbar\">\n" +
     "        <div class=\"question-content\"></div>\n" +
