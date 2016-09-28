@@ -45,7 +45,6 @@ module.exports = function (config) {
             'bower_components/v-accordion/dist/v-accordion.js',
             'bower_components/satellizer/satellizer.js',
             'bower_components/infra-web-app/dist/main.js',
-            'bower_components/angularfire/dist/angularfire.js',
             'bower_components/es5-shim/es5-shim.js',
             'bower_components/angular-mocks/angular-mocks.js',
             'bower_components/mockfirebase/browser/mockfirebase.js',
@@ -54,7 +53,7 @@ module.exports = function (config) {
             'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
             // endbower
 
-            'test/jsonFixtures/config.js',
+            //'test/jsonFixtures/config.js',
             // JSON fixture
             {
                 pattern:  'test/jsonFixtures/*.json',
@@ -68,8 +67,8 @@ module.exports = function (config) {
             'src/**/*.svg',
 
             //utility
-            'test/utility/module.js',
-            'test/utility/**/*.*',
+            //'test/utility/module.js',
+            //'test/utility/**/*.*',
 
             //src files
             'src/core/*.js',
@@ -77,7 +76,7 @@ module.exports = function (config) {
             'src/components/**/*.js',
 
             //mock
-            'test/mock/**/*.js',
+            //'test/mock/**/*.js',
 
             //tests
             'test/spec/**/*.spec.js'
