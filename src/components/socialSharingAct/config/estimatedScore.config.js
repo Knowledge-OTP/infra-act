@@ -5,28 +5,28 @@
         .config(function estimatedScoreConfig(EstimatedScoreSrvProvider, SubjectEnumConst,
                                               EstimatedScoreEventsHandlerSrvProvider, exerciseTypeConst) {
 
-            var subjectsRawScoreEdges = {
-                'ENGLISH': {
-                    min: 0,
-                    max: 75
-                },
-                'MATH': {
-                    min: 0,
-                    max: 60
-                },
-                'READING': {
-                    min: 0,
-                    max: 40
-                },
-                'SCIENCE': {
-                    min: 0,
-                    max: 40
-                },
-                'WRITING': {
-                    min: 0,
-                    max: 10
-                }
+            var subjectsRawScoreEdges = {};
+            subjectsRawScoreEdges[SubjectEnumConst.ENGLISH] = {
+                min: 0,
+                max: 75
             };
+            subjectsRawScoreEdges[SubjectEnumConst.MATH] = {
+                min: 0,
+                max: 60
+            };
+            subjectsRawScoreEdges[SubjectEnumConst.READING] = {
+                min: 0,
+                max: 40
+            };
+            subjectsRawScoreEdges[SubjectEnumConst.SCIENCE] = {
+                min: 0,
+                max: 40
+            };
+            subjectsRawScoreEdges[SubjectEnumConst.WRITING] = {
+                min: 0,
+                max: 10
+            };
+
             EstimatedScoreSrvProvider.setSubjectsRawScoreEdges(subjectsRawScoreEdges);
 
             EstimatedScoreSrvProvider.setMinMaxDiagnosticScore(-Infinity, Infinity);
