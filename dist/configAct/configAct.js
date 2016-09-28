@@ -39,7 +39,7 @@
     'use strict';
 
     angular.module('znk.infra-act.configAct')
-        .decorator('EstimatedScoreSrv', ["$delegate", "ScoringService", "SubjectEnum", function ($delegate, ScoringService, SubjectEnum) {
+        .decorator('EstimatedScoreSrv', ["$delegate", "ScoringService", function ($delegate, ScoringService) {
             'ngInject';
 
             var decoratedEstimatedScoreSrv = $delegate;
@@ -70,15 +70,13 @@
                 });
             };
 
-            decoratedEstimatedScoreSrv.getCompositeScore = function () {
+            decoratedEstimatedScoreSrv.getCompositeScore = function () {                      // todo: delete this fn?
                 return $delegate.getLatestEstimatedScore().then(function (estimatedScores) {
                     var scoresArr = [];
-                    angular.forEach(estimatedScores, function (estimatesScoreForSubject, subjectId) {
-                        if (+subjectId !== SubjectEnum.WRITING.enum) {
-                            scoresArr.push(estimatesScoreForSubject.score || 0);
-                        }
+                    angular.forEach(estimatedScores, function (estimatesScoreForSubject) {
+                        scoresArr.push(estimatesScoreForSubject.score || 0);
                     });
-                    return ScoringService.getScoreCompositeResult(scoresArr);
+                    return ScoringService.getTotalScoreResult(scoresArr);
                 });
             };
 
