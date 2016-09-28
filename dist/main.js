@@ -2126,7 +2126,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     'use strict';
 
     angular.module('znk.infra-act.configAct')
-        .decorator('EstimatedScoreSrv', ["$delegate", "ScoringService", function ($delegate, ScoringService) {
+        .decorator('EstimatedScoreSrv', ["$delegate", "ScoringService", "SubjectEnum", function ($delegate, ScoringService, SubjectEnum) {
             'ngInject';
 
             var decoratedEstimatedScoreSrv = $delegate;
@@ -2157,13 +2157,15 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
                 });
             };
 
-            decoratedEstimatedScoreSrv.getCompositeScore = function () {                      // todo: delete this fn?
+            decoratedEstimatedScoreSrv.getCompositeScore = function () {
                 return $delegate.getLatestEstimatedScore().then(function (estimatedScores) {
                     var scoresArr = [];
-                    angular.forEach(estimatedScores, function (estimatesScoreForSubject) {
-                        scoresArr.push(estimatesScoreForSubject.score || 0);
+                    angular.forEach(estimatedScores, function (estimatesScoreForSubject, subjectId) {
+                        if (+subjectId !== SubjectEnum.WRITING.enum) {
+                            scoresArr.push(estimatesScoreForSubject.score || 0);
+                        }
                     });
-                    return ScoringService.getTotalScoreResult(scoresArr);
+                    return ScoringService.getScoreCompositeResult(scoresArr);
                 });
             };
 
@@ -2212,7 +2214,6 @@ angular.module('znk.infra-act.configAct').run(['$templateCache', function($templ
                     subScoresArr: []
                 };
             }
-
             //   convert each subjectId to it's name as it's written in the scoreTable file
             function convertIdToName(subjectId) {
                 var nameForScoreTable;
@@ -2235,7 +2236,6 @@ angular.module('znk.infra-act.configAct').run(['$templateCache', function($templ
                 }
                 return nameForScoreTable;
             }
-
             // calculate the sum of the score and adjust it according to the scoreTable file.
             function sumScores(resultsObj, computeSubScore, scoreObj) {
                 var scoreSumTemp;
@@ -2328,6 +2328,7 @@ angular.module('znk.infra-act.configAct').run(['$templateCache', function($templ
                     return scoreObj;
                 });
             };
+
             this.getScoreCompositeResult = function (scoreResultsArr) {
                 var sumScoreResultsArr = 0,
                     i;

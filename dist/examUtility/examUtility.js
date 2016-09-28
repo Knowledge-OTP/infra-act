@@ -35,7 +35,6 @@
                     subScoresArr: []
                 };
             }
-
             //   convert each subjectId to it's name as it's written in the scoreTable file
             function convertIdToName(subjectId) {
                 var nameForScoreTable;
@@ -58,7 +57,6 @@
                 }
                 return nameForScoreTable;
             }
-
             // calculate the sum of the score and adjust it according to the scoreTable file.
             function sumScores(resultsObj, computeSubScore, scoreObj) {
                 var scoreSumTemp;
@@ -151,6 +149,7 @@
                     return scoreObj;
                 });
             };
+
             this.getScoreCompositeResult = function (scoreResultsArr) {
                 var sumScoreResultsArr = 0,
                     i;
