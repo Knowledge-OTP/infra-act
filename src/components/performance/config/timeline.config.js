@@ -12,12 +12,6 @@
             keys[SubjectEnumConst.ENGLISH] = '#AF89D2';
             keys[SubjectEnumConst.SCIENCE] = '#51CDBA';
 
-            TimelineSrvProvider.setColors({
-                mathKey: '#75CBE8',
-                readingKey: '#F9D41B',
-                writingKey: '#FF5895',
-                englishKey: '#AF89D2',
-                scienceKey: '#51CDBA'
-            });
+            TimelineSrvProvider.setColors(keys);
         });
 })(angular);
