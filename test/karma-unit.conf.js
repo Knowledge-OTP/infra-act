@@ -76,7 +76,7 @@ module.exports = function (config) {
             'src/components/**/*.js',
 
             //mock
-            //'test/mock/**/*.js',
+            'test/mock/**/*.js',
 
             //tests
             'test/spec/**/*.spec.js'
