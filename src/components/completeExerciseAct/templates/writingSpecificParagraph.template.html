@@ -3,13 +3,13 @@
 <div class="question-wrapper writing-specific-paragraph-wrapper question-basic-style" translate-namespace="WRITING_SPECIFIC_PARAGRAPH">
 
     <div class="specific-paragraph-view-wrapper" ng-show="vm.view === vm.SPECIFIC_PARAGRAPH" image-zoomer>
-        <div class="question-container znk-scrollbar">
+        <div class="question-container znk-scrollbar" znk-exercise-draw-container canvas-name="question">
             <div class="full-passage-link" ng-bind-html="vm.question.groupData.name" ng-click="vm.view = vm.FULL_PASSAGE"></div>
             <div class="paragraph-title"></div>
             <div class="paragraph"></div>
         </div>
 
-        <div class="answer-container znk-scrollbar">
+        <div class="answer-container znk-scrollbar" znk-exercise-draw-container canvas-name="answer">
             <div class="question-content"></div>
             <answer-builder></answer-builder>
         </div>
