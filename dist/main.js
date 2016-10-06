@@ -1821,14 +1821,14 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "<div class=\"question-wrapper english-full-paragraphs-wrapper question-basic-style\">\n" +
     "\n" +
-    "    <div class=\"question-container znk-scrollbar\">\n" +
+    "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
     "        <div class=\"paragraph-title\"></div>\n" +
     "\n" +
     "        <div class=\"paragraphs-wrapper\"></div>\n" +
     "\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"answer-container znk-scrollbar\">\n" +
+    "    <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
     "        <div class=\"question-content\"></div>\n" +
     "        <answer-builder></answer-builder>\n" +
     "    </div>\n" +
@@ -1841,13 +1841,13 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "<div class=\"question-wrapper english-specific-paragraph-wrapper question-basic-style\"  translate-namespace=\"ENGLISH_SPECIFIC_PARAGRAPH\">\n" +
     "\n" +
     "    <div class=\"specific-paragraph-view-wrapper\" ng-show=\"vm.view === vm.SPECIFIC_PARAGRAPH\">\n" +
-    "        <div class=\"question-container znk-scrollbar\">\n" +
+    "        <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
     "            <div class=\"full-passage-link\" ng-bind-html=\"vm.question.groupData.name\" ng-click=\"vm.view = vm.FULL_PASSAGE\"></div>\n" +
     "            <div class=\"paragraph-title\"></div>\n" +
     "            <div class=\"paragraph\"></div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"answer-container znk-scrollbar\">\n" +
+    "        <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
     "            <div class=\"question-content\"></div>\n" +
     "            <answer-builder></answer-builder>\n" +
     "        </div>\n" +
@@ -1877,9 +1877,9 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "<div class=\"question-wrapper writing-question-wrapper question-basic-style\">\n" +
     "\n" +
-    "    <div class=\"question-container znk-scrollbar\"></div>\n" +
+    "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\"></div>\n" +
     "\n" +
-    "    <div class=\"answer-container znk-scrollbar\">\n" +
+    "    <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
     "        <div class=\"question-content\"></div>\n" +
     "        <answer-builder></answer-builder>\n" +
     "    </div>\n" +
@@ -1914,7 +1914,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/lectureQuestion.template.html",
-    "<div class=\"lecture-question-wrapper\" ng-switch=\"vm.question.typeId\">\n" +
+    "<div class=\"lecture-question-wrapper\" ng-switch=\"vm.question.typeId\" znk-exercise-draw-container canvas-name=\"lecture\">\n" +
     "    <div class=\"img-wrapper\" ng-switch-when=\"1\">\n" +
     "        <img  ng-src=\"{{vm.question.fileUrl}}\">\n" +
     "    </div>\n" +
@@ -1926,9 +1926,9 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "<div class=\"math-question-wrapper\" image-zoomer>\n" +
     "\n" +
-    "    <div class=\"question-container\"></div>\n" +
+    "    <div class=\"question-container\" znk-exercise-draw-container canvas-name=\"question\"></div>\n" +
     "\n" +
-    "    <div class=\"answer-container znk-scrollbar\">\n" +
+    "    <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
     "        <div class=\"answer-content\"></div>\n" +
     "        <custom-answer-builder-act></custom-answer-builder-act>\n" +
     "    </div>\n" +
@@ -1954,14 +1954,14 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "<div class=\"question-wrapper reading-question-wrapper question-basic-style\" image-zoomer>\n" +
     "\n" +
-    "    <div class=\"question-container znk-scrollbar\">\n" +
+    "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
     "        <div class=\"passage-title\">{{::vm.passageTitle}}</div>\n" +
     "        <div class=\"article\">\n" +
     "            <div class=\"article-content\"></div>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"answer-container znk-scrollbar\">\n" +
+    "    <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
     "        <div class=\"question-content\"></div>\n" +
     "        <answer-builder></answer-builder>\n" +
     "    </div>\n" +
@@ -1973,13 +1973,13 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "<div class=\"question-wrapper science-question-wrapper question-basic-style\" image-zoomer>\n" +
     "\n" +
-    "    <div class=\"question-container znk-scrollbar\">\n" +
+    "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
     "        <div class=\"paragraph-title\"></div>\n" +
     "\n" +
     "        <div class=\"paragraphs-wrapper\"></div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"answer-container znk-scrollbar\">\n" +
+    "    <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
     "        <div class=\"question-content\"></div>\n" +
     "        <answer-builder></answer-builder>\n" +
     "    </div>\n" +
@@ -2006,7 +2006,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "<div class=\"question-wrapper simple-question-wrapper question-basic-style\" image-zoomer>\n" +
     "\n" +
-    "        <div class=\"answer-container znk-scrollbar\">\n" +
+    "        <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
     "            <div class=\"question-content\"></div>\n" +
     "            <custom-answer-builder-act></custom-answer-builder-act>\n" +
     "        </div>\n" +
@@ -2020,14 +2020,14 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "<div class=\"question-wrapper english-full-paragraphs-wrapper question-basic-style\" image-zoomer>\n" +
     "\n" +
-    "    <div class=\"question-container znk-scrollbar\">\n" +
+    "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
     "        <div class=\"paragraph-title\"></div>\n" +
     "\n" +
     "        <div class=\"paragraphs-wrapper\"></div>\n" +
     "\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"answer-container znk-scrollbar\">\n" +
+    "    <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
     "        <div class=\"question-content\"></div>\n" +
     "        <answer-builder></answer-builder>\n" +
     "    </div>\n" +
@@ -2040,9 +2040,9 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "<div class=\"question-wrapper writing-question-wrapper question-basic-style\">\n" +
     "\n" +
-    "    <div class=\"question-container znk-scrollbar\"></div>\n" +
+    "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\"></div>\n" +
     "\n" +
-    "    <div class=\"answer-container znk-scrollbar\">\n" +
+    "    <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
     "        <div class=\"question-content\"></div>\n" +
     "        <answer-builder></answer-builder>\n" +
     "    </div>\n" +
@@ -2055,13 +2055,13 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "<div class=\"question-wrapper writing-specific-paragraph-wrapper question-basic-style\" translate-namespace=\"WRITING_SPECIFIC_PARAGRAPH\">\n" +
     "\n" +
     "    <div class=\"specific-paragraph-view-wrapper\" ng-show=\"vm.view === vm.SPECIFIC_PARAGRAPH\" image-zoomer>\n" +
-    "        <div class=\"question-container znk-scrollbar\">\n" +
+    "        <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
     "            <div class=\"full-passage-link\" ng-bind-html=\"vm.question.groupData.name\" ng-click=\"vm.view = vm.FULL_PASSAGE\"></div>\n" +
     "            <div class=\"paragraph-title\"></div>\n" +
     "            <div class=\"paragraph\"></div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"answer-container znk-scrollbar\">\n" +
+    "        <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
     "            <div class=\"question-content\"></div>\n" +
     "            <answer-builder></answer-builder>\n" +
     "        </div>\n" +
