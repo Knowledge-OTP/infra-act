@@ -1817,8 +1817,6 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "<answer-builder> </answer-builder>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/englishFullParagraphs.template.html",
-    "<answer-explanation></answer-explanation>\n" +
-    "\n" +
     "<div class=\"question-wrapper english-full-paragraphs-wrapper question-basic-style\">\n" +
     "\n" +
     "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
@@ -1836,8 +1834,6 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/englishSpecificParagraph.template.html",
-    "<answer-explanation></answer-explanation>\n" +
-    "\n" +
     "<div class=\"question-wrapper english-specific-paragraph-wrapper question-basic-style\"  translate-namespace=\"ENGLISH_SPECIFIC_PARAGRAPH\">\n" +
     "\n" +
     "    <div class=\"specific-paragraph-view-wrapper\" ng-show=\"vm.view === vm.SPECIFIC_PARAGRAPH\">\n" +
@@ -1873,8 +1869,6 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/essayQuestion.template.html",
-    "<answer-explanation></answer-explanation>\n" +
-    "\n" +
     "<div class=\"question-wrapper writing-question-wrapper question-basic-style\">\n" +
     "\n" +
     "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\"></div>\n" +
@@ -1922,8 +1916,6 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/mathQuestion.template.html",
-    "<answer-explanation></answer-explanation>\n" +
-    "\n" +
     "<div class=\"math-question-wrapper\" image-zoomer>\n" +
     "\n" +
     "    <div class=\"question-container\" znk-exercise-draw-container canvas-name=\"question\"></div>\n" +
@@ -1950,8 +1942,6 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/readingQuestion.template.html",
-    "<answer-explanation></answer-explanation>\n" +
-    "\n" +
     "<div class=\"question-wrapper reading-question-wrapper question-basic-style\" image-zoomer>\n" +
     "\n" +
     "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
@@ -1968,9 +1958,6 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/scienceQuestion.template.html",
-    "<!--scienceQuestion.template.html-->\n" +
-    "<answer-explanation></answer-explanation>\n" +
-    "\n" +
     "<div class=\"question-wrapper science-question-wrapper question-basic-style\" image-zoomer>\n" +
     "\n" +
     "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
@@ -2002,8 +1989,6 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/simpleQuestion.template.html",
-    "<answer-explanation></answer-explanation>\n" +
-    "\n" +
     "<div class=\"question-wrapper simple-question-wrapper question-basic-style\" image-zoomer>\n" +
     "\n" +
     "        <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
@@ -2014,10 +1999,6 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/writingFullPassage.template.html",
-    "<answer-explanation></answer-explanation>\n" +
-    "\n" +
-    "<answer-explanation></answer-explanation>\n" +
-    "\n" +
     "<div class=\"question-wrapper english-full-paragraphs-wrapper question-basic-style\" image-zoomer>\n" +
     "\n" +
     "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
@@ -2035,9 +2016,6 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/writingQuestion.template.html",
-    "<!--writingQuestion.template.html-->\n" +
-    "<answer-explanation></answer-explanation>\n" +
-    "\n" +
     "<div class=\"question-wrapper writing-question-wrapper question-basic-style\">\n" +
     "\n" +
     "    <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\"></div>\n" +
@@ -2050,8 +2028,6 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/templates/writingSpecificParagraph.template.html",
-    "<answer-explanation></answer-explanation>\n" +
-    "\n" +
     "<div class=\"question-wrapper writing-specific-paragraph-wrapper question-basic-style\" translate-namespace=\"WRITING_SPECIFIC_PARAGRAPH\">\n" +
     "\n" +
     "    <div class=\"specific-paragraph-view-wrapper\" ng-show=\"vm.view === vm.SPECIFIC_PARAGRAPH\" image-zoomer>\n" +
