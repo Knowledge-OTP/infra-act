@@ -27,5 +27,17 @@
         "SHARE_DESCRIPTION": "Hooray! I've reached {{pts}} pts on my estimated {{subjectName}} score on Zinkerz prep for the ACT",
         "SHARE_TITLE": "Zinkerz prep for the ACT",
         "SHARE_CAPTION": "Education Appa That Make It Easy To Study Hard!"
+    },
+    "PERFORMANCE_ACT": {
+        "MASTERY_LEVEL":{
+            "NOVICE": "novice",
+            "AVERAGE": "average",
+            "ADVANCE": "advanced",
+            "EXPERT": "expert",
+            "MASTER": "master"
+        }
+    },
+    "PERFORMANCE_TIMELINE": {
+        "POINTS_LEFT": "{{points}} pts to go!"
     }
 }

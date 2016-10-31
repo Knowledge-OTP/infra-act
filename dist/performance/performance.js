@@ -220,19 +220,6 @@
     'use strict';
 
     angular.module('znk.infra-act.performance')
-        .run(["$timeout", "$translatePartialLoader", function($timeout, $translatePartialLoader){
-            'ngInject';
-
-            $timeout(function(){
-                $translatePartialLoader.addPart('performance');
-            });
-        }]);
-})(angular);
-
-(function (angular) {
-    'use strict';
-
-    angular.module('znk.infra-act.performance')
         .service('masteryLevel', ["$filter", function ($filter) {
             'ngInject';
 

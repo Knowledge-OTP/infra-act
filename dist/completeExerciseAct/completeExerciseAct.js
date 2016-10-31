@@ -1454,19 +1454,6 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
-        .run(["$timeout", "$translatePartialLoader", function($timeout, $translatePartialLoader){
-            'ngInject';
-
-            $timeout(function(){
-                $translatePartialLoader.addPart('completeExerciseAct');
-            });
-        }]);
-})(angular);
-
-(function (angular) {
-    'use strict';
-
-    angular.module('znk.infra-act.completeExerciseAct')
         .service('articleSrv',function () {
             'ngInject';
 
