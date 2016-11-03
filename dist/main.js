@@ -1468,19 +1468,6 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
-        .run(["$timeout", "$translatePartialLoader", function($timeout, $translatePartialLoader){
-            'ngInject';
-
-            $timeout(function(){
-                $translatePartialLoader.addPart('completeExerciseAct');
-            });
-        }]);
-})(angular);
-
-(function (angular) {
-    'use strict';
-
-    angular.module('znk.infra-act.completeExerciseAct')
         .service('articleSrv',function () {
             'ngInject';
 
@@ -2592,19 +2579,6 @@ angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', functi
                 return directive;
             }
         );
-})(angular);
-
-(function (angular) {
-    'use strict';
-
-    angular.module('znk.infra-act.performance')
-        .run(["$timeout", "$translatePartialLoader", function($timeout, $translatePartialLoader){
-            'ngInject';
-
-            $timeout(function(){
-                $translatePartialLoader.addPart('performance');
-            });
-        }]);
 })(angular);
 
 (function (angular) {
