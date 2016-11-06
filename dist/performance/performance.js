@@ -54,9 +54,10 @@
                 var subjectIdToIndexMap = {
                     diagnostic: 'diagnostic'
                 };
-                subjectIdToIndexMap [ExerciseTypeEnum.TUTORIAL.enum] = 'tutorial';
-                subjectIdToIndexMap [ExerciseTypeEnum.PRACTICE.enum] = 'practice';
-                subjectIdToIndexMap [ExerciseTypeEnum.SECTION.enum] = 'section';
+                subjectIdToIndexMap[ExerciseTypeEnum.TUTORIAL.enum] = 'tutorial';
+                subjectIdToIndexMap[ExerciseTypeEnum.GAME.enum] = 'game';
+                subjectIdToIndexMap[ExerciseTypeEnum.PRACTICE.enum] = 'practice';
+                subjectIdToIndexMap[ExerciseTypeEnum.SECTION.enum] = 'section';
 
                 function _getSummaryData(summeryScore) {
                     var x = summeryScore.lineTo.x;
