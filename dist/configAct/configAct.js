@@ -88,7 +88,7 @@
     'use strict';
 
     angular.module('znk.infra-act.configAct')
-        .decorator('CategoryService', ["$delegate", function ($delegate) {
+        .decorator('SubjectEnum', ["$delegate", function ($delegate) {
             'ngInject';
 
             var relevantSubjects = ['ENGLISH', 'MATH', 'READING', 'SCIENCE', 'WRITING'];
