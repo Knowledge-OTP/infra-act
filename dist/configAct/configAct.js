@@ -11,10 +11,8 @@
         .decorator('CategoryService', ["$delegate", "SubjectEnum", function ($delegate, SubjectEnum) {
             'ngInject';
 
-            var categoryService = $delegate;
-
-            categoryService.getAllSubscores = function () {
-                return categoryService.getCategoryMap().then(function (categories) {
+            $delegate.getAllSubscores = function () {
+                return $delegate.getCategoryMap().then(function (categories) {
                     var subScoreObj = {};
                     for (var prop in categories) {
                         if (_isSubScore(categories[prop].parentId)) {
@@ -31,7 +29,7 @@
                     SubjectEnum.SCIENCE.enum === id;
             }
 
-            return categoryService;
+            return $delegate;
         }]);
 })();
 
