@@ -2136,6 +2136,23 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
         }]);
 })();
 
+(function () {
+    'use strict';
+
+    angular.module('znk.infra-act.configAct')
+        .decorator('CategoryService', ["$delegate", function ($delegate) {
+            'ngInject';
+
+            var relevantSubjects = ['ENGLISH', 'MATH', 'READING', 'SCIENCE', 'WRITING'];
+            angular.forEach($delegate, function (value, key) {
+                if (relevantSubjects.indexOf(key) === -1) {
+                    delete $delegate[key];
+                }
+            });
+            return $delegate;
+        }]);
+})();
+
 angular.module('znk.infra-act.configAct').run(['$templateCache', function($templateCache) {
 
 }]);
