@@ -5,7 +5,7 @@
         "Zinkerz"
     ],
     "dependencies": {
-        "infra-web-app": "https://github.com/Knowledge-OTP/infra-web-app.git#oren/invitation-new-3"
+        "infra-web-app": "https://github.com/Knowledge-OTP/infra-web-app.git#oren/new-invitation-3"
     },
     "ignore": [
         ".*",
