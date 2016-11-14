@@ -2558,7 +2558,8 @@ angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', functi
                 var directive = {
                     scope: {
                         onTimelineFinish: '&',
-                        activeExerciseId: '=?'
+                        activeExerciseId: '=?',
+                        hideInduction: '<?'
                     },
                     restrict: 'E',
                     templateUrl: 'components/performance/directives/performanceTimeline/performanceTimeline.template.html',
@@ -2722,7 +2723,7 @@ angular.module('znk.infra-act.performance').run(['$templateCache', function($tem
     "        <div class=\"progress-val\" ng-style=\"vm.timelineMinMaxStyle\" ng-if=\"vm.timeLineData.data.length\">\n" +
     "            <div class=\"goal-wrapper\">{{vm.goalPerSubject}}\n" +
     "                <div class=\"timeline-plus\"\n" +
-    "                     ng-if=\"vm.timelineLinePlus\"\n" +
+    "                     ng-if=\"vm.timelineLinePlus && vm.hideInduction\"\n" +
     "                     ng-class=\"{ 'red-point': vm.isRed, 'green-point': !vm.isRed }\">\n" +
     "                    {{vm.timelineLinePlus}}\n" +
     "                </div>\n" +
