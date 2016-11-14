@@ -1654,6 +1654,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "        <performance-timeline\n" +
     "            on-timeline-finish=\"vm.onTimelineFinish(subjectDelta)\"\n" +
     "            subject-id=\"{{::$ctrl.currentSubjectId}}\"\n" +
+    "            show-induction=\"true\"\n" +
     "            active-exercise-id=\"::$ctrl.activeExerciseId\">\n" +
     "        </performance-timeline>\n" +
     "    </section>\n" +
