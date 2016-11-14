@@ -6,7 +6,8 @@
                 var directive = {
                     scope: {
                         onTimelineFinish: '&',
-                        activeExerciseId: '=?'
+                        activeExerciseId: '=?',
+                        hideInduction: '<?'
                     },
                     restrict: 'E',
                     templateUrl: 'components/performance/directives/performanceTimeline/performanceTimeline.template.html',
