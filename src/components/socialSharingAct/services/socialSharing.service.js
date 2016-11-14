@@ -91,7 +91,7 @@
                         $log.error('SocialSharingSrv getSharingData: points should be configured in config phase!');
                         return $q.when(false);
                     }
-                    return EstimatedScoreSrv.getEstimatedScoresData().then(function (scoresMap) {
+                    return EstimatedScoreSrv.getEstimatedScores().then(function (scoresMap) {
                         var scoresArr = scoresMap[subjectId];
                         if (!scoresArr) {
                             $log.error('SocialSharingSrv getSharingData: no match of subjectId in scores obj! subjectId: ' + subjectId);
