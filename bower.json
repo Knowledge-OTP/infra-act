@@ -1,11 +1,11 @@
 {
     "name": "infra-act",
-    "version": "v1.0.0",
+    "version": "1.0.10",
     "authors": [
         "Zinkerz"
     ],
     "dependencies": {
-        "infra-web-app": "https://github.com/Knowledge-OTP/infra-web-app.git#v0.0.49"
+        "infra-web-app": "https://github.com/Knowledge-OTP/infra-web-app.git#~v0.0.51"
     },
     "ignore": [
         ".*",
