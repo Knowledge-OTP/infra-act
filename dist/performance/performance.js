@@ -245,33 +245,68 @@
         }]);
 })(angular);
 
-(function(angular){
+(function (angular) {
     'use strict';
 
     angular.module('znk.infra-act.performance')
-        .service('PerformanceData', ["StatsSrv", "StatsQuerySrv", "CategoryService", "$q", function(StatsSrv, StatsQuerySrv, CategoryService, $q) {
+        .service('PerformanceData', ["StatsSrv", "StatsQuerySrv", "CategoryService", "$q", function (StatsSrv, StatsQuerySrv, CategoryService, $q) {
             'ngInject';
 
             var SUBJECTS = 'level1Categories';
             var SUBSCORS = 'level2Categories';
             var GENERAL_CATEGORYS = 'level3Categories';
+            var SPECIFIC_CATEGORYS = 'level4Categories';
             var GENERAL_CATEGORY_LEVEL = 3;
+            var SPECIFIC_CATEGORY_LEVEL = 4;
             var performanceData = {};
 
-            var promArray = [StatsSrv.getStats(), CategoryService.getAllSubscores()];
+            var promArray = [
+                StatsSrv.getStats(),
+                CategoryService.getAllSubscores(),
+                CategoryService.getAllLevelCategories(SPECIFIC_CATEGORY_LEVEL)];
             this.getPerformanceData = function () {
                 performanceData = {};
                 return $q.all(promArray).then(function (results) {
                     var stats = results[0];
                     var allSubScores = results[1];
+                    var allSpecificCategories = angular.copy(results[2]);
                     if (angular.isDefined(stats[SUBJECTS]) && angular.isDefined(stats[SUBSCORS]) && angular.isDefined(stats[GENERAL_CATEGORYS])) {
                         _buildSubjects(stats[SUBJECTS]);
                         _buildSubScores(stats[SUBSCORS], allSubScores);
                         _buildGeneralCategories(stats[GENERAL_CATEGORYS]);
+                        _calcSpecificCategory(performanceData, allSpecificCategories, stats[SPECIFIC_CATEGORYS]);
                     }
                     return performanceData;
                 });
             };
+
+            function _calcSpecificCategory(_performanceData, allSpecificCategories, specificStats) {
+                angular.forEach(specificStats, function (specificCategoryStats, categoryId) {
+                    categoryId = categoryId.replace('id_', '');
+                    var categoryParent = specificCategoryStats.parentsIds;
+                    var subjectPerformance = _performanceData[categoryParent[categoryParent.length - 1]];
+                    if (subjectPerformance) {
+                        angular.forEach(subjectPerformance.subScoreArray, function (subscoreObj) {
+                            angular.forEach(subscoreObj.categoryArray, function (generalCategoryObj) {
+                                if (generalCategoryObj.id === categoryParent[0]) {
+                                    if (!generalCategoryObj.specificArray) {
+                                        generalCategoryObj.specificArray = [];
+                                    }
+
+                                    generalCategoryObj.specificArray.push({
+                                        id: categoryId,
+                                        name: allSpecificCategories[categoryId].name,
+                                        levelProgress: _getProgressPercentage(specificCategoryStats.totalQuestions, specificCategoryStats.correct),
+                                        correct: specificCategoryStats.correct,
+                                        wrong: specificCategoryStats.wrong,
+                                        totalQuestions: specificCategoryStats.totalQuestions
+                                    });
+                                }
+                            });
+                        });
+                    }
+                });
+            }
 
             function _buildSubjects(subjectsObj) {
                 var subjectsKeys = Object.keys(subjectsObj);

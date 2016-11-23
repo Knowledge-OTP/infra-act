@@ -702,7 +702,8 @@ znk-exercise simple-question .simple-question-wrapper {
 
 science-question .science-question-wrapper {
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  font-family: Lato; }
   science-question .science-question-wrapper .question-container {
     padding-left: 25px;
     padding-right: 25px; }
@@ -847,6 +848,11 @@ writing-question .writing-question-wrapper {
       line-height: 1.5em; }
     writing-question .writing-question-wrapper .answer-container answer-builder .rate-answer-wrapper .item-repeater:last-child {
       width: 26px; }
+
+znk-exercise .question-basic-style .question-container {
+  font-family: Lato;
+  font-weight: 200;
+  line-height: 24px; }
 
 znk-exercise .swiper-container {
   box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.27);
