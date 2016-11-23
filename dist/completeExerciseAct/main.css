@@ -461,7 +461,8 @@ reading-question {
   display: block; }
   reading-question .reading-question-wrapper {
     display: -ms-flexbox;
-    display: flex; }
+    display: flex;
+    font-family: Lato; }
     reading-question .reading-question-wrapper .question-container {
       padding-left: 35px; }
       reading-question .reading-question-wrapper .question-container .paragraph-title {
