@@ -68,13 +68,17 @@ znk-exercise {
 
 .zoom-image-modal {
     position: relative;
-    .close-popup {
+    .image-zoomer-close-popup {
         @include dimension(20px, 20px);
         cursor: pointer;
         position: absolute;
-        right: -45px;
-        top: -35px;
+        right: -20px;
+        top: -20px;
+        stroke-width: 10px;
 
+        svg g{
+            stroke: $backgroundColor1;
+        }
     }
 
     md-dialog {

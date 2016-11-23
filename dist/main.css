@@ -671,13 +671,16 @@ znk-exercise .orange-square {
 
 .zoom-image-modal {
   position: relative; }
-  .zoom-image-modal .close-popup {
+  .zoom-image-modal .image-zoomer-close-popup {
     width: 20px;
     height: 20px;
     cursor: pointer;
     position: absolute;
-    right: -45px;
-    top: -35px; }
+    right: -20px;
+    top: -20px;
+    stroke-width: 10px; }
+    .zoom-image-modal .image-zoomer-close-popup svg g {
+      stroke: #ffffff; }
   .zoom-image-modal md-dialog {
     max-width: 100%; }
 
