@@ -656,7 +656,7 @@ znk-exercise .question-basic-style .zoom-icon-wrapper {
   znk-exercise .question-basic-style .zoom-icon-wrapper:hover {
     background-color: #89ABAF; }
 
-znk-exercise.done-btn-show .question-container > div:last-child, znk-exercise.done-btn-show .question-container > article:last-child, znk-exercise.done-btn-show .question-container > p:last-child, znk-exercise.pager-displayed .question-container > div:last-child, znk-exercise.pager-displayed .question-container > article:last-child, znk-exercise.pager-displayed .question-container > p:last-child {
+znk-exercise.done-btn-show .question-container > div:nth-last-child(2), znk-exercise.done-btn-show .question-container > article:last-child, znk-exercise.done-btn-show .question-container > p:nth-last-child(2), znk-exercise.pager-displayed .question-container > div:nth-last-child(2), znk-exercise.pager-displayed .question-container > article:last-child, znk-exercise.pager-displayed .question-container > p:nth-last-child(2) {
   padding-bottom: 58px; }
 
 znk-exercise.done-btn-show answer-builder, znk-exercise.pager-displayed answer-builder {

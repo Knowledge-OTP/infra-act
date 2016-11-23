@@ -47,7 +47,7 @@ znk-exercise {
     &.done-btn-show, &.pager-displayed {
         $bottomShadowHeight: 58px;
         .question-container {
-            & > div:last-child, & > article:last-child, & > p:last-child {
+            & > div:nth-last-child(2), & > article:last-child, & > p:nth-last-child(2) {
                 padding-bottom: $bottomShadowHeight;
             }
         }
