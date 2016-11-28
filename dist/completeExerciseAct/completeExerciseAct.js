@@ -1573,12 +1573,12 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "        <div class=\"social-text\"\n" +
     "             translate=\".POINTS_TEXT\"\n" +
     "             ng-switch-when=\"false\"\n" +
-    "             translate-values=\"{ pts: {{vm.showSocialArea.points}}, subjectName: '{{vm.subjectName}}' }\">\n" +
+    "             translate-values=\"{ pts: {{vm.showSocialArea.realPoints}}, subjectName: '{{vm.subjectName}}' }\">\n" +
     "        </div>\n" +
     "        <div class=\"social-text\"\n" +
     "             translate=\".IMPROVED_TEXT\"\n" +
     "             ng-switch-when=\"true\"\n" +
-    "             translate-values=\"{ pts: {{vm.showSocialArea.points}}, subjectName: '{{vm.subjectName}}' }\">\n" +
+    "             translate-values=\"{ pts: {{vm.showSocialArea.realPoints}}, subjectName: '{{vm.subjectName}}' }\">\n" +
     "        </div>\n" +
     "        <social-share-btn-drv share-data=\"vm.shareData\"></social-share-btn-drv>\n" +
     "    </div>\n" +

@@ -8,12 +8,12 @@
         <div class="social-text"
              translate=".POINTS_TEXT"
              ng-switch-when="false"
-             translate-values="{ pts: {{vm.showSocialArea.points}}, subjectName: '{{vm.subjectName}}' }">
+             translate-values="{ pts: {{vm.showSocialArea.realPoints}}, subjectName: '{{vm.subjectName}}' }">
         </div>
         <div class="social-text"
              translate=".IMPROVED_TEXT"
              ng-switch-when="true"
-             translate-values="{ pts: {{vm.showSocialArea.points}}, subjectName: '{{vm.subjectName}}' }">
+             translate-values="{ pts: {{vm.showSocialArea.realPoints}}, subjectName: '{{vm.subjectName}}' }">
         </div>
         <social-share-btn-drv share-data="vm.shareData"></social-share-btn-drv>
     </div>
