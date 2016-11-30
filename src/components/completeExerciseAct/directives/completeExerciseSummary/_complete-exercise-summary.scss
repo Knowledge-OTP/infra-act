@@ -312,3 +312,13 @@ complete-exercise-summary{
         }
     }
 }
+
+screen-sharing{
+    complete-exercise-summary{
+        .complete-exercise-summary-wrapper{
+            height: calc(100vh - 160px);
+            overflow: auto;
+        }
+    }
+}
+

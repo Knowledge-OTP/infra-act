@@ -1200,6 +1200,10 @@ complete-exercise-summary {
   complete-exercise-summary.workout-summary-wrapper-essay .proficiency-level-row, complete-exercise-summary.workout-summary-wrapper-essay .social-share {
     background-color: #fafafa; }
 
+screen-sharing complete-exercise-summary .complete-exercise-summary-wrapper {
+  height: calc(100vh - 160px);
+  overflow: auto; }
+
 .social-sharing-drv-container {
   width: 100%;
   display: -ms-flexbox;

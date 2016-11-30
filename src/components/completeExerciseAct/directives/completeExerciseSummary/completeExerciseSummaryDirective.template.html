@@ -3,56 +3,59 @@
      subject-id-to-attr-drv="$ctrl.currentSubjectId">
 
     <complete-exercise-header></complete-exercise-header>
+    <div class="complete-exercise-summary-wrapper">
+        <social-sharing
+            subject-id="::$ctrl.currentSubjectId"
+            animate="true">
+        </social-sharing>
 
-    <social-sharing
-        subject-id="::$ctrl.currentSubjectId"
-        animate="true">
-    </social-sharing>
+        <section>
+            <div class="test-score-title">{{::$ctrl.testScoreTitle}}</div>
 
-    <section>
-        <div class="test-score-title">{{::$ctrl.testScoreTitle}}</div>
-
-        <div class="gauge-row-wrapper">
-            <div class="overflowWrap">
-                <div class="gauge-wrap">
-                    <div class="gauge-inner-text">{{::$ctrl.gaugeSuccessRate}}%
-                        <div class="success-title" translate=".SUCCESS"></div>
+            <div class="gauge-row-wrapper">
+                <div class="overflowWrap">
+                    <div class="gauge-wrap">
+                        <div class="gauge-inner-text">{{::$ctrl.gaugeSuccessRate}}%
+                            <div class="success-title" translate=".SUCCESS"></div>
+                        </div>
+                        <canvas
+                            width="134px"
+                            height="134px"
+                            id="doughnut"
+                            class="chart chart-doughnut"
+                            chart-options="$ctrl.performenceChart.options"
+                            chart-colours="$ctrl.performenceChart.colours"
+                            chart-data="$ctrl.performenceChart.data"
+                            chart-labels="$ctrl.performenceChart.labels"
+                            chart-legend="false">
+                        </canvas>
                     </div>
-                    <canvas
-                        width="134px"
-                        height="134px"
-                        id="doughnut"
-                        class="chart chart-doughnut"
-                        chart-options="$ctrl.performenceChart.options"
-                        chart-colours="$ctrl.performenceChart.colours"
-                        chart-data="$ctrl.performenceChart.data"
-                        chart-labels="$ctrl.performenceChart.labels"
-                        chart-legend="false">
-                    </canvas>
+                    <div class="statistics">
+                        <div class="stat-row">
+                            <div class="stat-val correct">{{::$ctrl.exerciseResults.correctAnswersNum}}</div>
+                            <div class="title" translate=".CORRECT"></div>
+                            <div class="avg-score"><span translate=".AVG"></span>. {{::$ctrl.avgTime.correctAvgTime}}
+                                <span translate=".SEC"></span></div>
+                        </div>
+
+                        <div class="stat-row">
+                            <div class="stat-val wrong">{{::$ctrl.exerciseResults.wrongAnswersNum}}</div>
+                            <div class="title" translate=".WRONG"></div>
+                            <div class="avg-score"><span translate=".AVG"></span>. {{::$ctrl.avgTime.wrongAvgTime}}
+                                <span translate=".SEC"></span></div>
+                        </div>
+
+                        <div class="stat-row">
+                            <div class="stat-val skipped">{{::$ctrl.exerciseResults.skippedAnswersNum}}</div>
+                            <div class="title" translate=".SKIPPED"></div>
+                            <div class="avg-score"><span translate=".AVG"></span>. {{::$ctrl.avgTime.skippedAvgTime}}
+                                <span translate=".SEC"></span></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="statistics">
-                    <div class="stat-row">
-                        <div class="stat-val correct">{{::$ctrl.exerciseResults.correctAnswersNum}}</div>
-                        <div class="title" translate=".CORRECT"></div>
-                        <div class="avg-score"><span translate=".AVG"></span>. {{::$ctrl.avgTime.correctAvgTime}} <span translate=".SEC"></span> </div>
-                    </div>
 
-                    <div class="stat-row">
-                        <div class="stat-val wrong">{{::$ctrl.exerciseResults.wrongAnswersNum}}</div>
-                        <div class="title" translate=".WRONG"></div>
-                        <div class="avg-score"><span translate=".AVG"></span>. {{::$ctrl.avgTime.wrongAvgTime}} <span translate=".SEC"></span></div>
-                    </div>
-
-                    <div class="stat-row">
-                        <div class="stat-val skipped">{{::$ctrl.exerciseResults.skippedAnswersNum}}</div>
-                        <div class="title" translate=".SKIPPED"></div>
-                        <div class="avg-score"><span translate=".AVG"></span>. {{::$ctrl.avgTime.skippedAvgTime}}  <span translate=".SEC"></span></div>
-                    </div>
-                </div>
+                <div class="category-name">{{$ctrl.categoryName | cutString: 42}}</div>
             </div>
-
-            <div class="category-name">{{$ctrl.categoryName | cutString: 42}}</div>
-        </div>
 
         <div class="review-btn-wrapper">
             <md-button class="md-primary znk"
@@ -65,48 +68,53 @@
         </div>
     </section>
 
-    <section class="time-line-wrapper2"  ng-class="{'seen-summary': $ctrl.seenSummary}">
+        <section class="time-line-wrapper2" ng-class="{'seen-summary': $ctrl.seenSummary}">
 
-        <div class="estimated-score-title">{{$ctrl.subjectName}} <span translate=".ESTIMATED_SCORE"></span> </div>
-        <performance-timeline
-            on-timeline-finish="vm.onTimelineFinish(subjectDelta)"
-            subject-id="{{::$ctrl.currentSubjectId}}"
-            show-induction="true"
-            active-exercise-id="::$ctrl.activeExerciseId">
-        </performance-timeline>
-    </section>
+            <div class="estimated-score-title">{{$ctrl.subjectName}} <span translate=".ESTIMATED_SCORE"></span></div>
+            <performance-timeline
+                on-timeline-finish="vm.onTimelineFinish(subjectDelta)"
+                subject-id="{{::$ctrl.currentSubjectId}}"
+                show-induction="true"
+                active-exercise-id="::$ctrl.activeExerciseId">
+            </performance-timeline>
+        </section>
 
 
-    <section class="proficiency-level-row animate-if" ng-if="!$ctrl.seenSummary">
-        <div class="proficiency-title-row" translate=".MASTERY_LEVEL"></div>
-        <div class="row data-row">
-            <div class="subject-level">
-                <div class="subject-name">{{$ctrl.subjectName}}</div>
-                <div class="subject-progress">
-                    <div class="progress">
-                        <div znk-progress-bar progress-width="{{$ctrl.performanceData[$ctrl.currentSubjectId].overall.progress}}" show-progress-value="false"></div>
-                        <span class="title" translate=".MASTERY"></span>
+        <section class="proficiency-level-row animate-if" ng-if="!$ctrl.seenSummary">
+            <div class="proficiency-title-row" translate=".MASTERY_LEVEL"></div>
+            <div class="row data-row">
+                <div class="subject-level">
+                    <div class="subject-name">{{$ctrl.subjectName}}</div>
+                    <div class="subject-progress">
+                        <div class="progress">
+                            <div znk-progress-bar
+                                 progress-width="{{$ctrl.performanceData[$ctrl.currentSubjectId].overall.progress}}"
+                                 show-progress-value="false"></div>
+                            <span class="title" translate=".MASTERY"></span>
+                        </div>
+                        <div class="progress-val">
+                            {{$ctrl.performanceData[$ctrl.currentSubjectId].overall.progress}}%
+                            <div class="progress-perfect" ng-class="{'bad-score': $ctrl.subjectsDelta<0}"
+                                 ng-if="$ctrl.subjectsDelta != 0">
+                                <span ng-if="$ctrl.subjectsDelta > 0">+</span>
+                                {{$ctrl.subjectsDelta | number : 0}}
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="progress-val">
-                        {{$ctrl.performanceData[$ctrl.currentSubjectId].overall.progress}}%
-                        <div class="progress-perfect" ng-class="{'bad-score': $ctrl.subjectsDelta<0}" ng-if="$ctrl.subjectsDelta != 0">
-                            <span ng-if="$ctrl.subjectsDelta > 0">+</span>
-                            {{$ctrl.subjectsDelta | number : 0}}
+                </div>
+                <div class="category-level-wrap">
+                    <div class="category-level" ng-repeat="(key, generalCategory) in $ctrl.generalCategories">
+
+                        <div class="category-data">
+                            <div class="category-level-name">{{generalCategory.name}}</div>
+                            <div znk-progress-bar progress-width="{{generalCategory.progress}}"
+                                 progress-value="{{generalCategory.progress}}" show-progress-value="false"></div>
+                            <div class="level">{{generalCategory.mastery}}</div>
                         </div>
                     </div>
-
                 </div>
             </div>
-            <div class="category-level-wrap">
-                <div class="category-level" ng-repeat="(key, generalCategory) in $ctrl.generalCategories">
-
-                    <div class="category-data">
-                        <div class="category-level-name">{{generalCategory.name}} </div>
-                        <div znk-progress-bar progress-width="{{generalCategory.progress}}" progress-value="{{generalCategory.progress}}" show-progress-value="false"></div>
-                        <div class="level">{{generalCategory.mastery}}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 </div>

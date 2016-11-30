@@ -1430,56 +1430,59 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "     subject-id-to-attr-drv=\"$ctrl.currentSubjectId\">\n" +
     "\n" +
     "    <complete-exercise-header></complete-exercise-header>\n" +
+    "    <div class=\"complete-exercise-summary-wrapper\">\n" +
+    "        <social-sharing\n" +
+    "            subject-id=\"::$ctrl.currentSubjectId\"\n" +
+    "            animate=\"true\">\n" +
+    "        </social-sharing>\n" +
     "\n" +
-    "    <social-sharing\n" +
-    "        subject-id=\"::$ctrl.currentSubjectId\"\n" +
-    "        animate=\"true\">\n" +
-    "    </social-sharing>\n" +
+    "        <section>\n" +
+    "            <div class=\"test-score-title\">{{::$ctrl.testScoreTitle}}</div>\n" +
     "\n" +
-    "    <section>\n" +
-    "        <div class=\"test-score-title\">{{::$ctrl.testScoreTitle}}</div>\n" +
-    "\n" +
-    "        <div class=\"gauge-row-wrapper\">\n" +
-    "            <div class=\"overflowWrap\">\n" +
-    "                <div class=\"gauge-wrap\">\n" +
-    "                    <div class=\"gauge-inner-text\">{{::$ctrl.gaugeSuccessRate}}%\n" +
-    "                        <div class=\"success-title\" translate=\".SUCCESS\"></div>\n" +
+    "            <div class=\"gauge-row-wrapper\">\n" +
+    "                <div class=\"overflowWrap\">\n" +
+    "                    <div class=\"gauge-wrap\">\n" +
+    "                        <div class=\"gauge-inner-text\">{{::$ctrl.gaugeSuccessRate}}%\n" +
+    "                            <div class=\"success-title\" translate=\".SUCCESS\"></div>\n" +
+    "                        </div>\n" +
+    "                        <canvas\n" +
+    "                            width=\"134px\"\n" +
+    "                            height=\"134px\"\n" +
+    "                            id=\"doughnut\"\n" +
+    "                            class=\"chart chart-doughnut\"\n" +
+    "                            chart-options=\"$ctrl.performenceChart.options\"\n" +
+    "                            chart-colours=\"$ctrl.performenceChart.colours\"\n" +
+    "                            chart-data=\"$ctrl.performenceChart.data\"\n" +
+    "                            chart-labels=\"$ctrl.performenceChart.labels\"\n" +
+    "                            chart-legend=\"false\">\n" +
+    "                        </canvas>\n" +
     "                    </div>\n" +
-    "                    <canvas\n" +
-    "                        width=\"134px\"\n" +
-    "                        height=\"134px\"\n" +
-    "                        id=\"doughnut\"\n" +
-    "                        class=\"chart chart-doughnut\"\n" +
-    "                        chart-options=\"$ctrl.performenceChart.options\"\n" +
-    "                        chart-colours=\"$ctrl.performenceChart.colours\"\n" +
-    "                        chart-data=\"$ctrl.performenceChart.data\"\n" +
-    "                        chart-labels=\"$ctrl.performenceChart.labels\"\n" +
-    "                        chart-legend=\"false\">\n" +
-    "                    </canvas>\n" +
+    "                    <div class=\"statistics\">\n" +
+    "                        <div class=\"stat-row\">\n" +
+    "                            <div class=\"stat-val correct\">{{::$ctrl.exerciseResults.correctAnswersNum}}</div>\n" +
+    "                            <div class=\"title\" translate=\".CORRECT\"></div>\n" +
+    "                            <div class=\"avg-score\"><span translate=\".AVG\"></span>. {{::$ctrl.avgTime.correctAvgTime}}\n" +
+    "                                <span translate=\".SEC\"></span></div>\n" +
+    "                        </div>\n" +
+    "\n" +
+    "                        <div class=\"stat-row\">\n" +
+    "                            <div class=\"stat-val wrong\">{{::$ctrl.exerciseResults.wrongAnswersNum}}</div>\n" +
+    "                            <div class=\"title\" translate=\".WRONG\"></div>\n" +
+    "                            <div class=\"avg-score\"><span translate=\".AVG\"></span>. {{::$ctrl.avgTime.wrongAvgTime}}\n" +
+    "                                <span translate=\".SEC\"></span></div>\n" +
+    "                        </div>\n" +
+    "\n" +
+    "                        <div class=\"stat-row\">\n" +
+    "                            <div class=\"stat-val skipped\">{{::$ctrl.exerciseResults.skippedAnswersNum}}</div>\n" +
+    "                            <div class=\"title\" translate=\".SKIPPED\"></div>\n" +
+    "                            <div class=\"avg-score\"><span translate=\".AVG\"></span>. {{::$ctrl.avgTime.skippedAvgTime}}\n" +
+    "                                <span translate=\".SEC\"></span></div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
     "                </div>\n" +
-    "                <div class=\"statistics\">\n" +
-    "                    <div class=\"stat-row\">\n" +
-    "                        <div class=\"stat-val correct\">{{::$ctrl.exerciseResults.correctAnswersNum}}</div>\n" +
-    "                        <div class=\"title\" translate=\".CORRECT\"></div>\n" +
-    "                        <div class=\"avg-score\"><span translate=\".AVG\"></span>. {{::$ctrl.avgTime.correctAvgTime}} <span translate=\".SEC\"></span> </div>\n" +
-    "                    </div>\n" +
     "\n" +
-    "                    <div class=\"stat-row\">\n" +
-    "                        <div class=\"stat-val wrong\">{{::$ctrl.exerciseResults.wrongAnswersNum}}</div>\n" +
-    "                        <div class=\"title\" translate=\".WRONG\"></div>\n" +
-    "                        <div class=\"avg-score\"><span translate=\".AVG\"></span>. {{::$ctrl.avgTime.wrongAvgTime}} <span translate=\".SEC\"></span></div>\n" +
-    "                    </div>\n" +
-    "\n" +
-    "                    <div class=\"stat-row\">\n" +
-    "                        <div class=\"stat-val skipped\">{{::$ctrl.exerciseResults.skippedAnswersNum}}</div>\n" +
-    "                        <div class=\"title\" translate=\".SKIPPED\"></div>\n" +
-    "                        <div class=\"avg-score\"><span translate=\".AVG\"></span>. {{::$ctrl.avgTime.skippedAvgTime}}  <span translate=\".SEC\"></span></div>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
+    "                <div class=\"category-name\">{{$ctrl.categoryName | cutString: 42}}</div>\n" +
     "            </div>\n" +
-    "\n" +
-    "            <div class=\"category-name\">{{$ctrl.categoryName | cutString: 42}}</div>\n" +
-    "        </div>\n" +
     "\n" +
     "        <div class=\"review-btn-wrapper\">\n" +
     "            <md-button class=\"md-primary znk\"\n" +
@@ -1492,50 +1495,55 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "        </div>\n" +
     "    </section>\n" +
     "\n" +
-    "    <section class=\"time-line-wrapper2\"  ng-class=\"{'seen-summary': $ctrl.seenSummary}\">\n" +
+    "        <section class=\"time-line-wrapper2\" ng-class=\"{'seen-summary': $ctrl.seenSummary}\">\n" +
     "\n" +
-    "        <div class=\"estimated-score-title\">{{$ctrl.subjectName}} <span translate=\".ESTIMATED_SCORE\"></span> </div>\n" +
-    "        <performance-timeline\n" +
-    "            on-timeline-finish=\"vm.onTimelineFinish(subjectDelta)\"\n" +
-    "            subject-id=\"{{::$ctrl.currentSubjectId}}\"\n" +
-    "            show-induction=\"true\"\n" +
-    "            active-exercise-id=\"::$ctrl.activeExerciseId\">\n" +
-    "        </performance-timeline>\n" +
-    "    </section>\n" +
+    "            <div class=\"estimated-score-title\">{{$ctrl.subjectName}} <span translate=\".ESTIMATED_SCORE\"></span></div>\n" +
+    "            <performance-timeline\n" +
+    "                on-timeline-finish=\"vm.onTimelineFinish(subjectDelta)\"\n" +
+    "                subject-id=\"{{::$ctrl.currentSubjectId}}\"\n" +
+    "                show-induction=\"true\"\n" +
+    "                active-exercise-id=\"::$ctrl.activeExerciseId\">\n" +
+    "            </performance-timeline>\n" +
+    "        </section>\n" +
     "\n" +
     "\n" +
-    "    <section class=\"proficiency-level-row animate-if\" ng-if=\"!$ctrl.seenSummary\">\n" +
-    "        <div class=\"proficiency-title-row\" translate=\".MASTERY_LEVEL\"></div>\n" +
-    "        <div class=\"row data-row\">\n" +
-    "            <div class=\"subject-level\">\n" +
-    "                <div class=\"subject-name\">{{$ctrl.subjectName}}</div>\n" +
-    "                <div class=\"subject-progress\">\n" +
-    "                    <div class=\"progress\">\n" +
-    "                        <div znk-progress-bar progress-width=\"{{$ctrl.performanceData[$ctrl.currentSubjectId].overall.progress}}\" show-progress-value=\"false\"></div>\n" +
-    "                        <span class=\"title\" translate=\".MASTERY\"></span>\n" +
+    "        <section class=\"proficiency-level-row animate-if\" ng-if=\"!$ctrl.seenSummary\">\n" +
+    "            <div class=\"proficiency-title-row\" translate=\".MASTERY_LEVEL\"></div>\n" +
+    "            <div class=\"row data-row\">\n" +
+    "                <div class=\"subject-level\">\n" +
+    "                    <div class=\"subject-name\">{{$ctrl.subjectName}}</div>\n" +
+    "                    <div class=\"subject-progress\">\n" +
+    "                        <div class=\"progress\">\n" +
+    "                            <div znk-progress-bar\n" +
+    "                                 progress-width=\"{{$ctrl.performanceData[$ctrl.currentSubjectId].overall.progress}}\"\n" +
+    "                                 show-progress-value=\"false\"></div>\n" +
+    "                            <span class=\"title\" translate=\".MASTERY\"></span>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"progress-val\">\n" +
+    "                            {{$ctrl.performanceData[$ctrl.currentSubjectId].overall.progress}}%\n" +
+    "                            <div class=\"progress-perfect\" ng-class=\"{'bad-score': $ctrl.subjectsDelta<0}\"\n" +
+    "                                 ng-if=\"$ctrl.subjectsDelta != 0\">\n" +
+    "                                <span ng-if=\"$ctrl.subjectsDelta > 0\">+</span>\n" +
+    "                                {{$ctrl.subjectsDelta | number : 0}}\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "\n" +
     "                    </div>\n" +
-    "                    <div class=\"progress-val\">\n" +
-    "                        {{$ctrl.performanceData[$ctrl.currentSubjectId].overall.progress}}%\n" +
-    "                        <div class=\"progress-perfect\" ng-class=\"{'bad-score': $ctrl.subjectsDelta<0}\" ng-if=\"$ctrl.subjectsDelta != 0\">\n" +
-    "                            <span ng-if=\"$ctrl.subjectsDelta > 0\">+</span>\n" +
-    "                            {{$ctrl.subjectsDelta | number : 0}}\n" +
+    "                </div>\n" +
+    "                <div class=\"category-level-wrap\">\n" +
+    "                    <div class=\"category-level\" ng-repeat=\"(key, generalCategory) in $ctrl.generalCategories\">\n" +
+    "\n" +
+    "                        <div class=\"category-data\">\n" +
+    "                            <div class=\"category-level-name\">{{generalCategory.name}}</div>\n" +
+    "                            <div znk-progress-bar progress-width=\"{{generalCategory.progress}}\"\n" +
+    "                                 progress-value=\"{{generalCategory.progress}}\" show-progress-value=\"false\"></div>\n" +
+    "                            <div class=\"level\">{{generalCategory.mastery}}</div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
-    "\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "            <div class=\"category-level-wrap\">\n" +
-    "                <div class=\"category-level\" ng-repeat=\"(key, generalCategory) in $ctrl.generalCategories\">\n" +
-    "\n" +
-    "                    <div class=\"category-data\">\n" +
-    "                        <div class=\"category-level-name\">{{generalCategory.name}} </div>\n" +
-    "                        <div znk-progress-bar progress-width=\"{{generalCategory.progress}}\" progress-value=\"{{generalCategory.progress}}\" show-progress-value=\"false\"></div>\n" +
-    "                        <div class=\"level\">{{generalCategory.mastery}}</div>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "    </section>\n" +
+    "        </section>\n" +
+    "    </div>\n" +
     "</div>\n" +
     "");
   $templateCache.put("components/completeExerciseAct/directives/socialSharing/socialSharing.template.html",
