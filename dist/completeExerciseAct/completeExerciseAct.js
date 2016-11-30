@@ -1098,59 +1098,36 @@
 
                     if (sharingData) {
                         self.subjectName = subjectMap[self.subjectId];
-                        var image = $window.location.protocol + ENV.zinkerzWebsiteBaseUrl + 'wp-content/themes/salient-child/images/share/' + sharingData.shareUrlMap[self.subjectName];
+                        var image = $window.location.protocol + ENV.zinkerzWebsiteBaseUrl + 'images/share/' + sharingData.shareUrlMap[self.subjectName];
                         var descriptionTranslate = sharingData.isImproved ? 'IMPROVED_TEXT' : 'SHARE_DESCRIPTION';
                         var description = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.' + descriptionTranslate, { pts: sharingData.points, subjectName: self.subjectName });
                         var title = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.SHARE_TITLE');
                         var caption = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.SHARE_CAPTION');
-                        var url = ENV.zinkezWebsiteUrl;
-                        var ogPrefix = 'og:';
-                        var twitterPrefix = 'twitter:';
+                        var hashtags = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.SHARE_HASHTAGS');
+                        var shareUrl =  $window.location.protocol + ENV.zinkezWebsiteUrl;
 
-
-                        self.shareData = {
-                            facebook: {
-                                type: 'facebook',
-                                facebookurl: url,
-                                facebooktitle: title
-                            }
+                        self.shareData = {};                        
+                        self.shareData.facebook = {
+                            type: 'facebook',
+                            display: 'popup',
+                            link: shareUrl,
+                            picture: image,
+                            caption: caption,
+                            description: description,
+                            app_id: ENV.facebookAppId,
+                            name: title
                         };
-                        self.shareData.facebook[ogPrefix + 'image'] = image;
-                        self.shareData.facebook[ogPrefix + 'image:width'] = 484;
-                        self.shareData.facebook[ogPrefix + 'image:height'] = 252;
-                        self.shareData.facebook[ogPrefix + 'title'] = title;
-                        self.shareData.facebook[ogPrefix + 'caption'] = caption;
-                        self.shareData.facebook[ogPrefix + 'description'] = description;
-                        self.shareData.facebook['fb:app_id'] = ENV.facebookAppId;
 
                         self.shareData.google = {
-                            type: 'google',
-                            url: url,
-                            title: title,
-                            description: description,
-                            image: image
+                            url: shareUrl,
                         };
-
-
-                        self.shareData.google [ogPrefix + 'image'] = image;
-                        self.shareData.google [ogPrefix + 'image:width'] = 484;
-                        self.shareData.google [ogPrefix + 'image:height'] = 252;
-                        self.shareData.google [ogPrefix + 'title'] = title;
-                        self.shareData.google [ogPrefix + 'description'] = description;
-                        self.shareData.google [ogPrefix + 'url'] = url;
 
                         self.shareData.twitter = {
                             type: 'twitter',
-                            description: description,
-                            url: url,
-                            title: title
+                            url: shareUrl,
+                            text: description,
+                            hashtags: hashtags
                         };
-                        self.shareData.twitter[twitterPrefix + 'card'] = 'summary_large_image';
-                        self.shareData.twitter[twitterPrefix + 'description'] = description;
-                        self.shareData.twitter[twitterPrefix + 'site'] = '@oded300';
-                        self.shareData.twitter[twitterPrefix + 'title'] = title;
-                        self.shareData.twitter[twitterPrefix + 'image'] = image;
-                        self.shareData.twitter[twitterPrefix + 'url'] = url;
                     }
                 });
             }]);

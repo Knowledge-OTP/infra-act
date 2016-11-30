@@ -26,7 +26,8 @@
         "IMPROVED_TEXT": "You've improved your initial {{subjectName}} score by <span class='bold'>{{pts}} pts!</span>",
         "SHARE_DESCRIPTION": "Hooray! I've reached {{pts}} pts on my estimated {{subjectName}} score on Zinkerz prep for the ACT",
         "SHARE_TITLE": "Zinkerz prep for the ACT",
-        "SHARE_CAPTION": "Education Appa That Make It Easy To Study Hard!"
+        "SHARE_CAPTION": "Education App That Make It Easy To Study Hard!",
+        "SHARE_HASHTAGS": "ACT, zinkerz, education"
     },
     "PERFORMANCE_ACT": {
         "MASTERY_LEVEL":{
