@@ -1486,6 +1486,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "        <div class=\"review-btn-wrapper\">\n" +
     "            <md-button class=\"md-primary znk\"\n" +
+    "                       aria-label=\"{{'COMPLETE_EXERCISE_ACT.COMPLETE_EXERCISE_SUMMARY.REVIEW' | translate}}\"\n" +
     "                       tabindex=\"1\"\n" +
     "                       md-no-ink\n" +
     "                       ng-cloak\n" +
