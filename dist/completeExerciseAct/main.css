@@ -1162,42 +1162,6 @@ complete-exercise-summary {
     background-color: #AF89D2; }
   complete-exercise-summary [znk-progress-bar], complete-exercise-summary znk-progress-bar {
     height: 0; }
-  complete-exercise-summary section.social-share {
-    padding: 25px 0; }
-    complete-exercise-summary section.social-share .social-share-wrapper {
-      width: 90px;
-      height: 25px;
-      cursor: pointer;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-pack: center;
-          justify-content: center;
-      -ms-flex-align: center;
-          align-items: center;
-      margin: 0 auto;
-      border-radius: 20px;
-      border: 1px solid #0a9bad; }
-      complete-exercise-summary section.social-share .social-share-wrapper span {
-        font-size: 16px;
-        color: #0a9bad;
-        font-family: Lato;
-        font-weight: 400;
-        position: relative;
-        top: -2px; }
-      complete-exercise-summary section.social-share .social-share-wrapper .share-icon {
-        width: 15px;
-        height: 15px;
-        fill: #0a9bad;
-        margin-bottom: 2px; }
-      complete-exercise-summary section.social-share .social-share-wrapper .share-button.sharer-0 {
-        width: 8px;
-        z-index: 1;
-        font-size: 0;
-        padding: 0;
-        bottom: 30px;
-        right: -13px; }
-        complete-exercise-summary section.social-share .social-share-wrapper .share-button.sharer-0 ul li:nth-child(1), complete-exercise-summary section.social-share .social-share-wrapper .share-button.sharer-0 ul li:nth-child(6), complete-exercise-summary section.social-share .social-share-wrapper .share-button.sharer-0 ul li:nth-child(7), complete-exercise-summary section.social-share .social-share-wrapper .share-button.sharer-0 ul li:nth-child(8) {
-          display: none; }
   complete-exercise-summary.workout-summary-wrapper-essay .time-line-wrapper2 {
     display: none; }
   complete-exercise-summary.workout-summary-wrapper-essay .proficiency-level-row, complete-exercise-summary.workout-summary-wrapper-essay .social-share {
