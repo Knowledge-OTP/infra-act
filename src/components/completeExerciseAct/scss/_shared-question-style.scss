@@ -45,15 +45,12 @@ znk-exercise {
     }
 
     &.done-btn-show, &.pager-displayed {
-        $bottomShadowHeight: 58px;
-        .question-container {
-            & > div:nth-last-child(2), & > article:last-child, & > p:nth-last-child(2) {
-                padding-bottom: $bottomShadowHeight;
-            }
+        .question-basic-style{
+            height: calc(100% - 60px);
         }
 
         answer-builder {
-            padding-bottom: $bottomShadowHeight;
+            max-height: calc(100% - 60px);
         }
     }
 
