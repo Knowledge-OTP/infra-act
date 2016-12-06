@@ -95,14 +95,3 @@ writing-specific-paragraph {
         }
     }
 }
-
-znk-exercise {
-    &.done-btn-show, &.pager-displayed {
-        $bottomShadowHeight: 58px;
-        .full-passage {
-            & > div:last-child, & > article:last-child, & > p:last-child {
-                padding-bottom: $bottomShadowHeight;
-            }
-        }
-    }
-}

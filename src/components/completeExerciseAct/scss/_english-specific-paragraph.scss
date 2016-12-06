@@ -32,7 +32,7 @@ english-specific-paragraph {
         }
 
         .full-passage-view-wrapper{
-            @include dimension(1040px, 540px);
+            @include dimension(1040px, 100%);
             margin: 0 auto;
             overflow-y: auto;
 
