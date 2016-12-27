@@ -326,9 +326,11 @@ free-text-answer .free-text-answer-wrapper {
     free-text-answer .free-text-answer-wrapper .input-wrapper input:focus {
       outline: none; }
 
-.lecture-question-wrapper .img-wrapper img {
-  width: 100% !important;
-  max-width: none !important; }
+.lecture-question-wrapper {
+  height: 100%; }
+  .lecture-question-wrapper .img-wrapper img {
+    width: 100% !important;
+    max-width: none !important; }
 
 math-question .math-question-wrapper .question-container {
   display: -ms-flexbox;
