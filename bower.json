@@ -5,7 +5,7 @@
     "Zinkerz"
   ],
   "dependencies": {
-    "infra-web-app": "https://github.com/Knowledge-OTP/infra-web-app.git#zinkerz/dev"
+    "infra-web-app": "https://github.com/Knowledge-OTP/infra-web-app.git#~v6.0.0"
   },
   "ignore": [
     ".*",
