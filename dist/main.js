@@ -6,6 +6,7 @@
 "znk.infra-act.configAct",
 "znk.infra-act.examUtility",
 "znk.infra-act.exerciseUtilityAct",
+"znk.infra-act.lessonTopic",
 "znk.infra-act.performance",
 "znk.infra-act.socialSharingAct",
 "znk.infra-act.userGoals"
@@ -2203,6 +2204,48 @@ angular.module('znk.infra-act.examUtility').run(['$templateCache', function($tem
 })(angular);
 
 angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', function($templateCache) {
+
+}]);
+
+(function (angular) {
+    'use strict';
+
+    angular.module('znk.infra-act.lessonTopic', [
+        'znk.infra.exerciseUtility'
+    ]);
+})(angular);
+
+(function (angular) {
+    'use strict';
+
+    angular.module('znk.infra-act.lessonTopic').service('LessonTopicService', ["SubjectEnum", "LiveSessionSubjectEnum", "$log", function (SubjectEnum, LiveSessionSubjectEnum, $log) {
+        'ngInject';
+        this.getTopicSubjects = function (topicId) {
+            var topicSubjects;
+
+            switch (topicId) {
+                case LiveSessionSubjectEnum.ENGLISH.enum:
+                    topicSubjects = {
+                        reading: SubjectEnum.READING.enum,
+                        writing: SubjectEnum.WRITING.enum,
+                        english: SubjectEnum.ENGLISH.enum
+                    };
+                    break;
+                case LiveSessionSubjectEnum.MATH.enum:
+                    topicSubjects = {
+                        math: SubjectEnum.MATH.enum,
+                        science: SubjectEnum.SCIENCE.enum
+                    };
+                    break;
+                default:
+                    $log.error('Invalid topicId');
+            }
+            return topicSubjects;
+        };
+    }]);
+})(angular);
+
+angular.module('znk.infra-act.lessonTopic').run(['$templateCache', function($templateCache) {
 
 }]);
 
