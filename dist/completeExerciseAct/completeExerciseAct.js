@@ -25,7 +25,7 @@
             var svgMap = {
                 'complete-exercise-correct-icon': 'components/completeExerciseAct/svg/correct-icon.svg',
                 'complete-exercise-wrong-icon': 'components/completeExerciseAct/svg/wrong-icon.svg',
-                'appLogo-with-name':'components/configAct/svg/app-logo.svg'
+                'znk-app-name-logo':'components/configAct/svg/znk-app-name-logo.svg'
             };
             SvgIconSrvProvider.registerSvgSources(svgMap);
         }]);

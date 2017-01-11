@@ -76,7 +76,7 @@
 })();
 
 angular.module('znk.infra-act.configAct').run(['$templateCache', function($templateCache) {
-  $templateCache.put("components/configAct/svg/app-logo.svg",
+  $templateCache.put("components/configAct/svg/znk-app-name-logo.svg",
     "<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" viewBox=\"-182.3 363 244.3 70.1\" class=\"act-app-logo\">\n" +
     "<style type=\"text/css\">\n" +
     "	.act-app-logo .st0{enable-background:new    ;}\n" +
