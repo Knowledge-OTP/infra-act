@@ -9,9 +9,8 @@
             animate="true">
         </social-sharing>
 
-        <section>
+        <div class="section">
             <div class="test-score-title">{{::$ctrl.testScoreTitle}}</div>
-
             <div class="gauge-row-wrapper">
                 <div class="overflowWrap">
                     <div class="gauge-wrap">
@@ -56,8 +55,7 @@
 
                 <div class="category-name">{{$ctrl.categoryName | cutString: 42}}</div>
             </div>
-
-        <div class="review-btn-wrapper">
+            <div class="review-btn-wrapper">
             <md-button class="md-primary znk"
                        aria-label="{{'COMPLETE_EXERCISE_ACT.COMPLETE_EXERCISE_SUMMARY.REVIEW' | translate}}"
                        tabindex="1"
@@ -67,9 +65,9 @@
                 <span translate=".REVIEW"></span>
             </md-button>
         </div>
-    </section>
+        </div>
 
-        <section class="time-line-wrapper2" ng-class="{'seen-summary': $ctrl.seenSummary}">
+        <div class="section time-line-wrapper2" ng-class="{'seen-summary': $ctrl.seenSummary}">
 
             <div class="estimated-score-title">{{$ctrl.subjectName}} <span translate=".ESTIMATED_SCORE"></span></div>
             <performance-timeline
@@ -78,10 +76,9 @@
                 show-induction="true"
                 active-exercise-id="::$ctrl.activeExerciseId">
             </performance-timeline>
-        </section>
+        </div>
 
-
-        <section class="proficiency-level-row animate-if" ng-if="!$ctrl.seenSummary">
+        <div class="section proficiency-level-row animate-if" ng-if="!$ctrl.seenSummary">
             <div class="proficiency-title-row" translate=".MASTERY_LEVEL"></div>
             <div class="row data-row">
                 <div class="subject-level">
@@ -116,6 +113,6 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 </div>

@@ -1,274 +1,270 @@
 complete-exercise-summary{
 
-    section {
-        padding: 30px 0;
-        background: $backgroundColor1;
-    }
+    .complete-exercise-summary-wrapper{
+        width: 100%;
+        height: 93%;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        position: relative;
+        background-color: $backgroundColor1;
 
-    @include dimension(1063px,auto);
-    // min-height: 1027px;
-    position: relative;
-    background-color: $backgroundColor1;
-
-    .test-score-title {
-        @include text-style(24px, $fontColor2, Lato, $regularFontWeight, null, null, null, center);
-    }
-
-    .gauge-row-wrapper {
-        .overflowWrap {
-            overflow: hidden;
+        .section {
+            padding: 30px 0;
+            background: $backgroundColor1;
         }
 
         .test-score-title {
-            @include text-style(18px, $fontColor1, Quicksand, $boldFontWeight);
-            margin-top: 22px;
-            text-align: center;
+            @include text-style(24px, $fontColor2, Lato, $regularFontWeight, null, null, null, center);
         }
 
-        .gauge-wrap {
-            display: inline-block;
-            margin-left: 230px;
-            float: left;
-            .gauge-inner-text {
-                @include dimension(62px, 32px);
-                @include text-style(30px, $fontColor10, Lato, $regularFontWeight);
-                text-align: center;
-                position: relative;
-                top: 77px;
-                left: 41px;
+        .gauge-row-wrapper {
+            .overflowWrap {
+                overflow: hidden;
+            }
 
-                .success-title {
-                    @include text-style(14px, $fontColor10, Lato, $lightFontWeight);
+            .test-score-title {
+                @include text-style(18px, $fontColor1, Quicksand, $boldFontWeight);
+                margin-top: 22px;
+                text-align: center;
+            }
+
+            .gauge-wrap {
+                display: inline-block;
+                margin-left: 230px;
+                float: left;
+                .gauge-inner-text {
+                    @include dimension(62px, 32px);
+                    @include text-style(30px, $fontColor10, Lato, $regularFontWeight);
+                    text-align: center;
                     position: relative;
-                    bottom: 2px;
+                    top: 77px;
+                    left: 41px;
+
+                    .success-title {
+                        @include text-style(14px, $fontColor10, Lato, $lightFontWeight);
+                        position: relative;
+                        bottom: 2px;
+                    }
+                }
+
+                .chart {
+                    @include dimension(134px, 134px);
                 }
             }
-
-            .chart {
-                @include dimension(134px, 134px);
-            }
-        }
-    }
-
-    .review-btn-wrapper{
-        display: flex;
-        justify-content: center;
-    }
-
-    .statistics {
-        @include dimension(320px, 110px);
-        @include display-flex;
-        @include justify-content(space-around);
-        position: relative;
-        top: 40px;
-        left: 44px;
-
-        .stat-row:nth-child(1):after, .stat-row:nth-child(2):after {
-            content: "";
-            position: absolute;
-            top: 7px;
-            left: 83px;
-            width: 1px;
-            height: 96px;
-            background-color: $borderColor7;
         }
 
-        .stat-row {
+        .review-btn-wrapper{
+            display: flex;
+            justify-content: center;
+        }
+
+        .statistics {
+            @include dimension(320px, 110px);
             @include display-flex;
-            @include flex-direction(column);
-            @include align-items(center);
             @include justify-content(space-around);
             position: relative;
-            .stat-val {
-                @include dimension(40px, 40px);
+            top: 40px;
+            left: 44px;
+
+            .stat-row:nth-child(1):after, .stat-row:nth-child(2):after {
+                content: "";
+                position: absolute;
+                top: 7px;
+                left: 83px;
+                width: 1px;
+                height: 96px;
+                background-color: $borderColor7;
+            }
+
+            .stat-row {
                 @include display-flex;
-                @include flex-middle;
-                @include text-style(28px, $fontColor1, Quicksand, $boldFontWeight);
-                margin: 0 auto;
-                border-radius: 50px;
-
-                &.correct {
-                    background-color: $backgroundColor4;
-                }
-                &.wrong {
-                    background-color: $backgroundColor3;
-                }
-                &.skipped {
-                    background-color: $backgroundColor14;
-                }
-            }
-
-            .title {
-                @include text-style(16px, $fontColor2, Quicksand, $regularFontWeight);
-            }
-
-            .avg-score {
-                @include text-style(10px, $fontColor2, Lato, $lightFontWeight);
-            }
-        }
-    }
-
-    .category-name {
-        @include text-style(14px, $fontColor2, Lato, $lightFontWeight, null, capitalize, null, center);
-        margin-top: 30px;
-    }
-
-    .review-button {
-        display: block;
-        margin: 20px auto 0;
-    }
-
-    .time-line-wrapper2 {
-        background-color: $backgroundColor7;
-
-        &.seen-summary{
-            border-radius: 0 0 15px 15px;
-        }
-
-        .estimated-score-title {
-            @include text-style(18px, $fontColor2, Quicksand, $boldFontWeight, null, capitalize, null, center);
-        }
-
-        .performance-timeline {
-            .progress-val {
-                text-align: center;
-            }
-        }
-    }
-
-    .proficiency-level-row {
-        .proficiency-title-row {
-            @include text-style(18px, $fontColor2, Quicksand, $boldFontWeight);
-            text-align: center;
-            margin-bottom: 27px;
-        }
-
-        .data-row {
-            @include display-flex;
-            @include justify-content(center);
-            .subject-level {
-                padding: 2px 0 0 0;
+                @include flex-direction(column);
+                @include align-items(center);
+                @include justify-content(space-around);
                 position: relative;
-                margin-right: 35px;
-
-                .test-score-name {
-                    @include text-style(25px, $fontColor2, Lato, $regularFontWeight, null, capitalize);
-                    display: block;
-                    margin-bottom: 15px;
-                }
-
-                .subject-progress {
-                    @include dimension(200px, 40px);
-                    display: flex;
-
-                    .progress {
-                        width: 72px;
-                        margin-right: 10px;
-
-                        .progress-wrap {
-                            height: 4px;
-                        }
-                        .title {
-                            @include text-style(12px, $fontColor3, Lato, $lightFontWeight);
-                            margin-top: 8px;
-                        }
-                    }
-                    .progress-val {
-                        @include text-style(28px, $fontColor2, Quicksand, $boldFontWeight);
-                        position: relative;
-                        bottom: 11px;
-                        .progress-perfect {
-                            @include text-style(12px, $fontColor5, Lato, $regularFontWeight);
-                            display: flex;
-                            position: absolute;
-                            bottom: 30px;
-                            left: 57px;
-                        }
-                        .bad-score {
-                            color: $fontColor6;
-                        }
-                    }
-                }
-            }
-
-            .category-level-wrap {
-                max-width: 500px;
-                margin-left: 20px;
-
-                div.category-level:nth-child(2n+1) {
-                    float: left;
-                    margin-right: 30px;
-                }
-
-                div.category-level:nth-child(2n) {
-                    float: right;
-                    margin-left: 65px;
-                }
-
-                .category-level {
-                    @include dimension(200px, 88px);
+                .stat-val {
+                    @include dimension(40px, 40px);
                     @include display-flex;
                     @include flex-middle;
-                    margin-bottom: 20px;
+                    @include text-style(28px, $fontColor1, Quicksand, $boldFontWeight);
+                    margin: 0 auto;
+                    border-radius: 50px;
 
-                    .icon-wrap {
-                        display: inline-block;
-                        margin-right: 10px;
+                    &.correct {
+                        background-color: $backgroundColor4;
+                    }
+                    &.wrong {
+                        background-color: $backgroundColor3;
+                    }
+                    &.skipped {
+                        background-color: $backgroundColor14;
+                    }
+                }
+
+                .title {
+                    @include text-style(16px, $fontColor2, Quicksand, $regularFontWeight);
+                }
+
+                .avg-score {
+                    @include text-style(10px, $fontColor2, Lato, $lightFontWeight);
+                }
+            }
+        }
+
+        .category-name {
+            @include text-style(14px, $fontColor2, Lato, $lightFontWeight, null, capitalize, null, center);
+            margin-top: 30px;
+        }
+
+        .review-button {
+            display: block;
+            margin: 20px auto 0;
+        }
+
+        .time-line-wrapper2 {
+            background-color: $backgroundColor7;
+
+            &.seen-summary{
+                border-radius: 0 0 15px 15px;
+            }
+
+            .estimated-score-title {
+                @include text-style(18px, $fontColor2, Quicksand, $boldFontWeight, null, capitalize, null, center);
+            }
+
+            .performance-timeline {
+                .progress-val {
+                    text-align: center;
+                }
+            }
+        }
+
+        .proficiency-level-row {
+            .proficiency-title-row {
+                @include text-style(18px, $fontColor2, Quicksand, $boldFontWeight);
+                text-align: center;
+                margin-bottom: 27px;
+            }
+
+            .data-row {
+                @include display-flex;
+                @include justify-content(center);
+                .subject-level {
+                    padding: 2px 0 0 0;
+                    position: relative;
+                    margin-right: 35px;
+
+                    .test-score-name {
+                        @include text-style(25px, $fontColor2, Lato, $regularFontWeight, null, capitalize);
+                        display: block;
+                        margin-bottom: 15px;
                     }
 
-                    .category-data {
-                        display: inline-block;
-                        text-align: left;
+                    .subject-progress {
+                        @include dimension(200px, 40px);
+                        display: flex;
 
-                        .category-level-name {
-                            @include text-style(17px, $fontColor2, Lato, $regularFontWeight);
-                            max-width: 170px;
-                            text-overflow: ellipsis;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            margin-bottom: 10px;
+                        .progress {
+                            width: 72px;
+                            margin-right: 10px;
+
+                            .progress-wrap {
+                                height: 4px;
+                            }
+                            .title {
+                                @include text-style(12px, $fontColor3, Lato, $lightFontWeight);
+                                margin-top: 8px;
+                            }
+                        }
+                        .progress-val {
+                            @include text-style(28px, $fontColor2, Quicksand, $boldFontWeight);
+                            position: relative;
+                            bottom: 11px;
+                            .progress-perfect {
+                                @include text-style(12px, $fontColor5, Lato, $regularFontWeight);
+                                display: flex;
+                                position: absolute;
+                                bottom: 30px;
+                                left: 57px;
+                            }
+                            .bad-score {
+                                color: $fontColor6;
+                            }
+                        }
+                    }
+                }
+
+                .category-level-wrap {
+                    max-width: 500px;
+                    margin-left: 20px;
+
+                    div.category-level:nth-child(2n+1) {
+                        float: left;
+                        margin-right: 30px;
+                    }
+
+                    div.category-level:nth-child(2n) {
+                        float: right;
+                        margin-left: 65px;
+                    }
+
+                    .category-level {
+                        @include dimension(200px, 88px);
+                        @include display-flex;
+                        @include flex-middle;
+                        margin-bottom: 20px;
+
+                        .icon-wrap {
+                            display: inline-block;
+                            margin-right: 10px;
                         }
 
-                        .level {
-                            @include text-style(12px, $fontColor2, Lato, $lightFontWeight);
+                        .category-data {
+                            display: inline-block;
                             text-align: left;
-                            text-transform: uppercase;
-                            margin-top: 10px;
-                        }
 
-                        .progress-wrap {
-                            width: 175px;
-                            height: 5px;
+                            .category-level-name {
+                                @include text-style(17px, $fontColor2, Lato, $regularFontWeight);
+                                max-width: 170px;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                margin-bottom: 10px;
+                            }
+
+                            .level {
+                                @include text-style(12px, $fontColor2, Lato, $lightFontWeight);
+                                text-align: left;
+                                text-transform: uppercase;
+                                margin-top: 10px;
+                            }
+
+                            .progress-wrap {
+                                width: 175px;
+                                height: 5px;
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
-    &.math .progress-wrap .progress {
-        background-color: $mathColor;
-    }
-    //&.reading .progress-wrap .progress {
-    //    background-color: $readingColor;
-    //}
-    //&.english .progress-wrap .progress {
-    //    background-color: $englishColor;
-    //}
-    //&.science .progress-wrap .progress {
-    //    background-color: $scienceColor;
-    //}
-
-    [znk-progress-bar], znk-progress-bar {
-        height: 0;
-    }
-
-    &.workout-summary-wrapper-essay {
-        .time-line-wrapper2 {
-            display: none;
+        &.math .progress-wrap .progress {
+            background-color: $mathColor;
         }
-        .proficiency-level-row, .social-share {
-            background-color: $backgroundColor7;
+
+        [znk-progress-bar], znk-progress-bar {
+            height: 0;
+        }
+
+        &.workout-summary-wrapper-essay {
+            .time-line-wrapper2 {
+                display: none;
+            }
+            .proficiency-level-row, .social-share {
+                background-color: $backgroundColor7;
+            }
         }
     }
 }

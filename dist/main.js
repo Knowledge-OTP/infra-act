@@ -1451,9 +1451,8 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "            animate=\"true\">\n" +
     "        </social-sharing>\n" +
     "\n" +
-    "        <section>\n" +
+    "        <div class=\"section\">\n" +
     "            <div class=\"test-score-title\">{{::$ctrl.testScoreTitle}}</div>\n" +
-    "\n" +
     "            <div class=\"gauge-row-wrapper\">\n" +
     "                <div class=\"overflowWrap\">\n" +
     "                    <div class=\"gauge-wrap\">\n" +
@@ -1498,8 +1497,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "                <div class=\"category-name\">{{$ctrl.categoryName | cutString: 42}}</div>\n" +
     "            </div>\n" +
-    "\n" +
-    "        <div class=\"review-btn-wrapper\">\n" +
+    "            <div class=\"review-btn-wrapper\">\n" +
     "            <md-button class=\"md-primary znk\"\n" +
     "                       aria-label=\"{{'COMPLETE_EXERCISE_ACT.COMPLETE_EXERCISE_SUMMARY.REVIEW' | translate}}\"\n" +
     "                       tabindex=\"1\"\n" +
@@ -1509,9 +1507,9 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "                <span translate=\".REVIEW\"></span>\n" +
     "            </md-button>\n" +
     "        </div>\n" +
-    "    </section>\n" +
+    "        </div>\n" +
     "\n" +
-    "        <section class=\"time-line-wrapper2\" ng-class=\"{'seen-summary': $ctrl.seenSummary}\">\n" +
+    "        <div class=\"section time-line-wrapper2\" ng-class=\"{'seen-summary': $ctrl.seenSummary}\">\n" +
     "\n" +
     "            <div class=\"estimated-score-title\">{{$ctrl.subjectName}} <span translate=\".ESTIMATED_SCORE\"></span></div>\n" +
     "            <performance-timeline\n" +
@@ -1520,10 +1518,9 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "                show-induction=\"true\"\n" +
     "                active-exercise-id=\"::$ctrl.activeExerciseId\">\n" +
     "            </performance-timeline>\n" +
-    "        </section>\n" +
+    "        </div>\n" +
     "\n" +
-    "\n" +
-    "        <section class=\"proficiency-level-row animate-if\" ng-if=\"!$ctrl.seenSummary\">\n" +
+    "        <div class=\"section proficiency-level-row animate-if\" ng-if=\"!$ctrl.seenSummary\">\n" +
     "            <div class=\"proficiency-title-row\" translate=\".MASTERY_LEVEL\"></div>\n" +
     "            <div class=\"row data-row\">\n" +
     "                <div class=\"subject-level\">\n" +
@@ -1558,7 +1555,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "        </section>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "</div>\n" +
     "");
