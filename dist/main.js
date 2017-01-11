@@ -1113,7 +1113,7 @@
 
                     if (sharingData) {
                         self.subjectName = subjectMap[self.subjectId];
-                        var image = $window.location.protocol + ENV.zinkerzWebsiteBaseUrl + 'images/share/' + sharingData.shareUrlMap[self.subjectName];
+                        var image = $window.location.protocol + ENV.zinkerzWebsiteShareImgUrl + sharingData.shareUrlMap[self.subjectName];
                         var descriptionTranslate = sharingData.isImproved ? 'IMPROVED_TEXT' : 'SHARE_DESCRIPTION';
                         var description = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.' + descriptionTranslate, { pts: sharingData.points, subjectName: self.subjectName });
                         var title = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.SHARE_TITLE');
@@ -2908,7 +2908,7 @@ angular.module('znk.infra-act.performance').run(['$templateCache', function($tem
                     banner1: 'summary-congrats-banner-750-1',
                     banner2: 'summary-congrats-banner-750-2',
                     shareUrlMap: {
-                        math: 'ACT-FB-share-post-math-25.png',
+                        math: 'ACT-FB-share-post-math-33.png',
                         english: 'ACT-FB-share-post-english-33.png',
                         reading: 'ACT-FB-share-post-reading-33.png',
                         science: 'ACT-FB-share-post-science-33.png',
