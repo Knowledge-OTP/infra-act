@@ -912,34 +912,39 @@ znk-exercise .question-wrapper table, .tutorial-intro table {
     border: 1px solid #dddddd;
     vertical-align: top; }
 
-complete-exercise-summary {
-  width: 1063px;
-  height: auto;
+complete-exercise-summary .complete-exercise-summary-wrapper {
+  width: 100%;
+  height: 93%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  overflow: auto;
   position: relative;
   background-color: #ffffff; }
-  complete-exercise-summary section {
+  complete-exercise-summary .complete-exercise-summary-wrapper .section {
     padding: 30px 0;
     background: #ffffff; }
-  complete-exercise-summary .test-score-title {
+  complete-exercise-summary .complete-exercise-summary-wrapper .test-score-title {
     font-size: 24px;
     color: #757a83;
     font-family: Lato;
     font-weight: 400;
     text-align: center; }
-  complete-exercise-summary .gauge-row-wrapper .overflowWrap {
+  complete-exercise-summary .complete-exercise-summary-wrapper .gauge-row-wrapper .overflowWrap {
     overflow: hidden; }
-  complete-exercise-summary .gauge-row-wrapper .test-score-title {
+  complete-exercise-summary .complete-exercise-summary-wrapper .gauge-row-wrapper .test-score-title {
     font-size: 18px;
     color: #ffffff;
     font-family: Quicksand;
     font-weight: 700;
     margin-top: 22px;
     text-align: center; }
-  complete-exercise-summary .gauge-row-wrapper .gauge-wrap {
+  complete-exercise-summary .complete-exercise-summary-wrapper .gauge-row-wrapper .gauge-wrap {
     display: inline-block;
     margin-left: 230px;
     float: left; }
-    complete-exercise-summary .gauge-row-wrapper .gauge-wrap .gauge-inner-text {
+    complete-exercise-summary .complete-exercise-summary-wrapper .gauge-row-wrapper .gauge-wrap .gauge-inner-text {
       width: 62px;
       height: 32px;
       font-size: 30px;
@@ -950,22 +955,22 @@ complete-exercise-summary {
       position: relative;
       top: 77px;
       left: 41px; }
-      complete-exercise-summary .gauge-row-wrapper .gauge-wrap .gauge-inner-text .success-title {
+      complete-exercise-summary .complete-exercise-summary-wrapper .gauge-row-wrapper .gauge-wrap .gauge-inner-text .success-title {
         font-size: 14px;
         color: #626060;
         font-family: Lato;
         font-weight: 200;
         position: relative;
         bottom: 2px; }
-    complete-exercise-summary .gauge-row-wrapper .gauge-wrap .chart {
+    complete-exercise-summary .complete-exercise-summary-wrapper .gauge-row-wrapper .gauge-wrap .chart {
       width: 134px;
       height: 134px; }
-  complete-exercise-summary .review-btn-wrapper {
+  complete-exercise-summary .complete-exercise-summary-wrapper .review-btn-wrapper {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-pack: center;
         justify-content: center; }
-  complete-exercise-summary .statistics {
+  complete-exercise-summary .complete-exercise-summary-wrapper .statistics {
     width: 320px;
     height: 110px;
     display: -ms-flexbox;
@@ -975,7 +980,7 @@ complete-exercise-summary {
     position: relative;
     top: 40px;
     left: 44px; }
-    complete-exercise-summary .statistics .stat-row:nth-child(1):after, complete-exercise-summary .statistics .stat-row:nth-child(2):after {
+    complete-exercise-summary .complete-exercise-summary-wrapper .statistics .stat-row:nth-child(1):after, complete-exercise-summary .complete-exercise-summary-wrapper .statistics .stat-row:nth-child(2):after {
       content: "";
       position: absolute;
       top: 7px;
@@ -983,7 +988,7 @@ complete-exercise-summary {
       width: 1px;
       height: 96px;
       background-color: #e7e7e7; }
-    complete-exercise-summary .statistics .stat-row {
+    complete-exercise-summary .complete-exercise-summary-wrapper .statistics .stat-row {
       display: -ms-flexbox;
       display: flex;
       display: flex;
@@ -994,7 +999,7 @@ complete-exercise-summary {
       -ms-flex-pack: distribute;
           justify-content: space-around;
       position: relative; }
-      complete-exercise-summary .statistics .stat-row .stat-val {
+      complete-exercise-summary .complete-exercise-summary-wrapper .statistics .stat-row .stat-val {
         width: 40px;
         height: 40px;
         display: -ms-flexbox;
@@ -1011,23 +1016,23 @@ complete-exercise-summary {
         font-weight: 700;
         margin: 0 auto;
         border-radius: 50px; }
-        complete-exercise-summary .statistics .stat-row .stat-val.correct {
+        complete-exercise-summary .complete-exercise-summary-wrapper .statistics .stat-row .stat-val.correct {
           background-color: #87ca4d; }
-        complete-exercise-summary .statistics .stat-row .stat-val.wrong {
+        complete-exercise-summary .complete-exercise-summary-wrapper .statistics .stat-row .stat-val.wrong {
           background-color: #ff6766; }
-        complete-exercise-summary .statistics .stat-row .stat-val.skipped {
+        complete-exercise-summary .complete-exercise-summary-wrapper .statistics .stat-row .stat-val.skipped {
           background-color: #c2c2c2; }
-      complete-exercise-summary .statistics .stat-row .title {
+      complete-exercise-summary .complete-exercise-summary-wrapper .statistics .stat-row .title {
         font-size: 16px;
         color: #757a83;
         font-family: Quicksand;
         font-weight: 400; }
-      complete-exercise-summary .statistics .stat-row .avg-score {
+      complete-exercise-summary .complete-exercise-summary-wrapper .statistics .stat-row .avg-score {
         font-size: 10px;
         color: #757a83;
         font-family: Lato;
         font-weight: 200; }
-  complete-exercise-summary .category-name {
+  complete-exercise-summary .complete-exercise-summary-wrapper .category-name {
     font-size: 14px;
     color: #757a83;
     font-family: Lato;
@@ -1035,39 +1040,39 @@ complete-exercise-summary {
     text-transform: capitalize;
     text-align: center;
     margin-top: 30px; }
-  complete-exercise-summary .review-button {
+  complete-exercise-summary .complete-exercise-summary-wrapper .review-button {
     display: block;
     margin: 20px auto 0; }
-  complete-exercise-summary .time-line-wrapper2 {
+  complete-exercise-summary .complete-exercise-summary-wrapper .time-line-wrapper2 {
     background-color: #fafafa; }
-    complete-exercise-summary .time-line-wrapper2.seen-summary {
+    complete-exercise-summary .complete-exercise-summary-wrapper .time-line-wrapper2.seen-summary {
       border-radius: 0 0 15px 15px; }
-    complete-exercise-summary .time-line-wrapper2 .estimated-score-title {
+    complete-exercise-summary .complete-exercise-summary-wrapper .time-line-wrapper2 .estimated-score-title {
       font-size: 18px;
       color: #757a83;
       font-family: Quicksand;
       font-weight: 700;
       text-transform: capitalize;
       text-align: center; }
-    complete-exercise-summary .time-line-wrapper2 .performance-timeline .progress-val {
+    complete-exercise-summary .complete-exercise-summary-wrapper .time-line-wrapper2 .performance-timeline .progress-val {
       text-align: center; }
-  complete-exercise-summary .proficiency-level-row .proficiency-title-row {
+  complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .proficiency-title-row {
     font-size: 18px;
     color: #757a83;
     font-family: Quicksand;
     font-weight: 700;
     text-align: center;
     margin-bottom: 27px; }
-  complete-exercise-summary .proficiency-level-row .data-row {
+  complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-pack: center;
         justify-content: center; }
-    complete-exercise-summary .proficiency-level-row .data-row .subject-level {
+    complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .subject-level {
       padding: 2px 0 0 0;
       position: relative;
       margin-right: 35px; }
-      complete-exercise-summary .proficiency-level-row .data-row .subject-level .test-score-name {
+      complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .subject-level .test-score-name {
         font-size: 25px;
         color: #757a83;
         font-family: Lato;
@@ -1075,30 +1080,30 @@ complete-exercise-summary {
         text-transform: capitalize;
         display: block;
         margin-bottom: 15px; }
-      complete-exercise-summary .proficiency-level-row .data-row .subject-level .subject-progress {
+      complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .subject-level .subject-progress {
         width: 200px;
         height: 40px;
         display: -ms-flexbox;
         display: flex; }
-        complete-exercise-summary .proficiency-level-row .data-row .subject-level .subject-progress .progress {
+        complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .subject-level .subject-progress .progress {
           width: 72px;
           margin-right: 10px; }
-          complete-exercise-summary .proficiency-level-row .data-row .subject-level .subject-progress .progress .progress-wrap {
+          complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .subject-level .subject-progress .progress .progress-wrap {
             height: 4px; }
-          complete-exercise-summary .proficiency-level-row .data-row .subject-level .subject-progress .progress .title {
+          complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .subject-level .subject-progress .progress .title {
             font-size: 12px;
             color: #4f4d4d;
             font-family: Lato;
             font-weight: 200;
             margin-top: 8px; }
-        complete-exercise-summary .proficiency-level-row .data-row .subject-level .subject-progress .progress-val {
+        complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .subject-level .subject-progress .progress-val {
           font-size: 28px;
           color: #757a83;
           font-family: Quicksand;
           font-weight: 700;
           position: relative;
           bottom: 11px; }
-          complete-exercise-summary .proficiency-level-row .data-row .subject-level .subject-progress .progress-val .progress-perfect {
+          complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .subject-level .subject-progress .progress-val .progress-perfect {
             font-size: 12px;
             color: #87ca4d;
             font-family: Lato;
@@ -1108,18 +1113,18 @@ complete-exercise-summary {
             position: absolute;
             bottom: 30px;
             left: 57px; }
-          complete-exercise-summary .proficiency-level-row .data-row .subject-level .subject-progress .progress-val .bad-score {
+          complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .subject-level .subject-progress .progress-val .bad-score {
             color: #ff6766; }
-    complete-exercise-summary .proficiency-level-row .data-row .category-level-wrap {
+    complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .category-level-wrap {
       max-width: 500px;
       margin-left: 20px; }
-      complete-exercise-summary .proficiency-level-row .data-row .category-level-wrap div.category-level:nth-child(2n+1) {
+      complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .category-level-wrap div.category-level:nth-child(2n+1) {
         float: left;
         margin-right: 30px; }
-      complete-exercise-summary .proficiency-level-row .data-row .category-level-wrap div.category-level:nth-child(2n) {
+      complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .category-level-wrap div.category-level:nth-child(2n) {
         float: right;
         margin-left: 65px; }
-      complete-exercise-summary .proficiency-level-row .data-row .category-level-wrap .category-level {
+      complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .category-level-wrap .category-level {
         width: 200px;
         height: 88px;
         display: -ms-flexbox;
@@ -1131,13 +1136,13 @@ complete-exercise-summary {
             align-items: center;
         text-align: center;
         margin-bottom: 20px; }
-        complete-exercise-summary .proficiency-level-row .data-row .category-level-wrap .category-level .icon-wrap {
+        complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .category-level-wrap .category-level .icon-wrap {
           display: inline-block;
           margin-right: 10px; }
-        complete-exercise-summary .proficiency-level-row .data-row .category-level-wrap .category-level .category-data {
+        complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .category-level-wrap .category-level .category-data {
           display: inline-block;
           text-align: left; }
-          complete-exercise-summary .proficiency-level-row .data-row .category-level-wrap .category-level .category-data .category-level-name {
+          complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .category-level-wrap .category-level .category-data .category-level-name {
             font-size: 17px;
             color: #757a83;
             font-family: Lato;
@@ -1147,7 +1152,7 @@ complete-exercise-summary {
             white-space: nowrap;
             overflow: hidden;
             margin-bottom: 10px; }
-          complete-exercise-summary .proficiency-level-row .data-row .category-level-wrap .category-level .category-data .level {
+          complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .category-level-wrap .category-level .category-data .level {
             font-size: 12px;
             color: #757a83;
             font-family: Lato;
@@ -1155,16 +1160,16 @@ complete-exercise-summary {
             text-align: left;
             text-transform: uppercase;
             margin-top: 10px; }
-          complete-exercise-summary .proficiency-level-row .data-row .category-level-wrap .category-level .category-data .progress-wrap {
+          complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .category-level-wrap .category-level .category-data .progress-wrap {
             width: 175px;
             height: 5px; }
-  complete-exercise-summary.math .progress-wrap .progress {
+  complete-exercise-summary .complete-exercise-summary-wrapper.math .progress-wrap .progress {
     background-color: #AF89D2; }
-  complete-exercise-summary [znk-progress-bar], complete-exercise-summary znk-progress-bar {
+  complete-exercise-summary .complete-exercise-summary-wrapper [znk-progress-bar], complete-exercise-summary .complete-exercise-summary-wrapper znk-progress-bar {
     height: 0; }
-  complete-exercise-summary.workout-summary-wrapper-essay .time-line-wrapper2 {
+  complete-exercise-summary .complete-exercise-summary-wrapper.workout-summary-wrapper-essay .time-line-wrapper2 {
     display: none; }
-  complete-exercise-summary.workout-summary-wrapper-essay .proficiency-level-row, complete-exercise-summary.workout-summary-wrapper-essay .social-share {
+  complete-exercise-summary .complete-exercise-summary-wrapper.workout-summary-wrapper-essay .proficiency-level-row, complete-exercise-summary .complete-exercise-summary-wrapper.workout-summary-wrapper-essay .social-share {
     background-color: #fafafa; }
 
 screen-sharing complete-exercise-summary .complete-exercise-summary-wrapper {
