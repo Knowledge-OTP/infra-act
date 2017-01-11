@@ -7,7 +7,9 @@
                     scope: {
                         onTimelineFinish: '&',
                         activeExerciseId: '=?',
-                        showInduction: '<?'
+                        showInduction: '<?',
+                        showTooltips: '<?',
+                        results: '<?'
                     },
                     restrict: 'E',
                     templateUrl: 'components/performance/directives/performanceTimeline/performanceTimeline.template.html',
