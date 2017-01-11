@@ -3,7 +3,8 @@
 
     angular.module('demo', [
         'demoEnv',
-        'znk.infra-act.completeExerciseAct'
+        'znk.infra-act.completeExerciseAct',
+        'znk.infra-web-app.loadingAnimation'
     ])
         .config(function($sceProvider){
             $sceProvider.enabled(false);
