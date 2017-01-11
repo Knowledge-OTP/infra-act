@@ -23,3 +23,14 @@
 
 .essay-bg {
   background-color: #FF5895; }
+
+.znk-app-logo-wrap {
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -ms-flex-align: center;
+      align-items: center; }
+  .znk-app-logo-wrap svg-icon.znk-app-name-logo {
+    width: 100px; }
+    .znk-app-logo-wrap svg-icon.znk-app-name-logo svg {
+      width: 100%; }

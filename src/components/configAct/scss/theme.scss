@@ -19,3 +19,14 @@
     background-color: $essayColor;
 }
 
+.znk-app-logo-wrap{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    svg-icon.znk-app-name-logo{
+        width: 100px;
+        svg{
+            width: 100%;
+        }
+    }
+}
