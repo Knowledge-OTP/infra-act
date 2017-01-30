@@ -2362,7 +2362,7 @@ angular.module('znk.infra-act.lessonTopic').run(['$templateCache', function($tem
 
             // options
             var optionsPerDevice = {
-                width: 705,
+                width: 685,
                 height: 150,
                 distance: 90,
                 upOrDown: 100,

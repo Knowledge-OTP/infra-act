@@ -15,7 +15,7 @@
 
             // options
             var optionsPerDevice = {
-                width: 705,
+                width: 685,
                 height: 150,
                 distance: 90,
                 upOrDown: 100,
