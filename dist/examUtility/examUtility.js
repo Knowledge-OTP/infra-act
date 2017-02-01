@@ -190,6 +190,6 @@
         }]);
 })();
 
-angular.module('znk.infra-act.examUtility').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-act.examUtility').run(['$templateCache', function ($templateCache) {
 
 }]);

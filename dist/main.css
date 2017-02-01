@@ -1117,6 +1117,8 @@ complete-exercise-summary .complete-exercise-summary-wrapper {
             left: 57px; }
           complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .subject-level .subject-progress .progress-val .bad-score {
             color: #ff6766; }
+      complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .subject-level .subject-name {
+        text-transform: capitalize; }
     complete-exercise-summary .complete-exercise-summary-wrapper .proficiency-level-row .data-row .category-level-wrap {
       max-width: 500px;
       margin-left: 20px; }
