@@ -849,8 +849,10 @@ writing-question .writing-question-wrapper {
     writing-question .writing-question-wrapper .answer-container p {
       color: #4f4d4d;
       line-height: 1.5em; }
-    writing-question .writing-question-wrapper .answer-container answer-builder .rate-answer-wrapper .item-repeater:last-child {
-      width: 26px; }
+    writing-question .writing-question-wrapper .answer-container answer-builder {
+      margin-top: 20px; }
+      writing-question .writing-question-wrapper .answer-container answer-builder .rate-answer-wrapper .item-repeater:last-child {
+        width: 26px; }
 
 znk-exercise .question-basic-style .question-container {
   font-family: Lato;
