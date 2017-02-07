@@ -75,7 +75,7 @@
         }]);
 })();
 
-angular.module('znk.infra-act.configAct').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.configAct').run(['$templateCache', function($templateCache) {
   $templateCache.put("components/configAct/svg/znk-app-name-logo.svg",
     "<svg version=\"1.1\" id=\"ACT\" xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" viewBox=\"-183 363 245 67\" class=\"znk-app-name-logo\">\n" +
     "<style type=\"text/css\">\n" +

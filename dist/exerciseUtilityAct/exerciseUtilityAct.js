@@ -21,6 +21,6 @@
         }]);
 })(angular);
 
-angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', function($templateCache) {
 
 }]);

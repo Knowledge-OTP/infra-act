@@ -117,6 +117,6 @@
         }]);
 })(angular);
 
-angular.module('znk.infra-act.userGoals').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.userGoals').run(['$templateCache', function($templateCache) {
 
 }]);
