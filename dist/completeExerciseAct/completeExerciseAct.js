@@ -24,12 +24,12 @@
 
             var svgMap = {
                 'complete-exercise-correct-icon': 'components/completeExerciseAct/svg/correct-icon.svg',
-                'complete-exercise-wrong-icon': 'components/completeExerciseAct/svg/wrong-icon.svg'
+                'complete-exercise-wrong-icon': 'components/completeExerciseAct/svg/wrong-icon.svg',
+                'znk-app-name-logo': 'components/configAct/svg/znk-app-name-logo.svg'
             };
             SvgIconSrvProvider.registerSvgSources(svgMap);
         }]);
 })();
-
 
 (function () {
     'use strict';
@@ -1098,7 +1098,7 @@
 
                     if (sharingData) {
                         self.subjectName = subjectMap[self.subjectId];
-                        var image = $window.location.protocol + ENV.zinkerzWebsiteBaseUrl + 'images/share/' + sharingData.shareUrlMap[self.subjectName];
+                        var image = $window.location.protocol + ENV.zinkerzWebsiteShareImgUrl + sharingData.shareUrlMap[self.subjectName];
                         var descriptionTranslate = sharingData.isImproved ? 'IMPROVED_TEXT' : 'SHARE_DESCRIPTION';
                         var description = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.' + descriptionTranslate, { pts: sharingData.points, subjectName: self.subjectName });
                         var title = translateFilter('SOCIAL_SHARING_CONTAINER_DRV.SHARE_TITLE');
@@ -1423,7 +1423,7 @@
         }]);
 })(angular);
 
-angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', function ($templateCache) {
   $templateCache.put("components/completeExerciseAct/directives/completeExerciseSummary/completeExerciseSummaryDirective.template.html",
     "<div class=\"base-complete-exercise-container\"\n" +
     "     translate-namespace=\"COMPLETE_EXERCISE_ACT.COMPLETE_EXERCISE_SUMMARY\"\n" +
@@ -1436,9 +1436,8 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "            animate=\"true\">\n" +
     "        </social-sharing>\n" +
     "\n" +
-    "        <section>\n" +
+    "        <div class=\"section\">\n" +
     "            <div class=\"test-score-title\">{{::$ctrl.testScoreTitle}}</div>\n" +
-    "\n" +
     "            <div class=\"gauge-row-wrapper\">\n" +
     "                <div class=\"overflowWrap\">\n" +
     "                    <div class=\"gauge-wrap\">\n" +
@@ -1483,8 +1482,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "                <div class=\"category-name\">{{$ctrl.categoryName | cutString: 42}}</div>\n" +
     "            </div>\n" +
-    "\n" +
-    "        <div class=\"review-btn-wrapper\">\n" +
+    "            <div class=\"review-btn-wrapper\">\n" +
     "            <md-button class=\"md-primary znk\"\n" +
     "                       aria-label=\"{{'COMPLETE_EXERCISE_ACT.COMPLETE_EXERCISE_SUMMARY.REVIEW' | translate}}\"\n" +
     "                       tabindex=\"1\"\n" +
@@ -1494,9 +1492,9 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "                <span translate=\".REVIEW\"></span>\n" +
     "            </md-button>\n" +
     "        </div>\n" +
-    "    </section>\n" +
+    "        </div>\n" +
     "\n" +
-    "        <section class=\"time-line-wrapper2\" ng-class=\"{'seen-summary': $ctrl.seenSummary}\">\n" +
+    "        <div class=\"section time-line-wrapper2\" ng-class=\"{'seen-summary': $ctrl.seenSummary}\">\n" +
     "\n" +
     "            <div class=\"estimated-score-title\">{{$ctrl.subjectName}} <span translate=\".ESTIMATED_SCORE\"></span></div>\n" +
     "            <performance-timeline\n" +
@@ -1505,10 +1503,9 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "                show-induction=\"true\"\n" +
     "                active-exercise-id=\"::$ctrl.activeExerciseId\">\n" +
     "            </performance-timeline>\n" +
-    "        </section>\n" +
+    "        </div>\n" +
     "\n" +
-    "\n" +
-    "        <section class=\"proficiency-level-row animate-if\" ng-if=\"!$ctrl.seenSummary\">\n" +
+    "        <div class=\"section proficiency-level-row animate-if\" ng-if=\"!$ctrl.seenSummary\">\n" +
     "            <div class=\"proficiency-title-row\" translate=\".MASTERY_LEVEL\"></div>\n" +
     "            <div class=\"row data-row\">\n" +
     "                <div class=\"subject-level\">\n" +
@@ -1543,7 +1540,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "        </section>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "</div>\n" +
     "");
