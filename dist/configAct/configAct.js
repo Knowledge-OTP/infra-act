@@ -1,8 +1,25 @@
 (function (angular) {
     'use strict';
 
-    angular.module('znk.infra-act.configAct', []);
+    angular.module('znk.infra-act.configAct', [
+        'znk.infra.exerciseUtility'
+    ]);
 })(angular);
+
+(function () {
+    'use strict';
+
+    angular.module('znk.infra.exerciseUtility')
+        .decorator('categoryEnum', ["$delegate", function ($delegate) {
+            'ngInject';
+            $delegate.LEVEL1.enum = 9;
+            $delegate.LEVEL2.enum = 11;
+            $delegate.LEVEL3.enum = 6;
+            $delegate.LEVEL3.enum = 7;
+            
+            return $delegate;
+        }]);
+})();
 
 (function () {
     'use strict';
@@ -75,7 +92,7 @@
         }]);
 })();
 
-angular.module('znk.infra-act.configAct').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-act.configAct').run(['$templateCache', function ($templateCache) {
   $templateCache.put("components/configAct/svg/znk-app-name-logo.svg",
     "<svg version=\"1.1\" id=\"ACT\" xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" viewBox=\"-183 363 245 67\" class=\"znk-app-name-logo\">\n" +
     "<style type=\"text/css\">\n" +
