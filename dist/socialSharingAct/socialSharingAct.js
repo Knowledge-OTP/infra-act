@@ -250,6 +250,6 @@
         });
 })(angular);
 
-angular.module('znk.infra-act.socialSharingAct').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-act.socialSharingAct').run(['$templateCache', function ($templateCache) {
 
 }]);
