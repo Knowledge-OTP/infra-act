@@ -9,21 +9,6 @@
 (function () {
     'use strict';
 
-    angular.module('znk.infra.exerciseUtility')
-        .decorator('categoryEnum', ["$delegate", function ($delegate) {
-            'ngInject';
-            $delegate.LEVEL1.enum = 9;
-            $delegate.LEVEL2.enum = 11;
-            $delegate.LEVEL3.enum = 6;
-            $delegate.LEVEL3.enum = 7;
-            
-            return $delegate;
-        }]);
-})();
-
-(function () {
-    'use strict';
-
     angular.module('znk.infra-act.configAct')
         .decorator('CategoryService', ["$delegate", "SubjectEnum", function ($delegate, SubjectEnum) {
             'ngInject';
