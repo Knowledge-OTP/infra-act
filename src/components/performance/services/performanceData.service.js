@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('znk.infra-act.performance')
-        .service('PerformanceData', function (StatsSrv, StatsQuerySrv, CategoryService, $q) {
+        .service('PerformanceData', function (StatsSrv, StatsQuerySrv, CategoryService, $q, StatsLevelEnum) {
             'ngInject';
 
             var performanceData = {};
@@ -10,18 +10,18 @@
             var promArray = [
                 StatsSrv.getStats(),
                 CategoryService.getAllSubscores(),
-                CategoryService.getAllLevelCategories(statsLevelENUM.LEVEL4.enum)];
+                CategoryService.getAllLevelCategories(StatsLevelEnum.LEVEL4.enum)];
             this.getPerformanceData = function () {
                 performanceData = {};
                 return $q.all(promArray).then(function (results) {
                     var stats = results[0];
                     var allSubScores = results[1];
                     var allSpecificCategories = angular.copy(results[2]);
-                    if (angular.isDefined(stats[statsLevelENUM.LEVEL1.val]) && angular.isDefined(stats[statsLevelENUM.LEVEL2.val]) && angular.isDefined(stats[statsLevelENUM.LEVEL3.val])) {
-                        _buildSubjects(stats[statsLevelENUM.LEVEL1.val]);
-                        _buildSubScores(stats[statsLevelENUM.LEVEL2.val], allSubScores);
-                        _buildGeneralCategories(stats[statsLevelENUM.LEVEL3.val]);
-                        _calcSpecificCategory(performanceData, allSpecificCategories, stats[statsLevelENUM.LEVEL4.val]);
+                    if (angular.isDefined(stats[StatsLevelEnum.LEVEL1.val]) && angular.isDefined(stats[StatsLevelEnum.LEVEL2.val]) && angular.isDefined(stats[StatsLevelEnum.LEVEL3.val])) {
+                        _buildSubjects(stats[StatsLevelEnum.LEVEL1.val]);
+                        _buildSubScores(stats[StatsLevelEnum.LEVEL2.val], allSubScores);
+                        _buildGeneralCategories(stats[StatsLevelEnum.LEVEL3.val]);
+                        _calcSpecificCategory(performanceData, allSpecificCategories, stats[StatsLevelEnum.LEVEL4.val]);
                     }
                     return performanceData;
                 });
@@ -67,7 +67,7 @@
                         progress: _getProgressPercentage(subjectsObj[subjectkey].totalQuestions, subjectsObj[subjectkey].correct),
                         avgTime: _getAvgTime(subjectsObj[subjectkey].totalQuestions, subjectsObj[subjectkey].totalTime)
                     };
-                    StatsQuerySrv.getWeakestCategoryInLevel(statsLevelENUM.LEVEL3.enum, null, subjectsObj[subjectkey].id).then(function (weakestCategory) {
+                    StatsQuerySrv.getWeakestCategoryInLevel(StatsLevelEnum.LEVEL3.enum, null, subjectsObj[subjectkey].id).then(function (weakestCategory) {
                         if (angular.isDefined(weakestCategory) && angular.isDefined(weakestCategory.totalQuestions) && angular.isDefined(weakestCategory.correct)) {
                             subjectData.weakestCategory = {
                                 progress: _getProgressPercentage(weakestCategory.totalQuestions, weakestCategory.correct),
