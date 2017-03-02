@@ -10,7 +10,7 @@
         require: {
             completeExerciseCtrl: '^completeExercise'
         },
-        controller: function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log, ENV) {
+        controller: function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log, ENV) {
             'ngInject';
 
             var $ctrl = this;
