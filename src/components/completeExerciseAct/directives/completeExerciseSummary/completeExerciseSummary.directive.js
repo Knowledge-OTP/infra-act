@@ -10,7 +10,7 @@
         require: {
             completeExerciseCtrl: '^completeExercise'
         },
-        controller: function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, TestScoreCategoryEnum, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log, ENV) {
+        controller: function (CompleteExerciseSrv, SubjectEnum, $q, StatsSrv, CategoryService, $filter, ExerciseTypeEnum, masteryLevel, ScoringService, PerformanceData, $timeout, HintSrv, UserScreenSharingStateEnum, ScreenSharingSrv, $log, ENV) {
             'ngInject';
 
             var $ctrl = this;
@@ -115,7 +115,7 @@
 
             function _calcSectionScoring() {
                 var resultForScoring = {
-                    subjectId: $ctrl.exerciseData.subjectId,
+                    subjectId: $ctrl.exerciseResults.subjectId,
                     typeId: $ctrl.exerciseData.examData.typeId,
                     questions: $ctrl.exerciseData.questions,
                     answers: $ctrl.exerciseResults.questionResults.map(function (result) {
@@ -138,8 +138,8 @@
             this.$onInit = function () {
                 $ctrl.exerciseData = $ctrl.completeExerciseCtrl.getExerciseContent();
                 $ctrl.exerciseResults = $ctrl.completeExerciseCtrl.getExerciseResult();
-                $ctrl.subjectName = translateSubjectName($ctrl.exerciseData.subjectId);
-                $ctrl.currentSubjectId = $ctrl.exerciseData.subjectId;
+                $ctrl.subjectName = translateSubjectName($ctrl.exerciseResults.subjectId);
+                $ctrl.currentSubjectId = $ctrl.exerciseResults.subjectId;
                 $ctrl.activeExerciseId = $ctrl.exerciseData.id;
                 $ctrl.avgTime = {
                     correctAvgTime: Math.round($ctrl.exerciseResults.correctAvgTime / 1000),

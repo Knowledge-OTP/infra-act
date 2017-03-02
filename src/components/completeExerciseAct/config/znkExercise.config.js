@@ -2,8 +2,10 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
-        .config(function (QuestionTypesSrvProvider, exerciseTypeConst, SubjectEnumConst) {
+        .config(function (QuestionTypesSrvProvider, exerciseTypeConst, SubjectEnumConst, CategoryServiceProvider) {
             'ngInject';
+            
+            var categoryService = CategoryServiceProvider.$get();
 
             function questionTypeGetter(question) {
                 var templatesContants = {
@@ -22,7 +24,9 @@
                     return question.exerciseTypeId === exerciseTypeConst.LECTURE ? templatesContants.LECTURE_QUESTION : templatesContants.SIMPLE_QUESTION;
                 }
 
-                switch (question.subjectId) {
+                var questionSubjectId = categoryService.getCategoryLevel1ParentSync([question.categoryId, question.categoryId2]);
+
+                switch (questionSubjectId) {
 
                     case SubjectEnumConst.MATH:
                         return templatesContants.MATH_QUESTION;
@@ -67,7 +71,7 @@
                 if (isOddQuestion) {
                     var I_CHAR_INDEX = 3;
                     if (answerIndex >= I_CHAR_INDEX) {
-                        answerIndex++;//  i char should be skipped
+                        answerIndex++; //  i char should be skipped
                     }
                     var UPPER_F_ASCII_CODE = 70;
                     var formattedAnswerIndex = String.fromCharCode(UPPER_F_ASCII_CODE + answerIndex);
@@ -85,4 +89,3 @@
             ZnkExerciseSrvProvider.setAllowedTimeForQuestionMap(allowedTimeForQuestionByExercise);
         });
 })();
-

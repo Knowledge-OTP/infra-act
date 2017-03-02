@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
-        .service('completeExerciseActSrv', function ($q, $log, ExerciseTypeEnum, ExerciseResultSrv, ExamSrv) {
+        .service('completeExerciseActSrv', function ($q, $log, ExerciseTypeEnum, ExerciseResultSrv, ExamSrv, CategoryService) {
             'ngInject';
 
             this.mergedTestScoresIfCompleted = function (exam, examResult, questionsData, resultsData) {
@@ -15,7 +15,7 @@
                 resultsData = angular.copy(resultsData);
                 questionsData = angular.copy(questionsData);
                 var examId = exam.id;
-                var subjectId = questionsData.subjectId;
+                var subjectId = CategoryService.getCategoryLevel1ParentSync([questionsData.categoryId, questionsData.categoryId2]);
                 var currentSectionId = questionsData.id;
                 var sectionResults = examResult.sectionResults;
                 var sectionProms = [];
