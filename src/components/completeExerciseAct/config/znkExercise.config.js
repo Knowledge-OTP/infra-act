@@ -4,6 +4,8 @@
     angular.module('znk.infra-act.completeExerciseAct')
         .config(function (QuestionTypesSrvProvider, exerciseTypeConst, SubjectEnumConst, CategoryServiceProvider) {
             'ngInject';
+            
+            var categoryService = CategoryServiceProvider.$get();
 
             function questionTypeGetter(question) {
                 var templatesContants = {
@@ -22,7 +24,6 @@
                     return question.exerciseTypeId === exerciseTypeConst.LECTURE ? templatesContants.LECTURE_QUESTION : templatesContants.SIMPLE_QUESTION;
                 }
 
-                var categoryService = CategoryServiceProvider.$get();
                 var questionSubjectId = categoryService.getCategoryLevel1ParentSync([question.categoryId, question.categoryId2]);
 
                 switch (questionSubjectId) {
