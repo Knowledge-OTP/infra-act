@@ -52,6 +52,8 @@
     angular.module('znk.infra-act.completeExerciseAct')
         .config(["QuestionTypesSrvProvider", "exerciseTypeConst", "SubjectEnumConst", "CategoryServiceProvider", function (QuestionTypesSrvProvider, exerciseTypeConst, SubjectEnumConst, CategoryServiceProvider) {
             'ngInject';
+            
+            var categoryService = CategoryServiceProvider.$get();
 
             function questionTypeGetter(question) {
                 var templatesContants = {
@@ -70,7 +72,6 @@
                     return question.exerciseTypeId === exerciseTypeConst.LECTURE ? templatesContants.LECTURE_QUESTION : templatesContants.SIMPLE_QUESTION;
                 }
 
-                var categoryService = CategoryServiceProvider.$get();
                 var questionSubjectId = categoryService.getCategoryLevel1ParentSync([question.categoryId, question.categoryId2]);
 
                 switch (questionSubjectId) {
@@ -1405,7 +1406,8 @@
                 var sectionResults = examResult.sectionResults;
                 var sectionProms = [];
                 var getOtherSections = exam.sections.filter(function (section) {
-                    return section.subjectId === subjectId && currentSectionId !== section.id;
+                    var sectionSubjectId = CategoryService.getCategoryLevel1ParentSync([section.categoryId, section.categoryId2]);
+                    return sectionSubjectId === subjectId && currentSectionId !== section.id;
                 });
                 angular.forEach(getOtherSections, function (sectionBySubject) {
                     var sectionKey = sectionResults[sectionBySubject.id];
