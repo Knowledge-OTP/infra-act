@@ -50,7 +50,7 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
-        .config(["QuestionTypesSrvProvider", "exerciseTypeConst", "SubjectEnumConst", function (QuestionTypesSrvProvider, exerciseTypeConst, SubjectEnumConst) {
+        .config(["QuestionTypesSrvProvider", "exerciseTypeConst", "SubjectEnumConst", "CategoryServiceProvider", function (QuestionTypesSrvProvider, exerciseTypeConst, SubjectEnumConst, CategoryServiceProvider) {
             'ngInject';
 
             function questionTypeGetter(question) {
@@ -70,7 +70,10 @@
                     return question.exerciseTypeId === exerciseTypeConst.LECTURE ? templatesContants.LECTURE_QUESTION : templatesContants.SIMPLE_QUESTION;
                 }
 
-                switch (question.subjectId) {
+                var categoryService = CategoryServiceProvider.$get();
+                var questionSubjectId = categoryService.getCategoryLevel1ParentSync([question.categoryId, question.categoryId2]);
+
+                switch (questionSubjectId) {
 
                     case SubjectEnumConst.MATH:
                         return templatesContants.MATH_QUESTION;
@@ -115,7 +118,7 @@
                 if (isOddQuestion) {
                     var I_CHAR_INDEX = 3;
                     if (answerIndex >= I_CHAR_INDEX) {
-                        answerIndex++;//  i char should be skipped
+                        answerIndex++; //  i char should be skipped
                     }
                     var UPPER_F_ASCII_CODE = 70;
                     var formattedAnswerIndex = String.fromCharCode(UPPER_F_ASCII_CODE + answerIndex);
@@ -133,7 +136,6 @@
             ZnkExerciseSrvProvider.setAllowedTimeForQuestionMap(allowedTimeForQuestionByExercise);
         }]);
 })();
-
 
 (function (angular) {
     'use strict';
@@ -340,7 +342,7 @@
 
             function _calcSectionScoring() {
                 var resultForScoring = {
-                    subjectId: $ctrl.exerciseData.subjectId,
+                    subjectId: $ctrl.exerciseResults.subjectId,
                     typeId: $ctrl.exerciseData.examData.typeId,
                     questions: $ctrl.exerciseData.questions,
                     answers: $ctrl.exerciseResults.questionResults.map(function (result) {
@@ -363,8 +365,8 @@
             this.$onInit = function () {
                 $ctrl.exerciseData = $ctrl.completeExerciseCtrl.getExerciseContent();
                 $ctrl.exerciseResults = $ctrl.completeExerciseCtrl.getExerciseResult();
-                $ctrl.subjectName = translateSubjectName($ctrl.exerciseData.subjectId);
-                $ctrl.currentSubjectId = $ctrl.exerciseData.subjectId;
+                $ctrl.subjectName = translateSubjectName($ctrl.exerciseResults.subjectId);
+                $ctrl.currentSubjectId = $ctrl.exerciseResults.subjectId;
                 $ctrl.activeExerciseId = $ctrl.exerciseData.id;
                 $ctrl.avgTime = {
                     correctAvgTime: Math.round($ctrl.exerciseResults.correctAvgTime / 1000),
@@ -1385,7 +1387,7 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
-        .service('completeExerciseActSrv', ["$q", "$log", "ExerciseTypeEnum", "ExerciseResultSrv", "ExamSrv", function ($q, $log, ExerciseTypeEnum, ExerciseResultSrv, ExamSrv) {
+        .service('completeExerciseActSrv', ["$q", "$log", "ExerciseTypeEnum", "ExerciseResultSrv", "ExamSrv", "CategoryService", function ($q, $log, ExerciseTypeEnum, ExerciseResultSrv, ExamSrv, CategoryService) {
             'ngInject';
 
             this.mergedTestScoresIfCompleted = function (exam, examResult, questionsData, resultsData) {
@@ -1398,7 +1400,7 @@
                 resultsData = angular.copy(resultsData);
                 questionsData = angular.copy(questionsData);
                 var examId = exam.id;
-                var subjectId = questionsData.subjectId;
+                var subjectId = CategoryService.getCategoryLevel1ParentSync([questionsData.categoryId, questionsData.categoryId2]);
                 var currentSectionId = questionsData.id;
                 var sectionResults = examResult.sectionResults;
                 var sectionProms = [];
