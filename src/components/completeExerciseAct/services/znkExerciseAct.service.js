@@ -20,7 +20,8 @@
                 var sectionResults = examResult.sectionResults;
                 var sectionProms = [];
                 var getOtherSections = exam.sections.filter(function (section) {
-                    return section.subjectId === subjectId && currentSectionId !== section.id;
+                    var sectionSubjectId = CategoryService.getCategoryLevel1ParentSync([section.categoryId, section.categoryId2]);
+                    return sectionSubjectId === subjectId && currentSectionId !== section.id;
                 });
                 angular.forEach(getOtherSections, function (sectionBySubject) {
                     var sectionKey = sectionResults[sectionBySubject.id];
