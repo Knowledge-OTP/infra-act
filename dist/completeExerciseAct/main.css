@@ -509,8 +509,6 @@ select-answer {
         border: 13px solid #ff6766; }
       select-answer .answer.wrong .content-wrapper .answer-index-wrapper .answer-index {
         color: #ffffff; }
-    select-answer .answer.wrong .content-wrapper .content {
-      color: #ff6766; }
     select-answer .answer.wrong .content-wrapper .ion-ios-close-empty {
       display: block; }
     select-answer .answer.wrong .content-wrapper .wrong-icon-drv {
@@ -531,8 +529,6 @@ select-answer {
         border: 13px solid #87ca4d; }
       select-answer .answer.correct .content-wrapper .answer-index-wrapper .answer-index {
         color: #ffffff; }
-    select-answer .answer.correct .content-wrapper .content {
-      color: #87ca4d; }
     select-answer .answer.correct .content-wrapper .ion-android-done {
       display: block; }
     select-answer .answer.correct .content-wrapper .correct-icon-drv {
@@ -553,8 +549,6 @@ select-answer {
         border: 13px solid #87ca4d; }
       select-answer .answer.answered-incorrect .content-wrapper .answer-index-wrapper .answer-index {
         color: #2AB79E; }
-    select-answer .answer.answered-incorrect .content-wrapper .content {
-      color: #87ca4d; }
     select-answer .answer.answered-incorrect .answer-solution-icon-wrapper {
       visibility: visible; }
     select-answer .answer.answered .content-wrapper .answer-index-wrapper {
