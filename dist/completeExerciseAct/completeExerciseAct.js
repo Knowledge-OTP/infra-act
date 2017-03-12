@@ -294,8 +294,12 @@
                         subjectProgress = subjectProgress['id_' + $ctrl.currentSubjectId];
 
                         var oldSubjectMastery = _calcOldSubjectMastery(subjectProgress);
-                        var currentSubjectProgress = $ctrl.performanceData[$ctrl.currentSubjectId].progress;
-                        $ctrl.subjectsDelta = currentSubjectProgress - oldSubjectMastery;
+                        var currentSubjectProgress = 0;
+                        $ctrl.subjectsDelta = 0;
+                        if (angular.isDefined($ctrl.performanceData[$ctrl.currentSubjectId]) && $ctrl.performanceData[$ctrl.currentSubjectId] !== null) {
+                            currentSubjectProgress = $ctrl.performanceData[$ctrl.currentSubjectId].overall.progress;
+                            $ctrl.subjectsDelta = currentSubjectProgress - oldSubjectMastery;
+                        }
                     }
 
                     function getProgress(generalCategoryObj) {
