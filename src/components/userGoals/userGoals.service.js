@@ -2,55 +2,54 @@
     'use strict';
 
     angular.module('znk.infra-act.userGoals')
-        .service('UserGoalsService', function (StorageFirebaseAdapter, StorageSrv, ENV, $q, AuthService) {
+        .service('UserGoalsService', function (InfraConfigSrv, StorageSrv, ENV, $q) {
             'ngInject';
 
-            var fbAdapter = new StorageFirebaseAdapter(ENV.fbDataEndPoint);
-            var config = {
-                variables: {
-                    uid: AuthService.getAuth().uid
-                }
-            };
-            var storage = new StorageSrv(fbAdapter, config);
             var goalsPath = StorageSrv.variables.appUserSpacePath + '/goals';
             var defaultSubjectScore = 25;
-            var self = this;
 
-            this.getGoals = function () {
-                return storage.get(goalsPath).then(function (userGoals) {
-                    if (angular.equals(userGoals, {})) {
-                        userGoals = _defaultUserGoals();
-                    }
-                    return userGoals;
+            function _getGoals() {
+                return InfraConfigSrv.getStudentStorage().then(function(studentStorage) {
+                    return studentStorage.get(goalsPath).then(function (userGoals) {
+                        if (Object.keys(userGoals).length === 0) {
+                            userGoals = _defaultUserGoals();
+                        }
+                        return userGoals;
+                    });
                 });
-            };
+            }
 
-            this.setGoals = function (newGoals) {
-                if (arguments.length && angular.isDefined(newGoals)) {
-                    return storage.set(goalsPath, newGoals);
+            function _setGoals(newGoals) {
+                if (arguments.length && typeof newGoals !== 'undefined') {
+                    return InfraConfigSrv.getStudentStorage().then(function(studentStorage) {
+                        return studentStorage.set(goalsPath, newGoals);
+                    });
+
                 }
-                return storage.get(goalsPath).then(function (userGoals) {
-                    if (!userGoals.goals) {
-                        userGoals.goals = {
-                            isCompleted: false,
-                            english: defaultSubjectScore,
-                            math: defaultSubjectScore,
-                            writing: defaultSubjectScore,
-                            reading: defaultSubjectScore,
-                            science: defaultSubjectScore,
-                            compositeScore: defaultSubjectScore
-                        };
-                    }
-                    return userGoals;
+                return InfraConfigSrv.getStudentStorage().then(function(studentStorage) {
+                    return studentStorage.get(goalsPath).then(function (userGoals) {
+                        if (!userGoals.goals) {
+                            userGoals.goals = {
+                                isCompleted: false,
+                                english: defaultSubjectScore,
+                                math: defaultSubjectScore,
+                                writing: defaultSubjectScore,
+                                reading: defaultSubjectScore,
+                                science: defaultSubjectScore,
+                                compositeScore: defaultSubjectScore
+                            };
+                        }
+                        return userGoals;
+                    });
                 });
-            };
+            }
 
-            this.calcCompositeScore = function (userSchools, save) {
+            function _calcCompositeScore(userSchools, save) {
                 // The calculation for composite score in ACT:
                 // 1. For each school in US, we have min & max score
                 // 2. Calc the average score for each school and set it for each subject goal
 
-                return this.getGoals().then(function (userGoals) {
+                return _getGoals().then(function (userGoals) {
                     var minSchoolScore = 20,
                         maxSchoolScore = 25,
                         avgScores = [];
@@ -80,11 +79,11 @@
                         science: avgSchoolsScore || defaultSubjectScore
                     };
 
-                    userGoals.compositeScore = averageSubjectsGoal(userGoals);
-                    var prom = save ? self.setGoals(userGoals) : $q.when(userGoals);
+                    userGoals.compositeScore = _averageSubjectsGoal(userGoals);
+                    var prom = save ? _setGoals(userGoals) : $q.when(userGoals);
                     return prom;
                 });
-            };
+            }
 
             function _defaultUserGoals() {
                 return {
@@ -98,7 +97,7 @@
                 };
             }
 
-            function averageSubjectsGoal(goals) {
+            function _averageSubjectsGoal(goals) {
                 // retrun the avg of 4 subject goals
                 var math = goals.math || defaultSubjectScore;
                 var english = goals.english || defaultSubjectScore;
@@ -106,5 +105,9 @@
                 var science = goals.science || defaultSubjectScore;
                 return Math.round((math + english + reading + science) / 4);
             }
+
+            this.getGoals = _getGoals;
+            this.setGoals = _setGoals;
+            this.calcCompositeScore = _calcCompositeScore;
         });
 })(angular);
