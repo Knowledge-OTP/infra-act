@@ -7,13 +7,13 @@
 
             var performanceData = {};
 
-            var promArray = [
-                StatsSrv.getStats(),
-                CategoryService.getAllSubscores(),
-                CategoryService.getAllLevelCategories(StatsLevelEnum.LEVEL4.enum)];
             this.getPerformanceData = function () {
                 performanceData = {};
-                return $q.all(promArray).then(function (results) {
+                return $q.all([
+                    StatsSrv.getStats(),
+                    CategoryService.getAllSubscores(),
+                    CategoryService.getAllLevelCategories(StatsLevelEnum.LEVEL4.enum)
+                ]).then(function (results) {
                     var stats = results[0];
                     var allSubScores = results[1];
                     var allSpecificCategories = angular.copy(results[2]);
