@@ -112,10 +112,6 @@ english-full-paragraphs .english-full-paragraphs-wrapper {
       font-weight: 400;
       text-align: center; }
     english-full-paragraphs .english-full-paragraphs-wrapper .question-container p {
-      font-size: 16px;
-      color: #161616;
-      font-family: Lato;
-      font-weight: 200;
       margin-top: 13px;
       line-height: 1.5em; }
     english-full-paragraphs .english-full-paragraphs-wrapper .question-container .paragraphs-wrapper .paragraph-number-title {
@@ -206,13 +202,7 @@ essay-question .writing-question-wrapper {
     padding-right: 25px; }
   essay-question .writing-question-wrapper .answer-container {
     margin-left: 20px; }
-    essay-question .writing-question-wrapper .answer-container .question-content {
-      font-size: 18px;
-      color: #161616;
-      font-family: Lato;
-      font-weight: 400; }
     essay-question .writing-question-wrapper .answer-container p {
-      color: #4f4d4d;
       line-height: 1.5em; }
     essay-question .writing-question-wrapper .answer-container answer-builder .rate-answer-wrapper .item-repeater:last-child {
       width: 26px; }
@@ -458,14 +448,12 @@ reading-question {
   display: block; }
   reading-question .reading-question-wrapper {
     display: -ms-flexbox;
-    display: flex;
-    font-family: Lato; }
+    display: flex; }
     reading-question .reading-question-wrapper .question-container {
       padding-left: 35px; }
       reading-question .reading-question-wrapper .question-container .paragraph-title {
         font-size: 18px; }
       reading-question .reading-question-wrapper .question-container p {
-        font-weight: 200;
         line-height: 1.5em;
         margin: 0; }
       reading-question .reading-question-wrapper .question-container .passage-title {
