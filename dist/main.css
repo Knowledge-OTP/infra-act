@@ -149,7 +149,6 @@ english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragra
     english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container .full-passage-link:hover {
       text-decoration: underline; }
   english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container p {
-    font-weight: 200;
     line-height: 1.5em; }
   english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper .answer-container p {
     color: #4f4d4d;
@@ -190,10 +189,6 @@ english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-vie
     width: 900px;
     margin: 0 auto 50px auto; }
     english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage p {
-      font-size: 16px;
-      color: #161616;
-      font-family: Lato;
-      font-weight: 200;
       line-height: 1.5em; }
     english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage .paragraph-number-title {
       font-size: 16px;
