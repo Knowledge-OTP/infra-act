@@ -609,12 +609,6 @@ select-answer {
         top: 8px;
         left: 9px; }
 
-znk-exercise .question-basic-style .question-container {
-  font-size: 16px;
-  color: #161616;
-  font-family: Lato;
-  font-weight: 400; }
-
 znk-exercise .question-basic-style .answer-container .content p {
   max-width: 370px;
   line-height: 1.5em; }
