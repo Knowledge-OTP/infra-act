@@ -468,9 +468,6 @@ reading-question {
       line-height: 1.5em; }
 
 select-answer {
-  font-size: 18px;
-  color: #161616;
-  font-family: Lato;
   display: block; }
   select-answer .answer {
     display: -ms-flexbox;
@@ -665,10 +662,6 @@ znk-exercise simple-question .simple-question-wrapper {
     margin: 0 auto;
     overflow-y: auto; }
     znk-exercise simple-question .simple-question-wrapper .answer-container .question-content {
-      font-size: 18px;
-      color: #161616;
-      font-family: Lato;
-      font-weight: 400;
       margin-bottom: 1em; }
       znk-exercise simple-question .simple-question-wrapper .answer-container .question-content p:last-child {
         margin-bottom: 0;
@@ -679,15 +672,13 @@ znk-exercise simple-question .simple-question-wrapper {
 
 science-question .science-question-wrapper {
   display: -ms-flexbox;
-  display: flex;
-  font-family: Lato; }
+  display: flex; }
   science-question .science-question-wrapper .question-container {
     padding-left: 25px;
     padding-right: 25px; }
     science-question .science-question-wrapper .question-container .paragraph-title {
       position: relative; }
     science-question .science-question-wrapper .question-container p {
-      font-weight: 200;
       line-height: 1.5em; }
   science-question .science-question-wrapper .answer-container p {
     color: #4f4d4d;
@@ -707,10 +698,6 @@ writing-full-passage .english-full-paragraphs-wrapper {
       font-weight: 400;
       text-align: center; }
     writing-full-passage .english-full-paragraphs-wrapper .question-container p {
-      font-size: 16px;
-      color: #161616;
-      font-family: Lato;
-      font-weight: 200;
       margin-top: 13px;
       line-height: 1.5em; }
     writing-full-passage .english-full-paragraphs-wrapper .question-container .paragraphs-wrapper .paragraph-number-title {
@@ -743,7 +730,6 @@ writing-specific-paragraph {
       writing-specific-paragraph .writing-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container .full-passage-link:hover {
         text-decoration: underline; }
     writing-specific-paragraph .writing-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container p {
-      font-weight: 200;
       line-height: 1.5em; }
     writing-specific-paragraph .writing-specific-paragraph-wrapper .specific-paragraph-view-wrapper .answer-container p {
       color: #4f4d4d;
@@ -785,10 +771,6 @@ writing-specific-paragraph {
         width: 900px;
         margin: 0 auto 50px auto; }
         writing-specific-paragraph .writing-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage-wrapper .full-passage p {
-          font-size: 16px;
-          color: #161616;
-          font-family: Lato;
-          font-weight: 200;
           line-height: 1.5em; }
         writing-specific-paragraph .writing-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage-wrapper .full-passage .paragraph-number-title {
           font-size: 16px;

@@ -20,7 +20,6 @@ writing-specific-paragraph {
                     }
                 }
                 p {
-                    font-weight: $lightFontWeight;
                     line-height: 1.5em;
                 }
             }
@@ -74,7 +73,6 @@ writing-specific-paragraph {
                     width: 900px;
                     margin: 0 auto 50px auto;
                     p {
-                        @include text-style(16px, $fontColor4, Lato, $thinFontWeight);
                         line-height: 1.5em;
                     }
 
