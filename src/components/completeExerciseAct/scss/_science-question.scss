@@ -1,7 +1,7 @@
 science-question {
     .science-question-wrapper {
         display: flex;
-        font-family: Lato;
+
         .question-container {
             padding: {
                 left: 25px;
@@ -13,14 +13,12 @@ science-question {
             }
 
             p {
-                font-weight: $lightFontWeight;
                 line-height: 1.5em
             }
 
         }
 
         .answer-container {
-
             p {
                 color: $fontColor3;
                 line-height: 1.5em

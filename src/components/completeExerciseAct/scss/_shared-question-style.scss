@@ -1,9 +1,5 @@
 znk-exercise {
     .question-basic-style {
-        .question-container {
-            @include text-style(16px, $fontColor4, Lato, $regularFontWeight);
-        }
-
         .answer-container {
             .content {
                 p {

@@ -4,7 +4,6 @@ reading-question {
 
     .reading-question-wrapper {
         display: flex;
-        font-family: Lato;
 
         .question-container {
             padding-left: 35px;
@@ -13,7 +12,6 @@ reading-question {
             }
 
             p {
-                font-weight: $lightFontWeight;
                 line-height: 1.5em;
                 margin: 0;
             }
