@@ -49,13 +49,14 @@
                 5: [10, 10, 7, 7]
             };
             EstimatedScoreEventsHandlerSrvProvider.setDiagnosticScoring(diagnosticScoringMap);
-
-            var defaultRawPointsForExercise = [1, 0, 0, 0];
-            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.SECTION, defaultRawPointsForExercise);
-            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.TUTORIAL, defaultRawPointsForExercise);
-            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.GAME, defaultRawPointsForExercise);
-            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.PRACTICE, defaultRawPointsForExercise);
-            var drillRawPointsForExercise = [0.2, 0, 0, 0];
+            // 1st pos = correct within allowed time, 2nd pos = correct outside allowed time , 3ed pos = wrong within allowed time, 4th pos = wrong outside allowed time
+            var exerciseRawPoints = [1, 1, 0, 0];
+            var sectionRawPoints = [1, 0, 0, 0];
+            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.SECTION, sectionRawPoints);
+            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.TUTORIAL, exerciseRawPoints);
+            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.GAME, exerciseRawPoints);
+            EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.PRACTICE, exerciseRawPoints);
+            var drillRawPointsForExercise = [0.2, 0.2, 0, 0];
             EstimatedScoreEventsHandlerSrvProvider.setExerciseRawPoints(exerciseTypeConst.DRILL, drillRawPointsForExercise);
         });
 })(angular);
