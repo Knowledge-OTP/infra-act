@@ -630,9 +630,6 @@ znk-exercise .question-basic-style .zoom-icon-wrapper {
 znk-exercise.done-btn-show .question-basic-style, znk-exercise.pager-displayed .question-basic-style {
   height: 100%; }
 
-znk-exercise.done-btn-show answer-builder, znk-exercise.pager-displayed answer-builder {
-  height: 100%; }
-
 znk-exercise .orange-square {
   background-color: #ff931e;
   color: white;
