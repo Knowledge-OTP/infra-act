@@ -42,11 +42,11 @@ znk-exercise {
 
     &.done-btn-show, &.pager-displayed {
         .question-basic-style{
-            height: calc(100% - 60px);
+            height: 100%;
         }
 
         answer-builder {
-            max-height: calc(100% - 60px);
+            height: 100%;
         }
     }
 
