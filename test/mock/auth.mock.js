@@ -2,12 +2,11 @@
     function AuthService($q) {
         return {
             getAuth: function () {
-                return {
+                return new Promise ( resolve => resolve({
                     uid: '$$$$uid', //   $$$$ added since when using replace function $$ changed to $
-                    auth: {
-                        email: 'fake@email.com'
-                    }
-                };
+                    email: 'fake@email.com'
+                    }))
+                }
             },
             userDataForAuthAndDataFb: function () {
                 return $q.when([
