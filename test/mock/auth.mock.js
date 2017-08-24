@@ -2,12 +2,12 @@
     function AuthService($q) {
         return {
             getAuth: function () {
-                return new Promise ( resolve => resolve({
+                return new Promise(resolve => resolve({
                     uid: '$$$$uid', //   $$$$ added since when using replace function $$ changed to $
                     email: 'fake@email.com'
-                    }))
-                }
-            },
+                }));
+            }
+        },
             userDataForAuthAndDataFb: function () {
                 return $q.when([
                     {
@@ -19,12 +19,12 @@
                     {}
                 ]);
             },
-            registerFirstLogin: function () {
-                return $q.when({});
-            }
-        };
-    }
+        registerFirstLogin: function () {
+            return $q.when({});
+        }
+    };
+}
 
     angular.module('auth.mock', [])
-        .service('AuthService', AuthService);
+    .service('AuthService', AuthService);
 })(angular);
