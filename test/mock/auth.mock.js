@@ -2,10 +2,10 @@
     function AuthService($q) {
         return {
             getAuth: function () {
-                return new Promise(resolve => resolve({
+                return $q.when({
                     uid: '$$$$uid',
                     email: 'fake@email.com'
-                }));
+                });
             },
             userDataForAuthAndDataFb: function () {
                 return $q.when([
