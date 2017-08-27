@@ -2,12 +2,10 @@
     function AuthService($q) {
         return {
             getAuth: function () {
-                return {
-                    uid: '$$$$uid', //   $$$$ added since when using replace function $$ changed to $
-                    auth: {
-                        email: 'fake@email.com'
-                    }
-                };
+                return $q.when({
+                    uid: '$$$$uid',
+                    email: 'fake@email.com'
+                });
             },
             userDataForAuthAndDataFb: function () {
                 return $q.when([
