@@ -5,7 +5,7 @@
     "Zinkerz"
   ],
   "dependencies": {
-    "infra-web-app": "https://4f465f366cf88b5bf2f8e33eaff8e219bfe538da:x-oauth-basic@github.com/Knowledge-OTP/infra-web-app.git#allen/login-for-dev"
+    "infra-web-app": "https://4f465f366cf88b5bf2f8e33eaff8e219bfe538da:x-oauth-basic@github.com/Knowledge-OTP/infra-web-app.git#v7.0.3"
   },
   "ignore": [
     ".*",
