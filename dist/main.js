@@ -1446,7 +1446,7 @@
         }]);
 })(angular);
 
-angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', function($templateCache) {
   $templateCache.put("components/completeExerciseAct/directives/completeExerciseSummary/completeExerciseSummaryDirective.template.html",
     "<div class=\"base-complete-exercise-container\"\n" +
     "     translate-namespace=\"COMPLETE_EXERCISE_ACT.COMPLETE_EXERCISE_SUMMARY\"\n" +
@@ -1912,8 +1912,21 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     'use strict';
 
     angular.module('znk.infra-act.configAct', [
-        'znk.infra.exerciseUtility'
+        'znk.infra.exerciseUtility',
+        'znk.infra-web-app.liveSession'
     ]);
+})(angular);
+
+(function (angular) {
+    'use strict';
+
+    angular.module('znk.infra-act.configAct')
+        .config(["LiveSessionSubjectSrvProvider", "LiveSessionSubjectConst", function (LiveSessionSubjectSrvProvider, LiveSessionSubjectConst) {
+            'ngInject';
+            var topics = [LiveSessionSubjectConst.MATH, LiveSessionSubjectConst.ENGLISH];
+            LiveSessionSubjectSrvProvider.setLiveSessionTopics(topics);
+
+        }]);
 })(angular);
 
 (function () {
@@ -1987,7 +2000,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
         }]);
 })();
 
-angular.module('znk.infra-act.configAct').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.configAct').run(['$templateCache', function($templateCache) {
   $templateCache.put("components/configAct/svg/znk-app-name-logo.svg",
     "<svg version=\"1.1\" id=\"ACT\" xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" viewBox=\"-183 363 245 67\" class=\"znk-app-name-logo\">\n" +
     "<style type=\"text/css\">\n" +
@@ -2254,7 +2267,7 @@ angular.module('znk.infra-act.configAct').run(['$templateCache', function ($temp
         }]);
 })();
 
-angular.module('znk.infra-act.examUtility').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.examUtility').run(['$templateCache', function($templateCache) {
 
 }]);
 
@@ -2281,7 +2294,7 @@ angular.module('znk.infra-act.examUtility').run(['$templateCache', function ($te
         }]);
 })(angular);
 
-angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', function($templateCache) {
 
 }]);
 
@@ -2323,7 +2336,7 @@ angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', functi
     }]);
 })(angular);
 
-angular.module('znk.infra-act.lessonTopic').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.lessonTopic').run(['$templateCache', function($templateCache) {
 
 }]);
 
@@ -2753,7 +2766,7 @@ angular.module('znk.infra-act.lessonTopic').run(['$templateCache', function ($te
         }]);
 })(angular);
 
-angular.module('znk.infra-act.performance').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.performance').run(['$templateCache', function($templateCache) {
   $templateCache.put("components/performance/directives/performanceTimeline/performanceTimeline.template.html",
     "<div class=\"performance-timeline znk-scrollbar\" translate-namespace=\"PERFORMANCE_TIMELINE\">\n" +
     "    <div class=\"time-line-wrapper\">\n" +
@@ -3044,7 +3057,7 @@ angular.module('znk.infra-act.performance').run(['$templateCache', function ($te
         });
 })(angular);
 
-angular.module('znk.infra-act.socialSharingAct').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.socialSharingAct').run(['$templateCache', function($templateCache) {
 
 }]);
 
@@ -3170,6 +3183,6 @@ angular.module('znk.infra-act.socialSharingAct').run(['$templateCache', function
         }]);
 })(angular);
 
-angular.module('znk.infra-act.userGoals').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.userGoals').run(['$templateCache', function($templateCache) {
 
 }]);

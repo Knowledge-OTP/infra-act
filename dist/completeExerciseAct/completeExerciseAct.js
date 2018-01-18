@@ -1431,7 +1431,7 @@
         }]);
 })(angular);
 
-angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', function($templateCache) {
   $templateCache.put("components/completeExerciseAct/directives/completeExerciseSummary/completeExerciseSummaryDirective.template.html",
     "<div class=\"base-complete-exercise-container\"\n" +
     "     translate-namespace=\"COMPLETE_EXERCISE_ACT.COMPLETE_EXERCISE_SUMMARY\"\n" +

@@ -36,6 +36,6 @@
     }]);
 })(angular);
 
-angular.module('znk.infra-act.lessonTopic').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.lessonTopic').run(['$templateCache', function($templateCache) {
 
 }]);
