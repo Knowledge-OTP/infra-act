@@ -24,7 +24,8 @@
                     return question.exerciseTypeId === exerciseTypeConst.LECTURE ? templatesContants.LECTURE_QUESTION : templatesContants.SIMPLE_QUESTION;
                 }
 
-                var questionSubjectId = categoryService.getCategoryLevel1ParentSync([question.categoryId, question.categoryId2]);
+                var questionSubjectId = !(typeof question.subjectId === 'undefined' || question.subjectId === null) ?
+                    question.subjectId : categoryService.getCategoryLevel1ParentSync([question.categoryId, question.categoryId2]);
 
                 switch (questionSubjectId) {
 
