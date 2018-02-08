@@ -57,7 +57,8 @@
                     return question.exerciseTypeId === exerciseTypeConst.LECTURE ? templatesContants.LECTURE_QUESTION : templatesContants.SIMPLE_QUESTION;
                 }
 
-                var questionSubjectId = categoryService.getCategoryLevel1ParentSync([question.categoryId, question.categoryId2]);
+                var questionSubjectId = !(typeof question.subjectId === 'undefined' || question.subjectId === null) ?
+                    question.subjectId : categoryService.getCategoryLevel1ParentSync([question.categoryId, question.categoryId2]);
 
                 switch (questionSubjectId) {
 
@@ -1390,12 +1391,14 @@
                 resultsData = angular.copy(resultsData);
                 questionsData = angular.copy(questionsData);
                 var examId = exam.id;
-                var subjectId = CategoryService.getCategoryLevel1ParentSync([questionsData.categoryId, questionsData.categoryId2]);
+                var subjectId = !(typeof questionsData.subjectId === 'undefined' || questionsData.subjectId === null) ?
+                    questionsData.subjectId : CategoryService.getCategoryLevel1ParentSync([questionsData.categoryId, questionsData.categoryId2]);
                 var currentSectionId = questionsData.id;
                 var sectionResults = examResult.sectionResults;
                 var sectionProms = [];
                 var getOtherSections = exam.sections.filter(function (section) {
-                    var sectionSubjectId = CategoryService.getCategoryLevel1ParentSync([section.categoryId, section.categoryId2]);
+                    var sectionSubjectId = !(typeof section.subjectId === 'undefined' || section.subjectId === null) ?
+                        section.subjectId : CategoryService.getCategoryLevel1ParentSync([section.categoryId, section.categoryId2]);
                     return sectionSubjectId === subjectId && currentSectionId !== section.id;
                 });
                 angular.forEach(getOtherSections, function (sectionBySubject) {
@@ -1431,7 +1434,7 @@
         }]);
 })(angular);
 
-angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', function($templateCache) {
+angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', function ($templateCache) {
   $templateCache.put("components/completeExerciseAct/directives/completeExerciseSummary/completeExerciseSummaryDirective.template.html",
     "<div class=\"base-complete-exercise-container\"\n" +
     "     translate-namespace=\"COMPLETE_EXERCISE_ACT.COMPLETE_EXERCISE_SUMMARY\"\n" +

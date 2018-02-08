@@ -15,12 +15,14 @@
                 resultsData = angular.copy(resultsData);
                 questionsData = angular.copy(questionsData);
                 var examId = exam.id;
-                var subjectId = CategoryService.getCategoryLevel1ParentSync([questionsData.categoryId, questionsData.categoryId2]);
+                var subjectId = !(typeof questionsData.subjectId === 'undefined' || questionsData.subjectId === null) ?
+                    questionsData.subjectId : CategoryService.getCategoryLevel1ParentSync([questionsData.categoryId, questionsData.categoryId2]);
                 var currentSectionId = questionsData.id;
                 var sectionResults = examResult.sectionResults;
                 var sectionProms = [];
                 var getOtherSections = exam.sections.filter(function (section) {
-                    var sectionSubjectId = CategoryService.getCategoryLevel1ParentSync([section.categoryId, section.categoryId2]);
+                    var sectionSubjectId = !(typeof section.subjectId === 'undefined' || section.subjectId === null) ?
+                        section.subjectId : CategoryService.getCategoryLevel1ParentSync([section.categoryId, section.categoryId2]);
                     return sectionSubjectId === subjectId && currentSectionId !== section.id;
                 });
                 angular.forEach(getOtherSections, function (sectionBySubject) {
