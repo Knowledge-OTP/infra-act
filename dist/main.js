@@ -61,10 +61,11 @@
                     MATH_QUESTION: 1,
                     READING_QUESTION: 2,
                     WRITING_QUESTION: 3,
-                    SUBJECT_SPECIFIC_PARAGRAPH: 4,
+                    ENGLISH_SPECIFIC_PARAGRAPH: 4,
                     ENGLISH_FULL_PARAGRAPHS: 5,
                     SCIENCE_QUESTION: 6,
-                    LECTURE_QUESTION: 7
+                    LECTURE_QUESTION: 7,
+                    SCIENCE_SPECIFIC_PARAGRAPH: 8
                 };
 
                 // lecture question or simple question.
@@ -88,12 +89,12 @@
 
                     case SubjectEnumConst.ENGLISH:
                         if (question.paragraph !== null && question.paragraph.length > 0) {
-                            return templatesContants.SUBJECT_SPECIFIC_PARAGRAPH;
+                            return templatesContants.ENGLISH_SPECIFIC_PARAGRAPH;
                         }
                         return templatesContants.ENGLISH_FULL_PARAGRAPHS;
                     case SubjectEnumConst.SCIENCE:
                         if (question.paragraph !== null && question.paragraph.length > 0) {
-                            return templatesContants.SUBJECT_SPECIFIC_PARAGRAPH;
+                            return templatesContants.SCIENCE_SPECIFIC_PARAGRAPH;
                         }
                         return templatesContants.SCIENCE_QUESTION;
                     default:
@@ -108,10 +109,11 @@
                 1: '<math-question></math-question>',
                 2: '<reading-question></reading-question>',
                 3: '<writing-question></writing-question>',
-                4: '<subject-specific-paragraph></subject-specific-paragraph>',
+                4: '<english-specific-paragraph></english-specific-paragraph>',
                 5: '<english-full-paragraphs></english-full-paragraphs>',
                 6: '<science-question></science-question>',
-                7: '<lecture-question></lecture-question>'
+                7: '<lecture-question></lecture-question>',
+                8: '<science-specific-paragraph></science-specific-paragraph>'
             };
             QuestionTypesSrvProvider.setQuestionTypesHtmlTemplate(map);
         }])
@@ -521,6 +523,45 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
+        .directive('englishSpecificParagraph', function () {
+            'ngInject';
+
+            function compileFn() {
+                function preFn(scope, element, attrs, questionBuilderCtrl) {
+                    scope.vm = {
+                        question: questionBuilderCtrl.question,
+                        SPECIFIC_PARAGRAPH: 1,
+                        FULL_PASSAGE: 2
+                    };
+                    scope.vm.view = scope.vm.SPECIFIC_PARAGRAPH;
+
+                    var paragraph = questionBuilderCtrl.question.paragraph.replace(/_/g, '');
+                    angular.element(element[0].querySelector('.paragraph')).append(paragraph);
+                    angular.element(element[0].querySelector('.paragraph-title')).append(questionBuilderCtrl.question.paragraphTitle);
+                    angular.element(element[0].querySelector('.question-content')).append(questionBuilderCtrl.question.content);
+                }
+
+                return {
+                    pre: preFn
+                };
+            }
+
+            var directive = {
+                templateUrl: 'components/completeExerciseAct/templates/englishSpecificParagraph.template.html',
+                restrict: 'E',
+                require: '^questionBuilder',
+                scope: {},
+                compile: compileFn
+            };
+
+            return directive;
+        });
+})(angular);
+
+(function (angular) {
+    'use strict';
+
+    angular.module('znk.infra-act.completeExerciseAct')
         .directive('essayQuestion', function essayQuestionDirective() {
             'ngInject';
 
@@ -899,6 +940,45 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
+        .directive('scienceSpecificParagraph', function () {
+            'ngInject';
+
+            function compileFn() {
+                function preFn(scope, element, attrs, questionBuilderCtrl) {
+                    scope.vm = {
+                        question: questionBuilderCtrl.question,
+                        SPECIFIC_PARAGRAPH: 1,
+                        FULL_PASSAGE: 2
+                    };
+                    scope.vm.view = scope.vm.SPECIFIC_PARAGRAPH;
+
+                    var paragraph = questionBuilderCtrl.question.paragraph.replace(/_/g, '');
+                    angular.element(element[0].querySelector('.paragraph')).append(paragraph);
+                    angular.element(element[0].querySelector('.paragraph-title')).append(questionBuilderCtrl.question.paragraphTitle);
+                    angular.element(element[0].querySelector('.question-content')).append(questionBuilderCtrl.question.content);
+                }
+
+                return {
+                    pre: preFn
+                };
+            }
+
+            var directive = {
+                templateUrl: 'components/completeExerciseAct/templates/scienceSpecificParagraph.template.html',
+                restrict: 'E',
+                require: '^questionBuilder',
+                scope: {},
+                compile: compileFn
+            };
+
+            return directive;
+        });
+})(angular);
+
+(function (angular) {
+    'use strict';
+
+    angular.module('znk.infra-act.completeExerciseAct')
         .directive('selectAnswer', ["$timeout", "ZnkExerciseViewModeEnum", "ZnkExerciseAnswersSrv", "ZnkExerciseEvents", "$document", function ($timeout, ZnkExerciseViewModeEnum, ZnkExerciseAnswersSrv, ZnkExerciseEvents, $document) {
             'ngInject';
 
@@ -1138,45 +1218,6 @@
                 controller: 'SocialSharingController',
                 bindToController: true,
                 controllerAs: 'vm'
-            };
-
-            return directive;
-        });
-})(angular);
-
-(function (angular) {
-    'use strict';
-
-    angular.module('znk.infra-act.completeExerciseAct')
-        .directive('subjectSpecificParagraph', function () {
-            'ngInject';
-
-            function compileFn() {
-                function preFn(scope, element, attrs, questionBuilderCtrl) {
-                    scope.vm = {
-                        question: questionBuilderCtrl.question,
-                        SPECIFIC_PARAGRAPH: 1,
-                        FULL_PASSAGE: 2
-                    };
-                    scope.vm.view = scope.vm.SPECIFIC_PARAGRAPH;
-
-                    var paragraph = questionBuilderCtrl.question.paragraph.replace(/_/g, '');
-                    angular.element(element[0].querySelector('.paragraph')).append(paragraph);
-                    angular.element(element[0].querySelector('.paragraph-title')).append(questionBuilderCtrl.question.paragraphTitle);
-                    angular.element(element[0].querySelector('.question-content')).append(questionBuilderCtrl.question.content);
-                }
-
-                return {
-                    pre: preFn
-                };
-            }
-
-            var directive = {
-                templateUrl: 'components/completeExerciseAct/templates/englishSpecificParagraph.template.html',
-                restrict: 'E',
-                require: '^questionBuilder',
-                scope: {},
-                compile: compileFn
             };
 
             return directive;
@@ -1686,6 +1727,41 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "</div>\n" +
     "");
+  $templateCache.put("components/completeExerciseAct/templates/englishSpecificParagraph.template.html",
+    "<div class=\"question-wrapper english-specific-paragraph-wrapper question-basic-style\"  translate-namespace=\"ENGLISH_SPECIFIC_PARAGRAPH\">\n" +
+    "\n" +
+    "    <div class=\"specific-paragraph-view-wrapper\" ng-show=\"vm.view === vm.SPECIFIC_PARAGRAPH\">\n" +
+    "        <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
+    "            <div class=\"full-passage-link\" ng-bind-html=\"vm.question.groupData.name\" ng-click=\"vm.view = vm.FULL_PASSAGE\"></div>\n" +
+    "            <div class=\"paragraph-title\"></div>\n" +
+    "            <div class=\"paragraph\"></div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
+    "            <div class=\"question-content\"></div>\n" +
+    "            <answer-builder></answer-builder>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"full-passage-view-wrapper znk-scrollbar\" ng-show=\"vm.view === vm.FULL_PASSAGE\">\n" +
+    "\n" +
+    "        <div class=\"passage-title\">\n" +
+    "            <div ng-bind-html=\"vm.question.groupData.name\"></div>\n" +
+    "            <div class=\"back-to-question-link\" ng-click=\"vm.view = vm.SPECIFIC_PARAGRAPH\">\n" +
+    "                <i class=\"material-icons chevron-left\">chevron_left</i>\n" +
+    "                <div class=\"back-to-question\" translate=\".BACK_TO_QUESTION\"></div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"full-passage\" ng-repeat=\"paragraph in ::vm.question.groupData.paragraphs\">\n" +
+    "            <div class=\"paragraph-number-title\">[{{::$index + 1}}]</div>\n" +
+    "            <div article content=\"::paragraph.body\"  markup-field=\"body\" delete-under-scores=\"true\"></div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "\n" +
+    "</div>\n" +
+    "");
   $templateCache.put("components/completeExerciseAct/templates/essayQuestion.template.html",
     "<div class=\"question-wrapper writing-question-wrapper question-basic-style\">\n" +
     "\n" +
@@ -1791,33 +1867,8 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "</div>\n" +
     "");
-  $templateCache.put("components/completeExerciseAct/templates/selectAnswer.template.html",
-    "<div ng-repeat=\"answer in ::d.answers track by answer.id\"\n" +
-    "     class=\"answer\"\n" +
-    "     ng-click=\"d.click(answer)\"\n" +
-    "     tabindex=\"-1\">\n" +
-    "    <div class=\"content-wrapper\">\n" +
-    "        <div class=\"answer-index-wrapper\">\n" +
-    "            <span class=\"index-char\">{{::d.getIndexChar($index)}}</span>\n" +
-    "        </div>\n" +
-    "        <markup content=\"answer.content\" type=\"md\" class=\"content\"></markup>\n" +
-    "        <svg-icon class=\"correct-icon-drv\" name=\"complete-exercise-correct-icon\"></svg-icon>\n" +
-    "        <svg-icon class=\"wrong-icon-drv\" name=\"complete-exercise-wrong-icon\"></svg-icon>\n" +
-    "    </div>\n" +
-    "</div>\n" +
-    "");
-  $templateCache.put("components/completeExerciseAct/templates/simpleQuestion.template.html",
-    "<div class=\"question-wrapper simple-question-wrapper question-basic-style\" image-zoomer>\n" +
-    "\n" +
-    "        <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
-    "            <div class=\"question-content\"></div>\n" +
-    "            <custom-answer-builder-act></custom-answer-builder-act>\n" +
-    "        </div>\n" +
-    "\n" +
-    "</div>\n" +
-    "");
-  $templateCache.put("components/completeExerciseAct/templates/subjectSpecificParagraph.template.html",
-    "<div class=\"question-wrapper subject-specific-paragraph-wrapper question-basic-style\"  translate-namespace=\"ENGLISH_SPECIFIC_PARAGRAPH\">\n" +
+  $templateCache.put("components/completeExerciseAct/templates/scienceSpecificParagraph.template.html",
+    "<div class=\"question-wrapper science-specific-paragraph-wrapper question-basic-style\"  translate-namespace=\"ENGLISH_SPECIFIC_PARAGRAPH\">\n" +
     "\n" +
     "    <div class=\"specific-paragraph-view-wrapper\" ng-show=\"vm.view === vm.SPECIFIC_PARAGRAPH\">\n" +
     "        <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
@@ -1848,6 +1899,31 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "        </div>\n" +
     "\n" +
     "    </div>\n" +
+    "\n" +
+    "</div>\n" +
+    "");
+  $templateCache.put("components/completeExerciseAct/templates/selectAnswer.template.html",
+    "<div ng-repeat=\"answer in ::d.answers track by answer.id\"\n" +
+    "     class=\"answer\"\n" +
+    "     ng-click=\"d.click(answer)\"\n" +
+    "     tabindex=\"-1\">\n" +
+    "    <div class=\"content-wrapper\">\n" +
+    "        <div class=\"answer-index-wrapper\">\n" +
+    "            <span class=\"index-char\">{{::d.getIndexChar($index)}}</span>\n" +
+    "        </div>\n" +
+    "        <markup content=\"answer.content\" type=\"md\" class=\"content\"></markup>\n" +
+    "        <svg-icon class=\"correct-icon-drv\" name=\"complete-exercise-correct-icon\"></svg-icon>\n" +
+    "        <svg-icon class=\"wrong-icon-drv\" name=\"complete-exercise-wrong-icon\"></svg-icon>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "");
+  $templateCache.put("components/completeExerciseAct/templates/simpleQuestion.template.html",
+    "<div class=\"question-wrapper simple-question-wrapper question-basic-style\" image-zoomer>\n" +
+    "\n" +
+    "        <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
+    "            <div class=\"question-content\"></div>\n" +
+    "            <custom-answer-builder-act></custom-answer-builder-act>\n" +
+    "        </div>\n" +
     "\n" +
     "</div>\n" +
     "");
