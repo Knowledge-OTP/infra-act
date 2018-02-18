@@ -131,49 +131,49 @@ english-full-paragraphs .question-wrapper {
   display: -ms-flexbox;
   display: flex; }
 
-english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper {
+subject-specific-paragraph .subject-specific-paragraph-wrapper .specific-paragraph-view-wrapper {
   height: 100%;
   display: -ms-flexbox;
   display: flex; }
-  english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container .full-passage-link {
+  subject-specific-paragraph .subject-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container .full-passage-link {
     font-size: 18px;
     color: #0a9bad;
     font-family: Lato;
     font-weight: 400;
     cursor: pointer;
     margin-bottom: 10px; }
-    english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container .full-passage-link:hover {
+    subject-specific-paragraph .subject-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container .full-passage-link:hover {
       text-decoration: underline; }
-  english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container p {
+  subject-specific-paragraph .subject-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container p {
     line-height: 1.5em; }
-  english-specific-paragraph .english-specific-paragraph-wrapper .specific-paragraph-view-wrapper .answer-container p {
+  subject-specific-paragraph .subject-specific-paragraph-wrapper .specific-paragraph-view-wrapper .answer-container p {
     color: #4f4d4d;
     line-height: 1.5em; }
 
-english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper {
+subject-specific-paragraph .subject-specific-paragraph-wrapper .full-passage-view-wrapper {
   width: 1040px;
   height: 100%;
   margin: 0 auto;
   overflow-y: auto; }
-  english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link {
+  subject-specific-paragraph .subject-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link {
     position: absolute;
     top: -7px;
     cursor: pointer;
     text-align: left; }
-    english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .chevron-left {
+    subject-specific-paragraph .subject-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .chevron-left {
       position: relative;
       top: 6px;
       left: 6px;
       color: #0a9bad; }
-    english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .back-to-question {
+    subject-specific-paragraph .subject-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .back-to-question {
       font-size: 18px;
       color: #0a9bad;
       font-family: Lato;
       font-weight: 400;
       display: inline-block; }
-      english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .back-to-question:hover {
+      subject-specific-paragraph .subject-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .back-to-question:hover {
         text-decoration: underline; }
-  english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .passage-title {
+  subject-specific-paragraph .subject-specific-paragraph-wrapper .full-passage-view-wrapper .passage-title {
     position: relative;
     font-size: 22px;
     color: #161616;
@@ -181,12 +181,12 @@ english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-vie
     font-weight: 400;
     text-align: center;
     margin-bottom: 24px; }
-  english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage {
+  subject-specific-paragraph .subject-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage {
     width: 900px;
     margin: 0 auto 50px auto; }
-    english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage p {
+    subject-specific-paragraph .subject-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage p {
       line-height: 1.5em; }
-    english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage .paragraph-number-title {
+    subject-specific-paragraph .subject-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage .paragraph-number-title {
       font-size: 16px;
       color: #4f4d4d;
       font-family: Lato;
