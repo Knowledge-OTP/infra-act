@@ -52,7 +52,7 @@
     angular.module('znk.infra-act.completeExerciseAct')
         .config(["QuestionTypesSrvProvider", "exerciseTypeConst", "SubjectEnumConst", "CategoryServiceProvider", function (QuestionTypesSrvProvider, exerciseTypeConst, SubjectEnumConst, CategoryServiceProvider) {
             'ngInject';
-            
+
             var categoryService = CategoryServiceProvider.$get();
 
             function questionTypeGetter(question) {
@@ -64,7 +64,8 @@
                     ENGLISH_SPECIFIC_PARAGRAPH: 4,
                     ENGLISH_FULL_PARAGRAPHS: 5,
                     SCIENCE_QUESTION: 6,
-                    LECTURE_QUESTION: 7
+                    LECTURE_QUESTION: 7,
+                    SCIENCE_SPECIFIC_PARAGRAPH: 8
                 };
 
                 // lecture question or simple question.
@@ -92,6 +93,9 @@
                         }
                         return templatesContants.ENGLISH_FULL_PARAGRAPHS;
                     case SubjectEnumConst.SCIENCE:
+                        if (question.paragraph !== null && question.paragraph.length > 0) {
+                            return templatesContants.SCIENCE_SPECIFIC_PARAGRAPH;
+                        }
                         return templatesContants.SCIENCE_QUESTION;
                     default:
                         return templatesContants.SIMPLE_QUESTION;
@@ -108,7 +112,8 @@
                 4: '<english-specific-paragraph></english-specific-paragraph>',
                 5: '<english-full-paragraphs></english-full-paragraphs>',
                 6: '<science-question></science-question>',
-                7: '<lecture-question></lecture-question>'
+                7: '<lecture-question></lecture-question>',
+                8: '<science-specific-paragraph></science-specific-paragraph>'
             };
             QuestionTypesSrvProvider.setQuestionTypesHtmlTemplate(map);
         }])
@@ -935,6 +940,45 @@
     'use strict';
 
     angular.module('znk.infra-act.completeExerciseAct')
+        .directive('scienceSpecificParagraph', function () {
+            'ngInject';
+
+            function compileFn() {
+                function preFn(scope, element, attrs, questionBuilderCtrl) {
+                    scope.vm = {
+                        question: questionBuilderCtrl.question,
+                        SPECIFIC_PARAGRAPH: 1,
+                        FULL_PASSAGE: 2
+                    };
+                    scope.vm.view = scope.vm.SPECIFIC_PARAGRAPH;
+
+                    var paragraph = questionBuilderCtrl.question.paragraph.replace(/_/g, '');
+                    angular.element(element[0].querySelector('.paragraph')).append(paragraph);
+                    angular.element(element[0].querySelector('.paragraph-title')).append(questionBuilderCtrl.question.paragraphTitle);
+                    angular.element(element[0].querySelector('.question-content')).append(questionBuilderCtrl.question.content);
+                }
+
+                return {
+                    pre: preFn
+                };
+            }
+
+            var directive = {
+                templateUrl: 'components/completeExerciseAct/templates/scienceSpecificParagraph.template.html',
+                restrict: 'E',
+                require: '^questionBuilder',
+                scope: {},
+                compile: compileFn
+            };
+
+            return directive;
+        });
+})(angular);
+
+(function (angular) {
+    'use strict';
+
+    angular.module('znk.infra-act.completeExerciseAct')
         .directive('selectAnswer', ["$timeout", "ZnkExerciseViewModeEnum", "ZnkExerciseAnswersSrv", "ZnkExerciseEvents", "$document", function ($timeout, ZnkExerciseViewModeEnum, ZnkExerciseAnswersSrv, ZnkExerciseEvents, $document) {
             'ngInject';
 
@@ -1449,7 +1493,7 @@
         }]);
 })(angular);
 
-angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', function($templateCache) {
   $templateCache.put("components/completeExerciseAct/directives/completeExerciseSummary/completeExerciseSummaryDirective.template.html",
     "<div class=\"base-complete-exercise-container\"\n" +
     "     translate-namespace=\"COMPLETE_EXERCISE_ACT.COMPLETE_EXERCISE_SUMMARY\"\n" +
@@ -1823,6 +1867,41 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
     "\n" +
     "</div>\n" +
     "");
+  $templateCache.put("components/completeExerciseAct/templates/scienceSpecificParagraph.template.html",
+    "<div class=\"question-wrapper science-specific-paragraph-wrapper question-basic-style\"  translate-namespace=\"SCIENCE_SPECIFIC_PARAGRAPH\">\n" +
+    "\n" +
+    "    <div class=\"specific-paragraph-view-wrapper\" ng-show=\"vm.view === vm.SPECIFIC_PARAGRAPH\">\n" +
+    "        <div class=\"question-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"question\">\n" +
+    "            <div class=\"full-passage-link\" ng-bind-html=\"vm.question.groupData.name\" ng-click=\"vm.view = vm.FULL_PASSAGE\"></div>\n" +
+    "            <div class=\"paragraph-title\"></div>\n" +
+    "            <div class=\"paragraph\"></div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"answer-container znk-scrollbar\" znk-exercise-draw-container canvas-name=\"answer\">\n" +
+    "            <div class=\"question-content\"></div>\n" +
+    "            <answer-builder></answer-builder>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"full-passage-view-wrapper znk-scrollbar\" ng-show=\"vm.view === vm.FULL_PASSAGE\">\n" +
+    "\n" +
+    "        <div class=\"passage-title\">\n" +
+    "            <div ng-bind-html=\"vm.question.groupData.name\"></div>\n" +
+    "            <div class=\"back-to-question-link\" ng-click=\"vm.view = vm.SPECIFIC_PARAGRAPH\">\n" +
+    "                <i class=\"material-icons chevron-left\">chevron_left</i>\n" +
+    "                <div class=\"back-to-question\" translate=\".BACK_TO_QUESTION\"></div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "        <div class=\"full-passage\" ng-repeat=\"paragraph in ::vm.question.groupData.paragraphs\">\n" +
+    "            <div class=\"paragraph-number-title\">[{{::$index + 1}}]</div>\n" +
+    "            <div article content=\"::paragraph.body\"  markup-field=\"body\" delete-under-scores=\"true\"></div>\n" +
+    "        </div>\n" +
+    "\n" +
+    "    </div>\n" +
+    "\n" +
+    "</div>\n" +
+    "");
   $templateCache.put("components/completeExerciseAct/templates/selectAnswer.template.html",
     "<div ng-repeat=\"answer in ::d.answers track by answer.id\"\n" +
     "     class=\"answer\"\n" +
@@ -2003,7 +2082,7 @@ angular.module('znk.infra-act.completeExerciseAct').run(['$templateCache', funct
         }]);
 })();
 
-angular.module('znk.infra-act.configAct').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.configAct').run(['$templateCache', function($templateCache) {
   $templateCache.put("components/configAct/svg/znk-app-name-logo.svg",
     "<svg version=\"1.1\" id=\"ACT\" xmlns=\"http://www.w3.org/2000/svg\" x=\"0px\" y=\"0px\" viewBox=\"-183 363 245 67\" class=\"znk-app-name-logo\">\n" +
     "<style type=\"text/css\">\n" +
@@ -2270,7 +2349,7 @@ angular.module('znk.infra-act.configAct').run(['$templateCache', function ($temp
         }]);
 })();
 
-angular.module('znk.infra-act.examUtility').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.examUtility').run(['$templateCache', function($templateCache) {
 
 }]);
 
@@ -2297,7 +2376,7 @@ angular.module('znk.infra-act.examUtility').run(['$templateCache', function ($te
         }]);
 })(angular);
 
-angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', function($templateCache) {
 
 }]);
 
@@ -2339,7 +2418,7 @@ angular.module('znk.infra-act.exerciseUtilityAct').run(['$templateCache', functi
     }]);
 })(angular);
 
-angular.module('znk.infra-act.lessonTopic').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.lessonTopic').run(['$templateCache', function($templateCache) {
 
 }]);
 
@@ -2771,7 +2850,7 @@ angular.module('znk.infra-act.lessonTopic').run(['$templateCache', function ($te
         }]);
 })(angular);
 
-angular.module('znk.infra-act.performance').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.performance').run(['$templateCache', function($templateCache) {
   $templateCache.put("components/performance/directives/performanceTimeline/performanceTimeline.template.html",
     "<div class=\"performance-timeline znk-scrollbar\" translate-namespace=\"PERFORMANCE_TIMELINE\">\n" +
     "    <div class=\"time-line-wrapper\">\n" +
@@ -3062,7 +3141,7 @@ angular.module('znk.infra-act.performance').run(['$templateCache', function ($te
         });
 })(angular);
 
-angular.module('znk.infra-act.socialSharingAct').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.socialSharingAct').run(['$templateCache', function($templateCache) {
 
 }]);
 
@@ -3188,6 +3267,6 @@ angular.module('znk.infra-act.socialSharingAct').run(['$templateCache', function
         }]);
 })(angular);
 
-angular.module('znk.infra-act.userGoals').run(['$templateCache', function ($templateCache) {
+angular.module('znk.infra-act.userGoals').run(['$templateCache', function($templateCache) {
 
 }]);

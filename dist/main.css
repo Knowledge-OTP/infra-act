@@ -193,6 +193,68 @@ english-specific-paragraph .english-specific-paragraph-wrapper .full-passage-vie
       font-weight: 400;
       text-align: center; }
 
+science-specific-paragraph .science-specific-paragraph-wrapper .specific-paragraph-view-wrapper {
+  height: 100%;
+  display: -ms-flexbox;
+  display: flex; }
+  science-specific-paragraph .science-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container .full-passage-link {
+    font-size: 18px;
+    color: #0a9bad;
+    font-family: Lato;
+    font-weight: 400;
+    cursor: pointer;
+    margin-bottom: 10px; }
+    science-specific-paragraph .science-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container .full-passage-link:hover {
+      text-decoration: underline; }
+  science-specific-paragraph .science-specific-paragraph-wrapper .specific-paragraph-view-wrapper .question-container p {
+    line-height: 1.5em; }
+  science-specific-paragraph .science-specific-paragraph-wrapper .specific-paragraph-view-wrapper .answer-container p {
+    color: #4f4d4d;
+    line-height: 1.5em; }
+
+science-specific-paragraph .science-specific-paragraph-wrapper .full-passage-view-wrapper {
+  width: 1040px;
+  height: 100%;
+  margin: 0 auto;
+  overflow-y: auto; }
+  science-specific-paragraph .science-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link {
+    position: absolute;
+    top: -7px;
+    cursor: pointer;
+    text-align: left; }
+    science-specific-paragraph .science-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .chevron-left {
+      position: relative;
+      top: 6px;
+      left: 6px;
+      color: #0a9bad; }
+    science-specific-paragraph .science-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .back-to-question {
+      font-size: 18px;
+      color: #0a9bad;
+      font-family: Lato;
+      font-weight: 400;
+      display: inline-block; }
+      science-specific-paragraph .science-specific-paragraph-wrapper .full-passage-view-wrapper .back-to-question-link .back-to-question:hover {
+        text-decoration: underline; }
+  science-specific-paragraph .science-specific-paragraph-wrapper .full-passage-view-wrapper .passage-title {
+    position: relative;
+    font-size: 22px;
+    color: #161616;
+    font-family: Lato;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 24px; }
+  science-specific-paragraph .science-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage {
+    width: 900px;
+    margin: 0 auto 50px auto; }
+    science-specific-paragraph .science-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage p {
+      line-height: 1.5em; }
+    science-specific-paragraph .science-specific-paragraph-wrapper .full-passage-view-wrapper .full-passage .paragraph-number-title {
+      font-size: 16px;
+      color: #4f4d4d;
+      font-family: Lato;
+      font-weight: 400;
+      text-align: center; }
+
 essay-question .writing-question-wrapper {
   padding-top: 28px;
   display: -ms-flexbox;

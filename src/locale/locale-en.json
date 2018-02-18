@@ -40,5 +40,11 @@
     },
     "PERFORMANCE_TIMELINE": {
         "POINTS_LEFT": "{{points}} pts to go!"
+    },
+    "ENGLISH_SPECIFIC_PARAGRAPH":{
+        "BACK_TO_QUESTION": "Back to question"
+    },
+    "SCIENCE_SPECIFIC_PARAGRAPH":{
+        "BACK_TO_QUESTION": "Back to question"
     }
 }

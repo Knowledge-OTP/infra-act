@@ -1,0 +1,80 @@
+science-specific-paragraph {
+    .science-specific-paragraph-wrapper {
+
+        .specific-paragraph-view-wrapper {
+            height:100%;
+            @include display-flex;
+
+            .question-container {
+                .full-passage-link {
+                    @include text-style(18px, $fontColor8, Lato, $regularFontWeight);
+                    cursor: pointer;
+                    margin: {
+                        bottom: 10px;
+                    }
+
+                    &:hover{
+                        text-decoration: underline;
+                    }
+                }
+                p {
+                    line-height: 1.5em;
+                }
+            }
+
+            .answer-container {
+                p {
+                    color: $fontColor3;
+                    line-height: 1.5em;
+                }
+            }
+        }
+
+        .full-passage-view-wrapper{
+            @include dimension(1040px, 100%);
+            margin: 0 auto;
+            overflow-y: auto;
+
+            .back-to-question-link {
+                position: absolute;
+                top: -7px;
+                cursor: pointer;
+                text-align: left;
+
+                .chevron-left {
+                    position: relative;
+                    top: 6px;
+                    left: 6px;
+                    color: $fontColor8;
+                }
+                .back-to-question {
+                    @include text-style(18px, $fontColor8, Lato, $regularFontWeight);
+                    display: inline-block;
+                    &:hover{
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .passage-title{
+                position: relative;
+                @include text-style(22px, $fontColor4, Lato, $regularFontWeight);
+                text-align: center;
+                margin-bottom: 24px;
+            }
+
+            .full-passage{
+                width: 900px;
+                margin: 0 auto 50px auto;
+                p{
+                    line-height: 1.5em;
+                }
+
+                .paragraph-number-title{
+                    @include text-style(16px, $fontColor3, Lato, $regularFontWeight);
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
