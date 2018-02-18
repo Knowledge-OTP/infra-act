@@ -4,7 +4,7 @@
     angular.module('znk.infra-act.completeExerciseAct')
         .config(function (QuestionTypesSrvProvider, exerciseTypeConst, SubjectEnumConst, CategoryServiceProvider) {
             'ngInject';
-
+            
             var categoryService = CategoryServiceProvider.$get();
 
             function questionTypeGetter(question) {
@@ -13,7 +13,7 @@
                     MATH_QUESTION: 1,
                     READING_QUESTION: 2,
                     WRITING_QUESTION: 3,
-                    SUBJECT_SPECIFIC_PARAGRAPH: 4,
+                    ENGLISH_SPECIFIC_PARAGRAPH: 4,
                     ENGLISH_FULL_PARAGRAPHS: 5,
                     SCIENCE_QUESTION: 6,
                     LECTURE_QUESTION: 7
@@ -40,13 +40,10 @@
 
                     case SubjectEnumConst.ENGLISH:
                         if (question.paragraph !== null && question.paragraph.length > 0) {
-                            return templatesContants.SUBJECT_SPECIFIC_PARAGRAPH;
+                            return templatesContants.ENGLISH_SPECIFIC_PARAGRAPH;
                         }
                         return templatesContants.ENGLISH_FULL_PARAGRAPHS;
                     case SubjectEnumConst.SCIENCE:
-                        if (question.paragraph !== null && question.paragraph.length > 0) {
-                            return templatesContants.SUBJECT_SPECIFIC_PARAGRAPH;
-                        }
                         return templatesContants.SCIENCE_QUESTION;
                     default:
                         return templatesContants.SIMPLE_QUESTION;
@@ -60,7 +57,7 @@
                 1: '<math-question></math-question>',
                 2: '<reading-question></reading-question>',
                 3: '<writing-question></writing-question>',
-                4: '<subject-specific-paragraph></subject-specific-paragraph>',
+                4: '<english-specific-paragraph></english-specific-paragraph>',
                 5: '<english-full-paragraphs></english-full-paragraphs>',
                 6: '<science-question></science-question>',
                 7: '<lecture-question></lecture-question>'
