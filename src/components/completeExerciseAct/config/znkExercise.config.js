@@ -13,11 +13,10 @@
                     MATH_QUESTION: 1,
                     READING_QUESTION: 2,
                     WRITING_QUESTION: 3,
-                    ENGLISH_SPECIFIC_PARAGRAPH: 4,
+                    SUBJECT_SPECIFIC_PARAGRAPH: 4,
                     ENGLISH_FULL_PARAGRAPHS: 5,
                     SCIENCE_QUESTION: 6,
-                    LECTURE_QUESTION: 7,
-                    SCIENCE_SPECIFIC_PARAGRAPH: 8
+                    LECTURE_QUESTION: 7
                 };
 
                 // lecture question or simple question.
@@ -41,12 +40,12 @@
 
                     case SubjectEnumConst.ENGLISH:
                         if (question.paragraph !== null && question.paragraph.length > 0) {
-                            return templatesContants.ENGLISH_SPECIFIC_PARAGRAPH;
+                            return templatesContants.SUBJECT_SPECIFIC_PARAGRAPH;
                         }
                         return templatesContants.ENGLISH_FULL_PARAGRAPHS;
                     case SubjectEnumConst.SCIENCE:
                         if (question.paragraph !== null && question.paragraph.length > 0) {
-                            return templatesContants.SCIENCE_SPECIFIC_PARAGRAPH;
+                            return templatesContants.SUBJECT_SPECIFIC_PARAGRAPH;
                         }
                         return templatesContants.SCIENCE_QUESTION;
                     default:
@@ -61,11 +60,10 @@
                 1: '<math-question></math-question>',
                 2: '<reading-question></reading-question>',
                 3: '<writing-question></writing-question>',
-                4: '<english-specific-paragraph></english-specific-paragraph>',
+                4: '<subject-specific-paragraph></subject-specific-paragraph>',
                 5: '<english-full-paragraphs></english-full-paragraphs>',
                 6: '<science-question></science-question>',
-                7: '<lecture-question></lecture-question>',
-                8: '<science-specific-paragraph></science-specific-paragraph>'
+                7: '<lecture-question></lecture-question>'
             };
             QuestionTypesSrvProvider.setQuestionTypesHtmlTemplate(map);
         })
